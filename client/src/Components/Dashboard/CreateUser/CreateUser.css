@@ -1,0 +1,27 @@
+.CreateUser {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #f7f7f7;
+    font-family: Raleway;
+}
+
+.CreateUser .CreateUser-inner {
+    position: relative;
+}
+
+.CreateUser .CreateUser-inner .CreateUser-content {
+    width: 30%;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 40px 0 40px 0;
+}
+
+.CreateUser .CreateUser-inner .CreateUser-content select {
+    border: rgb(34, 34, 34, .5) 1px solid;
+}
+
+.CreateUser .CreateUser-inner .CreateUser-content select:focus {
+    box-shadow: none;
+    border: 1px solid #222222;
+}

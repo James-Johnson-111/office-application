@@ -1,0 +1,37 @@
+.d-grid {
+  display: grid;
+  align-items: center;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+input[type='text'].form-control, input[type='password'].form-control {
+  border: rgb(34, 34, 34, .5) 1px solid;
+}
+
+input[type='password'].form-control:focus {
+  box-shadow: none;
+  border: 1px solid #222222;
+}
+
+input[type='text'].form-control:focus {
+  box-shadow: none;
+  border: 1px solid #222222;
+}
+
+.btns {
+  border-radius: 20px 0 20px 0;
+  background-color: #222222;
+  border: 1px solid #222222;
+  color: #fff;
+  transition: .5s;
+  font-size: 12px;
+}
+
+.btns:hover {
+  background: none;
+  border: 1px solid #222222;
+  color: #222222;
+}
