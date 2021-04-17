@@ -6,6 +6,7 @@ import CandidateForm from './CandidateForm/CandidateForm';
 import CreateUser from './CreateUser/CreateUser';
 
 import './Dashboard.css';
+import MedicalExamination from './MedicalExamination/MedicalExamination';
 import ReportPanel from './ReportPanel/ReportPanel';
 
 class Dashboard extends Component {
@@ -107,6 +108,9 @@ class Dashboard extends Component {
                         <div className="action_links" onClick={this.openSideBar}>
                             <Link to='' onClick={this.logout}>Logout</Link>
                         </div>
+                        <div className="action_links" onClick={this.openSideBar}>
+                            <Link to='/MedicalExamination'>MedicalExamination</Link>
+                        </div>
                     </div>
                     <Loading show={this.state.loading} />
                     <div className="rendering" style={{ 'display': this.state.loading ? 'none' : 'block' }}>
@@ -114,6 +118,7 @@ class Dashboard extends Component {
                             <Route exact path='/candidateinfo' component={CandidateForm} />
                             <Route exact path='/candidatereport' component={ReportPanel} />
                             <Route exact path='/createuser' component={CreateUser} />
+                            <Route exact path='/MedicalExamination' component={MedicalExamination} />
                         </Switch>
                     </div>
                 </div>

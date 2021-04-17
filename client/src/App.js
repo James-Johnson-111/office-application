@@ -6,6 +6,7 @@ import LoginForm from './Components/Auth/LoginForm/LoginForm';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Cookies from 'js-cookie';
 import NoLoggedIn from './Components/UI/NoLoggedIn/NoLoggedIn';
+import MedicalExamination from './Components/Dashboard/MedicalExamination/MedicalExamination';
 
 class App extends Component {
 
@@ -18,24 +19,29 @@ class App extends Component {
 
     let navbar = null;
 
-    if(window.location.href == 'http://localhost:3000/')
+    if(window.location.href == '/')
     {
       navbar = <Navbar />;
     }
 
     return (
       <>
-        {navbar}
+        {/* {navbar} */}
+        <Navbar />
         <Switch>
-          <Route exact path='/' component={LoginForm} />
+          <Route exact path='/' component={MedicalExamination} />
 
           <Route exact path='/dashboard' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
           <Route exact path='/candidateinfo' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
           <Route exact path='/candidatereport' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
           <Route exact path='/createuser' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
+          <Route exact path='/MedicalExamination' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
 
           <Route exact path='/login' component={LoginForm} />
           <Route component={Dashboard} />
+          <Route>
+            <LoginForm />
+          </Route>
         </Switch>
       </>
     );
