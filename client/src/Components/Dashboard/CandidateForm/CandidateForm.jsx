@@ -5,6 +5,7 @@ import axios from '../../../axios-instance';
 import Modal from '../../UI/Modal/Modal';
 import Cookies from 'js-cookie';
 import Webcam from 'react-webcam';
+import $ from 'jquery';
 // import img from '/images/avatar6.png';
 
 class CandidateForm extends Component {
@@ -29,7 +30,8 @@ class CandidateForm extends Component {
             ShowCamera: false,
             candidateImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU',
             image: null,
-            imageName: null
+            imageName: null,
+            modalHeight: null
         }
 
     }
@@ -43,6 +45,14 @@ class CandidateForm extends Component {
             this.setState( { Editor: Cookies.get( 'LoginID' ), Insertor: Cookies.get( 'LoginID' ) } );
 
         }
+
+        let modalHeight = null;
+        let halfheight = null;
+
+        modalHeight = $('.Modal').outerHeight();
+        halfheight = modalHeight / 2;
+        
+        this.setState( { modalHeight: halfheight } );
 
     }
 
@@ -221,7 +231,7 @@ class CandidateForm extends Component {
         return(
 
             <div className="CandidateForm d-grid">
-                <Modal show={this.state.ShowCamera} close={this.cameraModalCall}>
+                <Modal show={this.state.ShowCamera} close={this.cameraModalCall} top={this.state.modalHeight}>
                     <Webcam
                         audio={false}
                         screenshotFormat="image/jpeg"
@@ -231,7 +241,7 @@ class CandidateForm extends Component {
                     />
                     <button className="btn btns btn-block mt-3" onClick={this.takePhoto}>Click</button>
                 </Modal>
-                <Modal show={this.state.showModal} close={this.modalCall}>
+                <Modal show={this.state.showModal} close={this.modalCall} top={this.state.modalHeight}>
                     <div>
                         <input
                             type="file"

@@ -1,3 +1,11 @@
+.d-tablet-block {
+  display: none !important;
+}
+
+.d-tablet-none {
+  display: block;
+}
+
 .d-mobile-block {
   display: none;
 }
@@ -46,6 +54,18 @@ input[type='text'].form-control:focus {
   background: none;
   border: 1px solid #222222;
   color: #222222;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .d-tablet-block {
+    display: grid !important;
+  }
+  
+  .d-tablet-none {
+    display: none;
+  }
+
 }
 
 

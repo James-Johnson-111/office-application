@@ -5,8 +5,9 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import LoginForm from './Components/Auth/LoginForm/LoginForm';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Cookies from 'js-cookie';
-import NoLoggedIn from './Components/UI/NoLoggedIn/NoLoggedIn';
 import MedicalExamination from './Components/Dashboard/MedicalExamination/MedicalExamination';
+import MedicalExamination2 from './Components/Dashboard/MedicalExamination-2/MedicalExamination2';
+import Error from './Components/UI/404Error/404Error';
 
 class App extends Component {
 
@@ -17,30 +18,20 @@ class App extends Component {
   
   render() {
 
-    let navbar = null;
-
-    if(window.location.href == '/')
-    {
-      navbar = <Navbar />;
-    }
-
     return (
       <>
-        {/* {navbar} */}
-        <Navbar />
         <Switch>
-          <Route exact path='/' component={MedicalExamination} />
+          <Route exact path='/' component={MedicalExamination2} />
 
-          <Route exact path='/dashboard' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
-          <Route exact path='/candidateinfo' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
-          <Route exact path='/candidatereport' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
-          <Route exact path='/createuser' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
-          <Route exact path='/MedicalExamination' component={ Cookies.get('LoginID') != null ? Dashboard : NoLoggedIn } />
+          <Route exact path='/dashboard' component={ Dashboard } />
+          <Route exact path='/candidateinfo' component={ Dashboard } />
+          <Route exact path='/candidatereport' component={ Dashboard } />
+          <Route exact path='/createuser' component={ Dashboard } />
+          <Route exact path='/MedicalExamination' component={ Dashboard } />
 
           <Route exact path='/login' component={LoginForm} />
-          <Route component={Dashboard} />
           <Route>
-            <LoginForm />
+            <Error />
           </Route>
         </Switch>
       </>

@@ -2,9 +2,21 @@
     position: relative;
     width: 100%;
     height: 100vh;
-    background-color: #f7f7f7;
     font-family: Raleway;
+    background-image: url('https://image.freepik.com/free-vector/black-dark-3d-low-poly-geometric-background_79145-393.jpg');
+    background-size: 100% ;
 }
+
+.loginForm::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, .1);
+}
+
 
 .loginForm .loginForm-inner {
     position: relative;
@@ -12,10 +24,44 @@
 
 .loginForm .loginForm-inner .loginForm-content {
     width: 30%;
-    background-color: #fff;
+    background-color: rgb(0, 0, 0, .5);
     padding: 30px;
     border-radius: 40px 0 40px 0;
-    box-shadow: 0 10px 10px lightgrey;
+    color: #fff;
+    /* border: 1px solid #fff; */
+    box-shadow: 0 0 10px rgb(255, 255, 255, .5);
 }
 
-/* .loginForm .loginForm-inner .loginForm-content .form-control {} */
+.loginForm .loginForm-inner .loginForm-content .form-control {
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+}
+
+.loginForm .loginForm-inner .loginForm-content .form-control::placeholder {
+    color: rgb(255, 255, 255, .5);
+}
+
+@media only screen and (max-width: 992px) {
+
+    .loginForm .loginForm-inner .loginForm-content {
+        width: 80%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    .loginForm .loginForm-inner .loginForm-content {
+        width: 90%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .loginForm .loginForm-inner .loginForm-content {
+        width: 92%;
+    }
+
+}

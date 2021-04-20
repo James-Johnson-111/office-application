@@ -30,3 +30,30 @@
     padding: 30px;
     background-color: #000;
 }
+
+
+@media only screen and (max-width: 992px) {
+
+    .ReportPanel .ReportPanel-inner .ReportPanel-content {
+        width: 80%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    .ReportPanel .ReportPanel-inner .ReportPanel-content {
+        width: 90%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .ReportPanel .ReportPanel-inner .ReportPanel-content {
+        width: 92%;
+        padding: 30px 20px;
+        margin-top: 22vh;
+    }
+
+}

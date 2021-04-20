@@ -4,6 +4,7 @@ import './LoginForm.css';
 import * as passwordHash from 'password-hash';
 import axios from '../../../axios-instance';
 import Cookies from 'js-cookie';
+import Loading from '../../UI/Loading/Loading';
 
 class LoginForm extends Component {
 
@@ -15,8 +16,16 @@ class LoginForm extends Component {
             userInfo: {
                 loginID: null,
                 loginPass: null
-            }
+            },
+            loading: true
         }
+
+    }
+
+    componentDidMount()
+    {
+
+        this.setState( { loading: false } );
 
     }
 
@@ -53,7 +62,7 @@ class LoginForm extends Component {
                 {
 
                     // sessionStorage.setItem('loginID', response.data[key].login_id);
-                    Cookies.set('LoginID', response.data[key].login_id, { expires: 1 } );
+                    Cookies.set('LoginID', response.data[key].login_id );
                     console.log(Cookies.get('LoginID'));
                     this.props.history.push('/dashboard');
 
@@ -72,34 +81,49 @@ class LoginForm extends Component {
     render()
     {
 
-        return(
+        let load = <Loading />
 
-            <div className="loginForm d-grid">
-                <div className="loginForm-inner d-flex justify-content-center">
-                    <div className="loginForm-content">
-                        <form onSubmit={this.userLogin}>
-                            <h3 className="mb-3">Login</h3>
-                            <input
-                                type="text"
-                                className="form-control form-control-sm mb-3 rounded-0"
-                                placeholder="Your Login ID"
-                                name="loginID"
-                                onChange={this.onChangeHandler}
-                            />
-                            <input
-                                type="password"
-                                className="form-control form-control-sm mb-3 rounded-0"
-                                placeholder="Your Password"
-                                name="loginPass"
-                                onChange={this.onChangeHandler}
-                            />
-                            <div className="text-center">
-                                <button type="submit" className="btn btn-sm px-5 btns">Login</button>
-                            </div>
-                        </form>
+        if( !this.state.loading )
+        {
+
+            load = (
+
+                <div className="loginForm d-grid">
+                    <div className="loginForm-inner d-flex justify-content-center">
+                        <div className="loginForm-content">
+                            <form onSubmit={this.userLogin}>
+                                <h3 className="mb-3">Login</h3>
+                                <input
+                                    type="text"
+                                    className="form-control form-control-sm mb-3 rounded-0"
+                                    placeholder="Your Login ID"
+                                    name="loginID"
+                                    onChange={this.onChangeHandler}
+                                />
+                                <input
+                                    type="password"
+                                    className="form-control form-control-sm mb-3 rounded-0"
+                                    placeholder="Your Password"
+                                    name="loginPass"
+                                    onChange={this.onChangeHandler}
+                                />
+                                <div className="text-center">
+                                    <button type="submit" className="btn btn-sm px-5 btns">Login</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+            )
+
+        }
+
+        return(
+
+            <>
+                { load }
+            </>
 
         );
 

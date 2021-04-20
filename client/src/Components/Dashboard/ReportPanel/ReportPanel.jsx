@@ -16,7 +16,8 @@ class ReportPanel extends Component {
                 ID: null
             },
             candidateReportInfo: {},
-            showRecordModal: false
+            showRecordModal: false,
+            modalHeight: null
         }
 
     }
@@ -29,6 +30,14 @@ class ReportPanel extends Component {
             $('input[type=text][name=ID]').val('');
 
         } )
+
+        let modalHeight = null;
+        let halfheight = null;
+
+        modalHeight = $('.Modal').outerHeight();
+        halfheight = modalHeight / 2;
+        
+        this.setState( { modalHeight: halfheight } );
 
     }
 
@@ -284,7 +293,7 @@ class ReportPanel extends Component {
 
             <>
                 <div className="ReportPanel">
-                    <Modal show={this.state.showRecordModal} close={this.modalToggle}>
+                    <Modal top={this.state.modalHeight} show={this.state.showRecordModal} close={this.modalToggle}>
                         {Records}
                     </Modal>
                     <div className="ReportPanel-inner d-flex justify-content-center">
@@ -302,15 +311,15 @@ class ReportPanel extends Component {
 
                                         <form onSubmit={this.ManualEntry}>
                                             <div className="row">
-                                                <div className="col-3 d-grid mb-3">
+                                                <div className="col-lg-3 col-md-3 col-sm-12 d-grid mb-3">
                                                     <div>
                                                         Candidate ID
-                                            </div>
+                                                    </div>
                                                 </div>
-                                                <div className="col-9 mb-3">
+                                                <div className="col-lg-9 col-md-9 col-sm-12 mb-3">
                                                     <input
                                                         type="text"
-                                                        className="form-control form-control-sm"
+                                                        className="form-control form-control-sm rounded-0"
                                                         name="ID"
                                                         onChange={this.ManualChangeHandler}
                                                     />

@@ -650,7 +650,10 @@ class MedicalExamination extends Component {
 					                </div>
                                 </div>
                                 <div className="text-center">
-                                    <button className="btn btns w-50" disabled={ this.state.buttonDisabled ? 'disabled' : null }>Submit</button>
+                                    <button 
+                                        className="btn btns w-50" 
+                                        // disabled={ this.state.buttonDisabled ? 'disabled' : null }
+                                    >Submit</button>
                                 </div>
                             </form>
                         </div>

@@ -1,6 +1,5 @@
 .Modal {
     position: fixed;
-    top: calc(50vh - 35vh);
     left: calc(50% - 15%);
     width: 30%;
     height: min-content;
@@ -8,4 +7,31 @@
     padding: 30px;
     z-index: 999;
     transition: 1s;
+}
+
+@media only screen and (max-width: 992px) {
+
+    .Modal {
+        width: 80%;
+        left: 10%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    .Modal {
+        width: 90%;
+        left: 5%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .Modal {
+        width: 92%;
+        left: 4%;
+    }
+
 }
