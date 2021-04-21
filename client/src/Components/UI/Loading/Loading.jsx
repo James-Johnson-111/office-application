@@ -19,7 +19,7 @@ class Loading extends Component {
 
             <div 
                 className="loading d-grid" 
-                // style={ { 'display' : this.props.show ? 'grid' : 'none' } }
+                style={ { 'display' : this.props.show ? 'grid' : 'none' } }
                 >
                 <div className="loading-inner d-flex justify-content-center">
                     <img src={Loader} width="50" />

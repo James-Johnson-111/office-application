@@ -4,7 +4,7 @@
     background-color: #222222;
     color: #fff;
     padding: 3px 20px;
-    z-index: 500;
+    z-index: 201;
     position: fixed;
     height: 50px;
 }
@@ -33,7 +33,7 @@
     top: calc(0vh + 50px);
     background-color: #222222;
     color: #fff;
-    z-index: 200;
+    z-index: 201;
 }
 
 .Dashboard .side_bar {

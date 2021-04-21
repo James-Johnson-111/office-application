@@ -1,0 +1,107 @@
+.LaboratoryInvestigation-background {
+    background-image: url('https://image.freepik.com/free-photo/abstract-black-gold-color-digital-particles-wave-with-bokeh-background_24070-674.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.LaboratoryInvestigation-background::before {
+    content: '';
+    position: absolute;
+    top: 0%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, .3);
+}
+
+.LaboratoryInvestigation {
+    width: 100%;
+    min-height: 100vh;
+    font-family: Raleway;
+}
+
+.LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
+    width: 60%;
+    background-color: rgb(0, 0, 0, .7);
+    padding: 30px;
+    color: #fff;
+    border-radius: 40px 0 40px 0;
+    /* box-shadow: 0 10px 10px lightgrey; */
+    font-size: 12px;
+    box-shadow: 0 0 10px hsl(0deg 0% 100% / 50%);
+}
+
+.LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .form-control {
+    font-size: 12px;
+    background: none;
+    color: #fff;
+    border: #fff 1px solid;
+}
+
+.LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .form-control::placeholder {
+    color: rgb(255, 255, 255, .5);
+}
+
+.LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .btn {
+    width: 50%;
+}
+
+@media only screen and (max-width: 1500px) {
+
+    .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
+        width: 70%;
+    }
+
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
+        width: 90%;
+    }
+
+}
+
+@media only screen and (max-width: 992px) {
+
+    .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
+        width: 92%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
+        width: 92%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .LaboratoryInvestigation {
+        padding: 100px 0;
+        font-size: 16px;
+    }
+
+    .LaboratoryInvestigation h3 {
+        font-size: 22px;
+    }
+
+    .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
+        width: 92%;
+    }
+
+    .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .form-control {
+        font-size: 16px;
+    }
+
+    .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .btn {
+        width: 75%;
+    }
+
+}

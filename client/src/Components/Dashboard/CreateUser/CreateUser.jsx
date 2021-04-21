@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from '../../../axios-instance';
 import * as passwordHash from 'password-hash';
+import Loading from '../../UI/Loading/Loading';
 
 class CreateUser extends Component {
 
@@ -17,8 +18,16 @@ class CreateUser extends Component {
                 loginID: null,
                 loginPass: null,
                 params: null
-            }
+            },
+            loading: true
         }
+
+    }
+
+    componentDidMount()
+    {
+
+        this.setState( { loading: false } );
 
     }
 
@@ -80,40 +89,43 @@ class CreateUser extends Component {
 
         return(
 
-            <div className="CreateUser d-grid">
-                <div className="CreateUser-inner d-flex justify-content-center">
-                    <div className="CreateUser-content">
-                        <form onSubmit={this.userCreation}>
-                            <h3 className="mb-3">Create User</h3>
-                            <input
-                                type="text"
-                                className="form-control form-control-sm mb-3 rounded-0"
-                                placeholder="User Login ID"
-                                name="loginID"
-                                onChange={this.onChangeHandler}
-                            />
-                            <input
-                                type="text"
-                                className="form-control form-control-sm mb-3 rounded-0"
-                                placeholder="User Password"
-                                name="loginPass"
-                                onChange={this.onChangeHandler}
-                            />
-                            <select name="params" className="form-control form-control-sm rounded-0 mb-3" onChange={this.onChangeHandler}>
-                                <option value="">Authority</option>
-                                <option value="Default">Default</option>
-                                <option value="C2">C2</option>
-                                <option value="C3">C3</option>
-                                <option value="C4">C4</option>
-                            </select>
-                            <div className="text-center">
-                                <button type="submit" className="btn btn-sm px-5 btns">Create</button>
-                                <ToastContainer autoClose={3000}/>
-                            </div>
-                        </form>
+            <>
+                <Loading show={this.state.loading} />
+                <div className="CreateUser d-grid">
+                    <div className="CreateUser-inner d-flex justify-content-center">
+                        <div className="CreateUser-content">
+                            <form onSubmit={this.userCreation}>
+                                <h3 className="mb-3">Create User</h3>
+                                <input
+                                    type="text"
+                                    className="form-control form-control-sm mb-3 rounded-0"
+                                    placeholder="User Login ID"
+                                    name="loginID"
+                                    onChange={this.onChangeHandler}
+                                />
+                                <input
+                                    type="text"
+                                    className="form-control form-control-sm mb-3 rounded-0"
+                                    placeholder="User Password"
+                                    name="loginPass"
+                                    onChange={this.onChangeHandler}
+                                />
+                                <select name="params" className="form-control form-control-sm rounded-0 mb-3" onChange={this.onChangeHandler}>
+                                    <option value="">Authority</option>
+                                    <option value="Default">Default</option>
+                                    <option value="C2">C2</option>
+                                    <option value="C3">C3</option>
+                                    <option value="C4">C4</option>
+                                </select>
+                                <div className="text-center">
+                                    <button type="submit" className="btn btn-sm px-5 btns">Create</button>
+                                    <ToastContainer autoClose={3000} />
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
 
         );
 

@@ -5,6 +5,7 @@ import * as passwordHash from 'password-hash';
 import axios from '../../../axios-instance';
 import Cookies from 'js-cookie';
 import Loading from '../../UI/Loading/Loading';
+import $ from 'jquery';
 
 class LoginForm extends Component {
 
@@ -44,6 +45,8 @@ class LoginForm extends Component {
 
     userLogin = ( event ) => {
 
+        this.setState( { loading: true } );
+
         event.preventDefault();
         const Data = {
             loginID: this.state.userInfo.loginID,
@@ -64,6 +67,7 @@ class LoginForm extends Component {
                     // sessionStorage.setItem('loginID', response.data[key].login_id);
                     Cookies.set('LoginID', response.data[key].login_id );
                     console.log(Cookies.get('LoginID'));
+                    this.setState( { loading: false } );
                     this.props.history.push('/dashboard');
 
                 }
@@ -72,6 +76,10 @@ class LoginForm extends Component {
 
         } ).catch( error => {
 
+            this.setState( { loading: false } );
+            alert(error);
+
+            $('input[type=password]').val( '' );
             console.log( error );
 
         } );
@@ -81,13 +89,10 @@ class LoginForm extends Component {
     render()
     {
 
-        let load = <Loading />
+        return(
 
-        if( !this.state.loading )
-        {
-
-            load = (
-
+            <>
+                <Loading show={this.state.loading} />
                 <div className="loginForm d-grid">
                     <div className="loginForm-inner d-flex justify-content-center">
                         <div className="loginForm-content">
@@ -114,15 +119,6 @@ class LoginForm extends Component {
                         </div>
                     </div>
                 </div>
-
-            )
-
-        }
-
-        return(
-
-            <>
-                { load }
             </>
 
         );

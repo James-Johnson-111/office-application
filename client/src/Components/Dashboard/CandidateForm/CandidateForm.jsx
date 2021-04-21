@@ -6,6 +6,7 @@ import Modal from '../../UI/Modal/Modal';
 import Cookies from 'js-cookie';
 import Webcam from 'react-webcam';
 import $ from 'jquery';
+import Loading from '../../UI/Loading/Loading';
 // import img from '/images/avatar6.png';
 
 class CandidateForm extends Component {
@@ -31,7 +32,8 @@ class CandidateForm extends Component {
             candidateImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU',
             image: null,
             imageName: null,
-            modalHeight: null
+            modalHeight: null,
+            loading: true
         }
 
     }
@@ -53,6 +55,7 @@ class CandidateForm extends Component {
         halfheight = modalHeight / 2;
         
         this.setState( { modalHeight: halfheight } );
+        this.setState( { loading: false } );
 
     }
 
@@ -230,86 +233,88 @@ class CandidateForm extends Component {
 
         return(
 
-            <div className="CandidateForm d-grid">
-                <Modal show={this.state.ShowCamera} close={this.cameraModalCall} top={this.state.modalHeight}>
-                    <Webcam
-                        audio={false}
-                        screenshotFormat="image/jpeg"
-                        width='100%'
-                        ref='webcam'
-                        videoConstraints={videoConstraints}
-                    />
-                    <button className="btn btns btn-block mt-3" onClick={this.takePhoto}>Click</button>
-                </Modal>
-                <Modal show={this.state.showModal} close={this.modalCall} top={this.state.modalHeight}>
-                    <div>
-                        <input
-                            type="file"
-                            className="form-control form-control-sm d-none"
-                            onChange={this.onImageUpload}
-                            name="userImage"
-                            ref={fileInput => this.fileInput = fileInput}
+            <>
+                <Loading show={this.state.loading} />
+                <div className="CandidateForm d-grid">
+                    <Modal show={this.state.ShowCamera} close={this.cameraModalCall} top={this.state.modalHeight}>
+                        <Webcam
+                            audio={false}
+                            screenshotFormat="image/jpeg"
+                            width='100%'
+                            ref='webcam'
+                            videoConstraints={videoConstraints}
                         />
-                        <div className="btn-group w-100"
-                            onClick={() => this.fileInput.click()}
-                        >
+                        <button className="btn btns btn-block mt-3" onClick={this.takePhoto}>Click</button>
+                    </Modal>
+                    <Modal show={this.state.showModal} close={this.modalCall} top={this.state.modalHeight}>
+                        <div>
                             <input
-                                type="text"
-                                className="form-control form-control-sm mb-3 w-75"
-                                placeholder="Profile Image"
-                            // defaultValue={this.state.UserInfo.userImage == null ? '' : 'Image Selected'}
+                                type="file"
+                                className="form-control form-control-sm d-none"
+                                onChange={this.onImageUpload}
+                                name="userImage"
+                                ref={fileInput => this.fileInput = fileInput}
                             />
-                            <button className="btn btn-sm mb-3 w-25 border"><small>Upload</small></button>
+                            <div className="btn-group w-100"
+                                onClick={() => this.fileInput.click()}
+                            >
+                                <input
+                                    type="text"
+                                    className="form-control form-control-sm mb-3 w-75"
+                                    placeholder="Profile Image"
+                                // defaultValue={this.state.UserInfo.userImage == null ? '' : 'Image Selected'}
+                                />
+                                <button className="btn btn-sm mb-3 w-25 border"><small>Upload</small></button>
+                            </div>
                         </div>
-                    </div>
-                    <h3 className="text-center my-3">
-                        OR
+                        <h3 className="text-center my-3">
+                            OR
                     </h3>
-                    <div>
-                        <button className="btn btn-sm btn-block btns"  onClick={this.cameraModalCall}>Take a SnapShot</button>
-                    </div>
-                </Modal>
-                <div className="CandidateForm-inner d-flex justify-content-center">
-                    <div className="CandidateForm-content">
-                        <form onSubmit={this.CandidateDataEntry} encType="multipart/form-data">
-                            <div className="user_image">
-                                {/* 
+                        <div>
+                            <button className="btn btn-sm btn-block btns" onClick={this.cameraModalCall}>Take a SnapShot</button>
+                        </div>
+                    </Modal>
+                    <div className="CandidateForm-inner d-flex justify-content-center">
+                        <div className="CandidateForm-content">
+                            <form onSubmit={this.CandidateDataEntry} encType="multipart/form-data">
+                                <div className="user_image">
+                                    {/* 
                                     { window.location.origin + '/images/avatar2.png' }
                                 */}
-                                <img 
-                                    className="rounded-circle"
-                                    id="usr_img"
-                                    src={ this.state.candidateImg } width="100px" height="100px" />
-                            </div>
-                            <h3 className="my-3 text-center">Candidate Info</h3>
-                            <input
-                                type="text"
-                                className="form-control form-control-sm mb-3 rounded-0"
-                                placeholder="Candidate Name"
-                                onChange={this.onChangeHandler}
-                                name="Name"
-                            />
-                            <input
-                                type="number"
-                                className="form-control form-control-sm mb-3 rounded-0"
-                                placeholder="Candidate Age"
-                                onChange={this.onChangeHandler}
-                                name="Age"
-                            />
-                            <input
-                                type="text"
-                                className="form-control form-control-sm mb-3 rounded-0"
-                                placeholder="Candidate Nationality"
-                                onChange={this.onChangeHandler}
-                                name="Nationality"
-                            />
-                            <select name="Gander" className="form-control form-control-sm mb-3 rounded-0" onChange={this.onChangeHandler}>
-                                <option value="">Candidate  Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="FeMale">FeMale</option>
-                            </select>
-                            <select name="MStatus" className="form-control form-control-sm mb-3 rounded-0" onChange={this.onChangeHandler}>
-                                <option value="">Marital Status</option>
+                                    <img
+                                        className="rounded-circle"
+                                        id="usr_img"
+                                        src={this.state.candidateImg} width="100px" height="100px" />
+                                </div>
+                                <h3 className="my-3 text-center">Candidate Info</h3>
+                                <input
+                                    type="text"
+                                    className="form-control form-control-sm mb-3 rounded-0"
+                                    placeholder="Candidate Name"
+                                    onChange={this.onChangeHandler}
+                                    name="Name"
+                                />
+                                <input
+                                    type="number"
+                                    className="form-control form-control-sm mb-3 rounded-0"
+                                    placeholder="Candidate Age"
+                                    onChange={this.onChangeHandler}
+                                    name="Age"
+                                />
+                                <input
+                                    type="text"
+                                    className="form-control form-control-sm mb-3 rounded-0"
+                                    placeholder="Candidate Nationality"
+                                    onChange={this.onChangeHandler}
+                                    name="Nationality"
+                                />
+                                <select name="Gander" className="form-control form-control-sm mb-3 rounded-0" onChange={this.onChangeHandler}>
+                                    <option value="">Candidate  Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="FeMale">FeMale</option>
+                                </select>
+                                <select name="MStatus" className="form-control form-control-sm mb-3 rounded-0" onChange={this.onChangeHandler}>
+                                    <option value="">Marital Status</option>
                                 <option value="Married">Married</option>
                                 <option value="UnMarried">UnMarried</option>
                             </select>
@@ -335,6 +340,7 @@ class CandidateForm extends Component {
                     </div>
                 </div>
             </div>
+            </>
 
         );
 
