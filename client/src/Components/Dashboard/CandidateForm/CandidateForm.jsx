@@ -23,7 +23,9 @@ class CandidateForm extends Component {
                 Gander: null,
                 MStatus: null,
                 Profession: null,
-                Passport: null
+                Passport: null,
+                PlaceOfIssue: null,
+                TrevellingTo: null
             },
             Insertor: null,
             Editor: null,
@@ -33,13 +35,18 @@ class CandidateForm extends Component {
             image: null,
             imageName: null,
             modalHeight: null,
-            loading: true
+            loading: true,
+            tokenNO : null
         }
 
     }
 
     componentDidMount()
     {
+
+        let url = window.location.href;
+        let id = url.split('/').pop();
+        this.setState( { tokenNO: id } );
 
         if( Cookies.get( 'LoginID' ) != null )
         {
@@ -141,6 +148,9 @@ class CandidateForm extends Component {
         FormsData.append( 'Editor', this.state.Editor );
         FormsData.append( 'Image', this.state.image );
         FormsData.append( 'ImageName', this.state.imageName );
+        FormsData.append( 'placeofissue', this.state.candidateInfo.PlaceOfIssue );
+        FormsData.append( 'travellingto', this.state.candidateInfo.TrevellingTo );
+        FormsData.append( 'token', this.state.tokenNO );
 
         axios.post( '/setcandidate', FormsData, { 
 
@@ -332,6 +342,20 @@ class CandidateForm extends Component {
                                 onChange={this.onChangeHandler}
                                 name="Passport"
                             />
+                            <input
+                                    type="text"
+                                    className="form-control form-control-sm mb-3 rounded-0"
+                                    placeholder="Place Of Issue"
+                                    onChange={this.onChangeHandler}
+                                    name="PlaceOfIssue"
+                                />
+                            <input
+                                    type="text"
+                                    className="form-control form-control-sm mb-3 rounded-0"
+                                    placeholder="Trevelling To"
+                                    onChange={this.onChangeHandler}
+                                    name="TrevellingTo"
+                                />
                             <button className="btn btn-sm btn-block btns mb-3" onClick={this.modalCall}>Profile Image</button>
                             <div className="text-center">
                                 <button type="submit" className="btn btn-sm px-5 btns">Next</button>

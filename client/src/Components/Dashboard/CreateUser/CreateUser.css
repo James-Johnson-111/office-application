@@ -25,3 +25,43 @@
     box-shadow: none;
     border: 1px solid #222222;
 }
+
+@media only screen and (max-width: 1500px) {
+
+    .CreateUser .CreateUser-inner .CreateUser-content {
+        width: 50%;
+    }
+
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .CreateUser .CreateUser-inner .CreateUser-content {
+        width: 60%;
+    }
+
+}
+
+@media only screen and (max-width: 992px) {
+
+    .CreateUser .CreateUser-inner .CreateUser-content {
+        width: 70%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    .CreateUser .CreateUser-inner .CreateUser-content {
+        width: 80%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .CreateUser .CreateUser-inner .CreateUser-content {
+        width: 92%;
+    }
+
+}

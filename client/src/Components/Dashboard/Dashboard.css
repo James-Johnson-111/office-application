@@ -38,7 +38,7 @@
 
 .Dashboard .side_bar {
     position: fixed;
-    width: 15%;
+    width: 20%;
     height: calc(100vh - 50px);
     top: calc(0vh + 50px);
     background-color: #222222;
@@ -50,16 +50,29 @@
 
 .Dashboard .side_bar .action_links a {
     display: block;
-    text-align: center;
-    padding: 10px;
+    /* text-align: center; */
+    padding: 10px 30px;
+    /* padding: 10px; */
     transition: .5s;
     color: #fff;
+}
+
+.Dashboard .side_bar .action_links.sub-links {
+    padding: 10px 0 0 35px;
 }
 
 .Dashboard .side_bar .action_links a:hover {
     background-color: rgb(255, 255, 255, .1);
     color: #fff;
     text-decoration: none;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .Dashboard .side_bar {
+        width: 30%;
+    }
+
 }
 
 @media only screen and (max-width: 992px) {
@@ -69,7 +82,7 @@
     }
 
     .Dashboard .side_bar {
-        width: 25%;
+        width: 35%;
     }
 
 }
@@ -81,7 +94,7 @@
     }
 
     .Dashboard .side_bar {
-        width: 35%;
+        width: 40%;
     }
 
     .Dashboard .side_fixed_bar {

@@ -33,6 +33,11 @@ class Dashboard extends Component {
 
             this.props.history.push('/login');
 
+        }else
+        {
+
+            this.props.history.push('/dashboard');
+
         }
 
         this.setState( { loading: false } );
@@ -70,7 +75,7 @@ class Dashboard extends Component {
 
         if(Cookies.get('LoginID') != undefined && Cookies.get('LoginID') == 'Admin')
         {
-            createUser = <Link to='/createuser'>Create New User</Link>;
+            createUser = <Link to='/createuser' className="text-center">Create New User</Link>;
         }
 
         return(
@@ -80,7 +85,7 @@ class Dashboard extends Component {
                 <div className="Dashboard">
                     <div className="top_bar d-flex justify-content-between">
                         <div className="d-grid">
-                            <Link to="/" className="Dashboard_logo">Labonline</Link>
+                            <Link to="/dashboard" className="Dashboard_logo">Labonline</Link>
                         </div>
                         <div className="d-grid other-grids">
                             <input type="search" className="form-control" placeholder="search keywords" />
@@ -128,7 +133,19 @@ class Dashboard extends Component {
                             </button>
                         </div>
                         <div className="action_links" onClick={this.openSideBar}>
-                            <Link to="/candidateinfo">Candidate Info</Link>
+                            <Link to={ "/candidateinfo/" + 10 }>Candidate Info</Link>
+                        </div>
+                        <div className="action_links sub-links" onClick={this.openSideBar}>
+                            <Link to={ '/MedicalExamination/' + 10 }>MedicalExamination</Link>
+                        </div>
+                        <div className="action_links sub-links" onClick={this.openSideBar}>
+                            <Link to={ '/MedicalExamination2/' + 10 }>MedicalExamination2</Link>
+                        </div>
+                        <div className="action_links sub-links" onClick={this.openSideBar}>
+                            <Link to={ '/LaboratoryInvestigation/' + 10 }>Laboratory Investigation</Link>
+                        </div>
+                        <div className="action_links d-mobile-block" onClick={this.openSideBar}>
+                            {createUser}
                         </div>
                         <div className="action_links" onClick={this.openSideBar}>
                             <Link to="/candidatereport">Reports</Link>
@@ -136,28 +153,16 @@ class Dashboard extends Component {
                         <div className="action_links" onClick={this.openSideBar}>
                             <Link onClick={this.logout}>Logout</Link>
                         </div>
-                        <div className="action_links" onClick={this.openSideBar}>
-                            <Link to='/MedicalExamination'>MedicalExamination</Link>
-                        </div>
-                        <div className="action_links" onClick={this.openSideBar}>
-                            <Link to='/MedicalExamination2'>MedicalExamination2</Link>
-                        </div>
-                        <div className="action_links" onClick={this.openSideBar}>
-                            <Link to='/LaboratoryInvestigation'>Laboratory Investigation</Link>
-                        </div>
-                        <div className="action_links d-mobile-block" onClick={this.openSideBar}>
-                            {createUser}
-                        </div>
                     </div>
                     <div className="rendering">
                         <Switch>
                             <Route exact path='/dashboard' component={DashboardHome} />
-                            <Route exact path='/candidateinfo' component={CandidateForm} />
+                            <Route exact path='/candidateinfo/:id' component={CandidateForm} />
                             <Route exact path='/candidatereport' component={ReportPanel} />
                             <Route exact path='/createuser' component={CreateUser} />
-                            <Route exact path='/MedicalExamination' component={MedicalExamination} />
-                            <Route exact path='/MedicalExamination2' component={MedicalExamination2} />
-                            <Route exact path='/LaboratoryInvestigation' component={LaboratoryInvestigation} />
+                            <Route exact path='/MedicalExamination/:id' component={MedicalExamination} />
+                            <Route exact path='/MedicalExamination2/:id' component={MedicalExamination2} />
+                            <Route exact path='/LaboratoryInvestigation/:id' component={LaboratoryInvestigation} />
                         </Switch>
                     </div>
                 </div>

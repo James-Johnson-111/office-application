@@ -25,12 +25,12 @@ class App extends Component {
           <Route exact path='/' component={ Dashboard } />
 
           <Route exact path='/dashboard' component={ Dashboard } />
-          <Route exact path='/candidateinfo' component={ Dashboard } />
+          <Route exact path='/candidateinfo/:id' component={ Dashboard } />
           <Route exact path='/candidatereport' component={ Dashboard } />
           <Route exact path='/createuser' component={ Dashboard } />
-          <Route exact path='/MedicalExamination' component={ Dashboard } />
-          <Route exact path='/MedicalExamination2' component={ Dashboard } />
-          <Route exact path='/LaboratoryInvestigation' component={ Dashboard } />
+          <Route exact path='/MedicalExamination/:id' component={ Dashboard } />
+          <Route exact path='/MedicalExamination2/:id' component={ Dashboard } />
+          <Route exact path='/LaboratoryInvestigation/:id' component={ Dashboard } />
 
           <Route exact path='/login' component={ LoginForm } />
           <Route>
