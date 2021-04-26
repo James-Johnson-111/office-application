@@ -17,6 +17,7 @@ class CandidateForm extends Component {
         super( props );
         this.state = {
             candidateInfo: {
+                Id: null,
                 Name: null,
                 Age: null,
                 Nationality: null,
@@ -35,8 +36,7 @@ class CandidateForm extends Component {
             image: null,
             imageName: null,
             modalHeight: null,
-            loading: true,
-            tokenNO : null
+            loading: true
         }
 
     }
@@ -45,8 +45,8 @@ class CandidateForm extends Component {
     {
 
         let url = window.location.href;
-        let id = url.split('/').pop();
-        this.setState( { tokenNO: id } );
+        let token = url.split('/').pop();
+        this.getCandidate( token );
 
         if( Cookies.get( 'LoginID' ) != null )
         {
@@ -63,6 +63,32 @@ class CandidateForm extends Component {
         
         this.setState( { modalHeight: halfheight } );
         this.setState( { loading: false } );
+
+    }
+
+    getCandidate = ( id ) => {
+
+        let formsData = new FormData();
+        formsData.append( 'tknID', id );
+        axios.post( '/gettokendata', formsData ).then( response => { 
+
+            console.log( response.data );
+            this.setState( { candidateInfo: {
+                Id: response.data[0].candidate_id,
+                Name: response.data[0].candidate_name,
+                Age: response.data[0].candidate_age,
+                Nationality: response.data[0].candidate_nationality,
+                Gander: response.data[0].candidate_gender,
+                MStatus: response.data[0].candidate_marital_status,
+                Profession: response.data[0].candidate_profession,
+                Passport: response.data[0].candidate_passport,
+                PlaceOfIssue: response.data[0].place_of_issue,
+                TrevellingTo: response.data[0].travelling_to
+            } } );
+
+            this.setState( { candidateImg: response.data[0] } )
+
+        } );
 
     }
 
@@ -272,7 +298,6 @@ class CandidateForm extends Component {
                                     type="text"
                                     className="form-control form-control-sm mb-3 w-75"
                                     placeholder="Profile Image"
-                                // defaultValue={this.state.UserInfo.userImage == null ? '' : 'Image Selected'}
                                 />
                                 <button className="btn btn-sm mb-3 w-25 border"><small>Upload</small></button>
                             </div>
@@ -288,9 +313,6 @@ class CandidateForm extends Component {
                         <div className="CandidateForm-content">
                             <form onSubmit={this.CandidateDataEntry} encType="multipart/form-data">
                                 <div className="user_image">
-                                    {/* 
-                                    { window.location.origin + '/images/avatar2.png' }
-                                */}
                                     <img
                                         className="rounded-circle"
                                         id="usr_img"
@@ -303,6 +325,7 @@ class CandidateForm extends Component {
                                     placeholder="Candidate Name"
                                     onChange={this.onChangeHandler}
                                     name="Name"
+                                    value={this.state.candidateInfo.Name}
                                 />
                                 <input
                                     type="number"
@@ -310,6 +333,7 @@ class CandidateForm extends Component {
                                     placeholder="Candidate Age"
                                     onChange={this.onChangeHandler}
                                     name="Age"
+                                    value={this.state.candidateInfo.Age}
                                 />
                                 <input
                                     type="text"
@@ -317,6 +341,7 @@ class CandidateForm extends Component {
                                     placeholder="Candidate Nationality"
                                     onChange={this.onChangeHandler}
                                     name="Nationality"
+                                    value={this.state.candidateInfo.Nationality}
                                 />
                                 <select name="Gander" className="form-control form-control-sm mb-3 rounded-0" onChange={this.onChangeHandler}>
                                     <option value="">Candidate  Gender</option>
@@ -334,6 +359,7 @@ class CandidateForm extends Component {
                                 placeholder="Candidate Profession"
                                 onChange={this.onChangeHandler}
                                 name="Profession"
+                                value={this.state.candidateInfo.Profession}
                             />
                             <input
                                 type="text"
@@ -341,6 +367,7 @@ class CandidateForm extends Component {
                                 placeholder="Candidate Passport NO."
                                 onChange={this.onChangeHandler}
                                 name="Passport"
+                                value={this.state.candidateInfo.Passport}
                             />
                             <input
                                     type="text"
@@ -348,6 +375,7 @@ class CandidateForm extends Component {
                                     placeholder="Place Of Issue"
                                     onChange={this.onChangeHandler}
                                     name="PlaceOfIssue"
+                                    value={this.state.candidateInfo.PlaceOfIssue}
                                 />
                             <input
                                     type="text"
@@ -355,6 +383,7 @@ class CandidateForm extends Component {
                                     placeholder="Trevelling To"
                                     onChange={this.onChangeHandler}
                                     name="TrevellingTo"
+                                    value={this.state.candidateInfo.TrevellingTo}
                                 />
                             <button className="btn btn-sm btn-block btns mb-3" onClick={this.modalCall}>Profile Image</button>
                             <div className="text-center">

@@ -13,7 +13,19 @@ class MedicalExamination extends Component {
         this.state = {
 
             buttonDisabled: true,
-            loading: true
+            loading: true,
+            Candidate: {
+                height: null,
+                weight: null,
+                bmi: null,
+                bp: null,
+                pulse: null,
+                pr: null,
+                unaidedDistantRtEye: null,
+                unaidedDistantLtEye: null,
+                aidedDistantRtEye: null,
+                aidedDistantLtEye: null,
+            }
 
         }
 
@@ -21,18 +33,21 @@ class MedicalExamination extends Component {
 
     componentDidMount()
     {
-
-        $('input').on( 'change', function() {
-
-            let values = $('.MedicalExamination-form');
-            console.log($(values).find("input[type='text'][class='form-control']").innerHtml());
-            if ($(values).find("input[type='text'][class='form-control']").val() != null) {
-                console.log(values);
-            }
-
-        } )
         
         this.setState( { loading: false } );
+
+    }
+
+    onChangeHandler = ( event ) => {
+
+        // event.preventDefault();
+        const { name, value } = event.target;
+        let setValues = {
+            ...this.state.Candidate,
+            [name]: value
+        };
+
+        this.setState( { Candidate: setValues } );
 
     }
 
@@ -78,7 +93,8 @@ class MedicalExamination extends Component {
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
                                                         placeholder="cm"
-                                                        name="loginID"
+                                                        name="height"
+                                                        onChange={this.onChangeHandler}
                                                     />
                                                 </div>
                                                 <div className="col-lg-1 col-md-3 col-sm-3 d-grid">
@@ -89,7 +105,8 @@ class MedicalExamination extends Component {
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
                                                         placeholder="Kgs"
-                                                        name="loginID"
+                                                        name="weight"
+                                                        onChange={this.onChangeHandler}
                                                     />
                                                 </div>
                                                 <div className="col-lg-1 col-md-3 col-sm-3 d-grid">
@@ -99,7 +116,8 @@ class MedicalExamination extends Component {
                                                     <input
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
-                                                        name="loginID"
+                                                        name="bmi"
+                                                        onChange={this.onChangeHandler}
                                                     />
                                                 </div>
 
@@ -111,7 +129,8 @@ class MedicalExamination extends Component {
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0 text-center"
                                                         defaultValue="/"
-                                                        name="loginID"
+                                                        name="bp"
+                                                        onChange={this.onChangeHandler}
                                                     />
                                                 </div>
                                                 <div className="col-lg-1 col-md-3 col-sm-3 d-grid">
@@ -122,7 +141,8 @@ class MedicalExamination extends Component {
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
                                                         placeholder="/min"
-                                                        name="loginID"
+                                                        name="pulse"
+                                                        onChange={this.onChangeHandler}
                                                     />
                                                 </div>
                                                 <div className="col-lg-1 col-md-3 col-sm-3 d-grid">
@@ -133,7 +153,8 @@ class MedicalExamination extends Component {
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
                                                         placeholder="/min"
-                                                        name="loginID"
+                                                        name="pr"
+                                                        onChange={this.onChangeHandler}
                                                     />
                                                 </div>
 
@@ -218,16 +239,18 @@ class MedicalExamination extends Component {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0 text-center"
-                                                                name="loginID"
+                                                                name="unaidedDistantRtEye"
                                                                 defaultValue="/6"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
                                                         <div className="col-6">
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0 text-center"
-                                                                name="loginID"
+                                                                name="unaidedDistantLtEye"
                                                                 defaultValue="/6"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
                                                     </div>
@@ -273,16 +296,18 @@ class MedicalExamination extends Component {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0 text-center"
-                                                                name="loginID"
+                                                                name="aidedDistantRtEye"
                                                                 defaultValue="/6"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
                                                         <div className="col-6">
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0 text-center"
-                                                                name="loginID"
+                                                                name="aidedDistantLtEye"
                                                                 defaultValue="/6"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
                                                     </div>
@@ -318,16 +343,18 @@ class MedicalExamination extends Component {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0 text-center"
-                                                                name="loginID"
+                                                                name="unaidedDistantRtEye"
                                                                 defaultValue="/6"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
                                                         <div className="col-6">
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0 text-center"
-                                                                name="loginID"
+                                                                name="unaidedDistantLtEye"
                                                                 defaultValue="/6"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
                                                     </div>
@@ -338,16 +365,18 @@ class MedicalExamination extends Component {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0 text-center"
-                                                                name="loginID"
+                                                                name="aidedDistantRtEye"
                                                                 defaultValue="/6"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
                                                         <div className="col-6">
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0 text-center"
-                                                                name="loginID"
+                                                                name="aidedDistantLtEye"
                                                                 defaultValue="/6"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
                                                     </div>

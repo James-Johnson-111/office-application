@@ -19,10 +19,12 @@ class Modal extends Component {
         return(
 
             <>
-                <div className="modal-rel">
+                <div className="modal-rel d-grid" style={{ 'zIndex': this.props.show ? '999' : '0' }}>
                     <BackDark close={this.props.close} show={this.props.show} />
-                    <div className="Modal" style={{ 'transform': this.props.show ? 'rotate(0) scale(1)' : 'rotate(180deg) scale(0)' }}>
-                        {this.props.children}
+                    <div className="d-flex justify-content-center">
+                        <div className="Modal" style={{ 'transform': this.props.show ? 'rotate(0) scale(1)' : 'rotate(180deg) scale(0)' }}>
+                            {this.props.children}
+                        </div>
                     </div>
                 </div>
             </>

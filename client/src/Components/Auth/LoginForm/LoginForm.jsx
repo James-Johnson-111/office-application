@@ -63,8 +63,10 @@ class LoginForm extends Component {
                 if( ( response.data[key].login_id == this.state.userInfo.loginID ) && passwordHash.verify( this.state.userInfo.loginPass, response.data[key].user_password ) )
                 {
 
-                    Cookies.set('LoginID', response.data[key].login_id );
-                    Cookies.set('FirstVisit', 'User Visit Site First Time' );
+                    let date = new Date();
+                    date.setTime(date.getTime()+(20*60*1000))
+                    Cookies.set('LoginID', response.data[key].login_id, { expires: date });
+                    Cookies.set('FirstVisit', 'User Visit Site First Time');
                     this.setState( { loading: false } );
                     this.props.history.push('/dashboard');
 

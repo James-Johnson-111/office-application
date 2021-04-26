@@ -13,6 +13,7 @@ import MedicalExamination from './MedicalExamination/MedicalExamination';
 import ReportPanel from './ReportPanel/ReportPanel';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import $ from 'jquery';
 
 class Dashboard extends Component {
 
@@ -22,7 +23,9 @@ class Dashboard extends Component {
         super( props );
         this.state = {
             sideBar: false,
-            loading: true
+            loading: true,
+            showCandidate_info: false,
+            showCandidate_info_icon: 'las la-user-check la-2x'
         }
 
     }
@@ -60,6 +63,17 @@ class Dashboard extends Component {
         }
 
         Cookies.remove('FirstVisit');
+
+        setInterval( () => {
+            
+            if( Cookies.get('LoginID') === undefined || Cookies.get('LoginID') === null )
+            {
+
+                this.props.history.push('/login');
+
+            }
+            
+        }, 15 * 1000);
 
     }
 
@@ -126,6 +140,58 @@ class Dashboard extends Component {
                     <div className="side_fixed_bar">
                         <button className="btn btn-block text-white p-0" onClick={this.openSideBar}>
                             <i className="las la-bars la-2x"></i>
+                        </button>
+                        <button
+                            className="btn btn-block text-white p-0 candidate_info_btn"
+                            onClick={ () => {
+                                
+                                if( this.state.showCandidate_info )
+                                {
+
+                                    this.setState( { showCandidate_info: false, showCandidate_info_icon: 'las la-user-check la-2x' } )
+
+                                }else
+                                {
+
+                                    this.setState( { showCandidate_info: true, showCandidate_info_icon: 'las la-user-times la-2x' } )
+
+                                }
+
+                            } }
+                        >
+                            <i className={this.state.showCandidate_info_icon}></i>
+
+                            <div 
+                                className="candidate_info_div" 
+                                style={ { 
+                                    'left' : this.state.showCandidate_info ? '100%' : '-100%', 
+                                    'opacity' : this.state.showCandidate_info ? '1' : '0' 
+                                } }
+                                >
+                                    <h5 className="font-weight-bold">
+                                        Candidate
+                                    </h5>
+                                    <div className="d-flex justify-content-center">
+                                        <div className="text-left mr-1">
+                                            <small>Token No</small>
+                                            <input type="text" className="form-control form-control-sm rounded-0 mb-3" value="" />
+                                        </div>
+                                        <div className="text-left ml-1">
+                                            <small>Candidate ID</small>
+                                            <input type="text" className="form-control form-control-sm rounded-0 mb-3" value="" />
+                                        </div>
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <div className="text-left mr-1">
+                                            <small>Candidate Name</small>
+                                            <input type="text" className="form-control form-control-sm rounded-0 mb-3" value="" />
+                                        </div>
+                                        <div className="text-left ml-1">
+                                            <small>Passport No</small>
+                                            <input type="text" className="form-control form-control-sm rounded-0 mb-3" value="" />
+                                        </div>
+                                    </div>
+                                </div>
                         </button>
 
                         <div className='h-100' style={{ 'display': 'grid', 'alignItems': 'center' }}>

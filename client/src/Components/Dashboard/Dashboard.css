@@ -67,6 +67,26 @@
     text-decoration: none;
 }
 
+.Dashboard .candidate_info_btn {
+    position: relative;
+}
+
+.Dashboard .candidate_info_btn .candidate_info_div {
+    position: absolute;
+    top: 0;
+    width: 300px;
+    padding: 10px;
+    height: min-content;
+    background-color: #fff;
+    /* border: 1px solid lightgrey; */
+    box-shadow: 8px 10px 10px lightgrey;
+    z-index: 50;
+    transition: .3s;
+    color: #000;
+    cursor: auto;
+    font-family: Quicksand;
+}
+
 @media only screen and (max-width: 1200px) {
 
     .Dashboard .side_bar {
