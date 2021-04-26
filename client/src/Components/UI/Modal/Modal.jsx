@@ -19,9 +19,11 @@ class Modal extends Component {
         return(
 
             <>
-                <BackDark close={this.props.close} show={this.props.show} />
-                <div className="Modal" style={ { 'transform' : this.props.show ? 'rotate(0) scale(1)' : 'rotate(180deg) scale(0)', 'top' : this.props.top } }>
-                    {this.props.children}
+                <div className="modal-rel">
+                    <BackDark close={this.props.close} show={this.props.show} />
+                    <div className="Modal" style={{ 'transform': this.props.show ? 'rotate(0) scale(1)' : 'rotate(180deg) scale(0)' }}>
+                        {this.props.children}
+                    </div>
                 </div>
             </>
 

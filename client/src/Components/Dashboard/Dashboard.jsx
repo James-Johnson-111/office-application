@@ -11,6 +11,8 @@ import LaboratoryInvestigation from './LaboratoryInvestigation/LaboratoryInvesti
 import MedicalExamination2 from './MedicalExamination-2/MedicalExamination2';
 import MedicalExamination from './MedicalExamination/MedicalExamination';
 import ReportPanel from './ReportPanel/ReportPanel';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Dashboard extends Component {
 
@@ -41,6 +43,23 @@ class Dashboard extends Component {
         }
 
         this.setState( { loading: false } );
+
+        if( Cookies.get('FirstVisit') != undefined )
+        {
+
+            setTimeout( () => {
+
+                toast.dark("Welcome Back " + Cookies.get('LoginID'), {
+                    position: 'top-right',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+    
+            }, 1000 );
+
+        }
+
+        Cookies.remove('FirstVisit');
 
     }
 
@@ -75,7 +94,7 @@ class Dashboard extends Component {
 
         if(Cookies.get('LoginID') != undefined && Cookies.get('LoginID') == 'Admin')
         {
-            createUser = <Link to='/createuser' className="text-center">Create New User</Link>;
+            createUser = <Link to='/createuser' className="">Create New User</Link>;
         }
 
         return(
@@ -97,7 +116,7 @@ class Dashboard extends Component {
 
                         <div className="d-grid d-tablet-block">
                             <button className="btn text-white px-0" onClick={this.openSideBar}>
-                                <i class="las la-ellipsis-v la-2x"></i>
+                                <i className="las la-ellipsis-v la-2x"></i>
                             </button>
                         </div>
                         <div className="d-grid other-grids">
@@ -144,7 +163,7 @@ class Dashboard extends Component {
                         <div className="action_links sub-links" onClick={this.openSideBar}>
                             <Link to={ '/LaboratoryInvestigation/' + 10 }>Laboratory Investigation</Link>
                         </div>
-                        <div className="action_links d-mobile-block" onClick={this.openSideBar}>
+                        <div className="action_links d-tablet-block" onClick={this.openSideBar}>
                             {createUser}
                         </div>
                         <div className="action_links" onClick={this.openSideBar}>
@@ -166,6 +185,7 @@ class Dashboard extends Component {
                         </Switch>
                     </div>
                 </div>
+                <ToastContainer autoClose={3000} />
             </>
 
         );

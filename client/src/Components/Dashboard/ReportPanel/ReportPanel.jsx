@@ -34,7 +34,7 @@ class ReportPanel extends Component {
         let modalHeight = null;
         let halfheight = null;
 
-        modalHeight = $('.Modal').outerHeight();
+        modalHeight = $('.Modal').innerHeight();
         halfheight = modalHeight / 2;
         
         this.setState( { modalHeight: halfheight } );

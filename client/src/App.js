@@ -24,15 +24,15 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={ Dashboard } />
 
-          <Route exact path='/dashboard' component={ Dashboard } />
-          <Route exact path='/candidateinfo/:id' component={ Dashboard } />
-          <Route exact path='/candidatereport' component={ Dashboard } />
-          <Route exact path='/createuser' component={ Dashboard } />
-          <Route exact path='/MedicalExamination/:id' component={ Dashboard } />
-          <Route exact path='/MedicalExamination2/:id' component={ Dashboard } />
-          <Route exact path='/LaboratoryInvestigation/:id' component={ Dashboard } />
+          <Route path='/dashboard' component={ Dashboard } />
+          <Route path='/candidateinfo/:id' component={ Dashboard } />
+          <Route path='/candidatereport' component={ Dashboard } />
+          <Route path='/createuser' component={ Dashboard } />
+          <Route path='/MedicalExamination/:id' component={ Dashboard } />
+          <Route path='/MedicalExamination2/:id' component={ Dashboard } />
+          <Route path='/LaboratoryInvestigation/:id' component={ Dashboard } />
 
-          <Route exact path='/login' component={ LoginForm } />
+          <Route path='/login' component={ LoginForm } />
           <Route>
             <Error />
           </Route>

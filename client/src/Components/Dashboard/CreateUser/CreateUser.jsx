@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from '../../../axios-instance';
 import * as passwordHash from 'password-hash';
 import Loading from '../../UI/Loading/Loading';
+import $ from 'jquery';
 
 class CreateUser extends Component {
 
@@ -28,6 +29,40 @@ class CreateUser extends Component {
     {
 
         this.setState( { loading: false } );
+        $('.eye-btn').on( 'click', () => {
+
+            if( $('input.password').attr('type') == 'text' )
+            {
+
+                $('input.password').attr('type', 'password');
+
+            }else
+            {
+
+                $('input.password').attr('type', 'text');
+
+            }
+
+        } );
+
+        $('input').on( 'change', () => {
+
+            if( $(this).length < 3 )
+            {
+
+                setTimeout( () => {
+
+                    toast.dark("Login ID must be greateor than 3 characters", {
+                        position: 'bottom-right',
+                        progressClassName: 'success-progress-bar',
+                        autoClose: 3000,
+                    });
+    
+                }, 500 );
+
+            }
+
+        } );
 
     }
 
@@ -45,7 +80,8 @@ class CreateUser extends Component {
     }
 
     userCreation = ( event ) => {
-
+        
+        this.setState( { loading: true } );
         event.preventDefault();
 
         let loginID = this.state.userInfo.loginID;
@@ -53,8 +89,11 @@ class CreateUser extends Component {
         
         if(log == 'admin')
         {
+
+            this.setState( { loading: false } );
+
             toast.dark("Admin Already Exists", {
-                position: 'bottom-right',
+                position: 'top-center',
                 progressClassName: 'success-progress-bar',
                 autoClose: 3000,
             });
@@ -71,12 +110,30 @@ class CreateUser extends Component {
             }
     
             axios.post( '/createuser', Data ).then( response => {
+
+                this.setState( { loading: false } );
+
+                toast.dark("User has been created suucessfully", {
+                    position: 'bottom-right',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
     
-               this.props.history.replace('/login');
+               setTimeout( () => {
+
+                    this.props.history.push('/dashboard');
+
+               }, 1000 );
     
             } ).catch( error => {
+
+                this.setState( { loading: false } );
     
-                console.log( error );
+                toast.dark("Network Error 500 please check your network connection", {
+                    position: 'top-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
     
             } );
 
@@ -101,16 +158,21 @@ class CreateUser extends Component {
                                     className="form-control form-control-sm mb-3 rounded-0"
                                     placeholder="User Login ID"
                                     name="loginID"
-                                    onChange={this.onChangeHandler}
+                                    onChange={this.onChangeHandler} required
                                 />
-                                <input
-                                    type="text"
-                                    className="form-control form-control-sm mb-3 rounded-0"
-                                    placeholder="User Password"
-                                    name="loginPass"
-                                    onChange={this.onChangeHandler}
-                                />
-                                <select name="params" className="form-control form-control-sm rounded-0 mb-3" onChange={this.onChangeHandler}>
+                                <div className="input-group mb-3">
+                                    <input
+                                        type="password"
+                                        className="form-control form-control-sm rounded-0 password"
+                                        placeholder="User Password"
+                                        name="loginPass"
+                                        onChange={this.onChangeHandler} required
+                                    />
+                                    <button type='button' className="btn btn-sm px-3 eye-btn">
+                                        <i className="lar la-eye"></i>
+                                    </button>
+                                </div>
+                                <select name="params" className="form-control form-control-sm rounded-0 mb-3" onChange={this.onChangeHandler} required>
                                     <option value="">Authority</option>
                                     <option value="Default">Default</option>
                                     <option value="C2">C2</option>

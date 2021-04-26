@@ -6,6 +6,8 @@ import axios from '../../../axios-instance';
 import Cookies from 'js-cookie';
 import Loading from '../../UI/Loading/Loading';
 import $ from 'jquery';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class LoginForm extends Component {
 
@@ -32,7 +34,7 @@ class LoginForm extends Component {
 
     onChangeHandler = ( event ) => {
 
-        const { name, value } = event.target;
+        const { name, value, type } = event.target;
         const setValues = {
 
             ...this.state.userInfo,
@@ -55,18 +57,14 @@ class LoginForm extends Component {
 
         axios.get( '/getuser' ).then( response => {
 
-            console.log( response.data );
             for( let key in response.data )
             {
-
-                // console.log( response.data[key] );
 
                 if( ( response.data[key].login_id == this.state.userInfo.loginID ) && passwordHash.verify( this.state.userInfo.loginPass, response.data[key].user_password ) )
                 {
 
-                    // sessionStorage.setItem('loginID', response.data[key].login_id);
                     Cookies.set('LoginID', response.data[key].login_id );
-                    console.log(Cookies.get('LoginID'));
+                    Cookies.set('FirstVisit', 'User Visit Site First Time' );
                     this.setState( { loading: false } );
                     this.props.history.push('/dashboard');
 
@@ -74,13 +72,29 @@ class LoginForm extends Component {
 
             }
 
+            if( Cookies.get('LoginID') == undefined )
+            {
+
+                this.setState({ loading: false });
+
+                toast.dark("Invalid Credentials, No User Found", {
+                    position: 'bottom-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+
+            }
+
         } ).catch( error => {
 
             this.setState( { loading: false } );
-            alert(error);
+            toast.dark("Network Error 500 please check your network connection", {
+                position: 'top-center',
+                progressClassName: 'success-progress-bar',
+                autoClose: 3000,
+            });
 
             $('input[type=password]').val( '' );
-            console.log( error );
 
         } );
 
@@ -104,6 +118,7 @@ class LoginForm extends Component {
                                     placeholder="Your Login ID"
                                     name="loginID"
                                     onChange={this.onChangeHandler}
+                                    required
                                 />
                                 <input
                                     type="password"
@@ -111,6 +126,7 @@ class LoginForm extends Component {
                                     placeholder="Your Password"
                                     name="loginPass"
                                     onChange={this.onChangeHandler}
+                                    required
                                 />
                                 <div className="text-center">
                                     <button type="submit" className="btn btn-sm px-5 btns">Login</button>
@@ -119,6 +135,7 @@ class LoginForm extends Component {
                         </div>
                     </div>
                 </div>
+                <ToastContainer autoClose={3000} />
             </>
 
         );

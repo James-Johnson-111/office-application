@@ -39,7 +39,7 @@
 .Dashboard .side_bar {
     position: fixed;
     width: 20%;
-    height: calc(100vh - 50px);
+    min-height: calc(100vh - 50px);
     top: calc(0vh + 50px);
     background-color: #222222;
     color: #fff;
@@ -116,6 +116,20 @@
 
     .Dashboard .side_bar {
         width: 100%;
+    }
+
+}
+
+@media only screen and (max-height: 400px)
+{
+
+    .Dashboard .side_bar {
+        font-size: 12px;
+        width: 50%;
+    }
+
+    .Dashboard .side_bar .action_links a {
+        padding: 5px 30px;
     }
 
 }

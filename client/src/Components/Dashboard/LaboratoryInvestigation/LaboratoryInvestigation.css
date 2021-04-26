@@ -1,48 +1,21 @@
-.LaboratoryInvestigation-background {
-    background-image: url('https://image.freepik.com/free-photo/abstract-black-gold-color-digital-particles-wave-with-bokeh-background_24070-674.jpg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.LaboratoryInvestigation-background::before {
-    content: '';
-    position: absolute;
-    top: 0%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(0, 0, 0, .3);
-}
-
 .LaboratoryInvestigation {
     width: 100%;
     min-height: 100vh;
     font-family: Raleway;
+    background-color: #f5f8fd;
 }
 
 .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
     width: 60%;
-    background-color: rgb(0, 0, 0, .7);
+    background-color: #fff;
     padding: 30px;
-    color: #fff;
     border-radius: 40px 0 40px 0;
-    /* box-shadow: 0 10px 10px lightgrey; */
+    box-shadow: 0 10px 29px 0 rgb(68 88 144 / 10%);
     font-size: 12px;
-    box-shadow: 0 0 10px hsl(0deg 0% 100% / 50%);
 }
 
 .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .form-control {
     font-size: 12px;
-    background: none;
-    color: #fff;
-    border: #fff 1px solid;
-}
-
-.LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .form-control::placeholder {
-    color: rgb(255, 255, 255, .5);
 }
 
 .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .btn {
@@ -76,6 +49,10 @@
 @media only screen and (max-width: 768px) {
 
     .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
+        font-size: 16px;
+    }
+
+    .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
         width: 92%;
     }
 
@@ -83,8 +60,7 @@
 
 @media only screen and (max-width: 600px) {
 
-    .LaboratoryInvestigation {
-        padding: 100px 0;
+    .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
         font-size: 16px;
     }
 
@@ -102,6 +78,15 @@
 
     .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .btn {
         width: 75%;
+    }
+
+}
+
+@media only screen and (max-height: 1000px)
+{
+
+    .LaboratoryInvestigation {
+        padding: 100px 0 50px 0;
     }
 
 }

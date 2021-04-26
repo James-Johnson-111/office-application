@@ -68,7 +68,7 @@ class LaboratoryInvestigation extends Component {
                                         LaboratoryInvestigation
                             </h3>
                                     <div className="row">
-                                        <div className="col-lg-6 col-md-12 col-sm-12">
+                                        <div className="col-lg-6 col-md-12 col-sm-12 px-0">
 
                                             <p className="text-uppercase font-weight-bold mb-1">blood group</p>
                                             <input
@@ -86,20 +86,20 @@ class LaboratoryInvestigation extends Component {
                                             <h6 className="text-uppercase text-center font-weight-bold mb-1">Vaccination Status</h6>
                                             <div className="container-fluid pt-3 pr-5">
                                                 <div className="row">
-                                                    <div className="col-lg-4 col-md-4 colsm-4 col-4 font-weight-bold mb-3 text-center">
+                                                    <div className="col-lg-4 col-md-4 col-sm-4 col-4 font-weight-bold mb-3 text-center">
                                                         Type
                                                 </div>
-                                                    <div className="col-lg-4 col-md-4 colsm-4 col-4 font-weight-bold mb-3 text-center">
+                                                    <div className="col-lg-4 col-md-4 col-sm-4 col-4 font-weight-bold mb-3 text-center">
                                                         Status
                                                 </div>
-                                                    <div className="col-lg-4 col-md-4 colsm-4 col-4 font-weight-bold mb-3 text-center">
+                                                    <div className="col-lg-4 col-md-4 col-sm-4 col-4 font-weight-bold mb-3 text-center">
                                                         date
                                                 </div>
 
-                                                    <div className="col-lg-4 col-md-12 colsm-4 d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 d-grid mb-3">
                                                         Polio
                                                 </div>
-                                                    <div className="col-lg-4 col-md-6 colsm-6 text-center d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <select name="" className="form-control form-control-sm rounded-0">
                                                             <option value="yes">yes</option>
@@ -107,15 +107,15 @@ class LaboratoryInvestigation extends Component {
                                                         </select>
 
                                                     </div>
-                                                    <div className="col-lg-4 col-md-6 colsm-6 text-center d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <input type="date" className="form-control rounded-0 form-control-sm" />
 
                                                     </div>
-                                                    <div className="col-lg-4 col-md-12 colsm-4 d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 d-grid mb-3">
                                                         MMR 1
                                                 </div>
-                                                    <div className="col-lg-4 col-md-6 colsm-6 text-center d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <select name="" className="form-control form-control-sm rounded-0">
                                                             <option value="yes">yes</option>
@@ -123,15 +123,15 @@ class LaboratoryInvestigation extends Component {
                                                         </select>
 
                                                     </div>
-                                                    <div className="col-lg-4 col-md-6 colsm-6 text-center d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <input type="date" className="form-control rounded-0 form-control-sm" />
 
                                                     </div>
-                                                    <div className="col-lg-4 col-md-12 colsm-4 d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 d-grid mb-3">
                                                         MMR2
                                                 </div>
-                                                    <div className="col-lg-4 col-md-6 colsm-6 text-center d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <select name="" className="form-control form-control-sm rounded-0">
                                                             <option value="yes">yes</option>
@@ -139,15 +139,15 @@ class LaboratoryInvestigation extends Component {
                                                         </select>
 
                                                     </div>
-                                                    <div className="col-lg-4 col-md-6 colsm-6 text-center d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <input type="date" className="form-control rounded-0 form-control-sm" />
 
                                                     </div>
-                                                    <div className="col-lg-4 col-md-12 colsm-4 d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 d-grid mb-3">
                                                         Meningococcal
                                                 </div>
-                                                    <div className="col-lg-4 col-md-6 colsm-6 text-center d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <select name="" className="form-control form-control-sm rounded-0">
                                                             <option value="yes">yes</option>
@@ -155,7 +155,7 @@ class LaboratoryInvestigation extends Component {
                                                         </select>
 
                                                     </div>
-                                                    <div className="col-lg-4 col-md-6 colsm-6 text-center d-grid mb-3">
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <input type="date" className="form-control rounded-0 form-control-sm" />
 
