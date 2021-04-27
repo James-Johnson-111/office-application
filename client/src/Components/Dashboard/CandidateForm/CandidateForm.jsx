@@ -7,7 +7,8 @@ import Cookies from 'js-cookie';
 import Webcam from 'react-webcam';
 import $ from 'jquery';
 import Loading from '../../UI/Loading/Loading';
-// import img from '/images/avatar6.png';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class CandidateForm extends Component {
 
@@ -46,7 +47,7 @@ class CandidateForm extends Component {
 
         let url = window.location.href;
         let token = url.split('/').pop();
-        this.getCandidate( token );
+        this.setState( { tokenNO: token } );
 
         if( Cookies.get( 'LoginID' ) != null )
         {
@@ -63,32 +64,6 @@ class CandidateForm extends Component {
         
         this.setState( { modalHeight: halfheight } );
         this.setState( { loading: false } );
-
-    }
-
-    getCandidate = ( id ) => {
-
-        let formsData = new FormData();
-        formsData.append( 'tknID', id );
-        axios.post( '/gettokendata', formsData ).then( response => { 
-
-            console.log( response.data );
-            this.setState( { candidateInfo: {
-                Id: response.data[0].candidate_id,
-                Name: response.data[0].candidate_name,
-                Age: response.data[0].candidate_age,
-                Nationality: response.data[0].candidate_nationality,
-                Gander: response.data[0].candidate_gender,
-                MStatus: response.data[0].candidate_marital_status,
-                Profession: response.data[0].candidate_profession,
-                Passport: response.data[0].candidate_passport,
-                PlaceOfIssue: response.data[0].place_of_issue,
-                TrevellingTo: response.data[0].travelling_to
-            } } );
-
-            this.setState( { candidateImg: response.data[0] } )
-
-        } );
 
     }
 
@@ -160,34 +135,49 @@ class CandidateForm extends Component {
     CandidateDataEntry = ( event ) => {
 
         event.preventDefault();
+        if( ( this.state.candidateInfo.Name.length > 2 ) && ( this.state.candidateInfo.Nationality.length > 2 ) && ( this.state.candidateInfo.PlaceOfIssue.length > 2 ) )
+        {
 
-        const FormsData = new FormData();
+            this.setState({ loading: true });
 
-        FormsData.append( 'Name', this.state.candidateInfo.Name );
-        FormsData.append( 'Age', this.state.candidateInfo.Age );
-        FormsData.append( 'Nationality', this.state.candidateInfo.Nationality );
-        FormsData.append( 'Gander', this.state.candidateInfo.Gander );
-        FormsData.append( 'MStatus', this.state.candidateInfo.MStatus );
-        FormsData.append( 'Profession', this.state.candidateInfo.Profession );
-        FormsData.append( 'Passport', this.state.candidateInfo.Passport );
-        FormsData.append( 'Insertor', this.state.Insertor );
-        FormsData.append( 'Editor', this.state.Editor );
-        FormsData.append( 'Image', this.state.image );
-        FormsData.append( 'ImageName', this.state.imageName );
-        FormsData.append( 'placeofissue', this.state.candidateInfo.PlaceOfIssue );
-        FormsData.append( 'travellingto', this.state.candidateInfo.TrevellingTo );
-        FormsData.append( 'token', this.state.tokenNO );
+            const FormsData = new FormData();
 
-        axios.post( '/setcandidate', FormsData, { 
+            FormsData.append('Name', this.state.candidateInfo.Name);
+            FormsData.append('Age', this.state.candidateInfo.Age);
+            FormsData.append('Nationality', this.state.candidateInfo.Nationality);
+            FormsData.append('Gander', this.state.candidateInfo.Gander);
+            FormsData.append('MStatus', this.state.candidateInfo.MStatus);
+            FormsData.append('Profession', this.state.candidateInfo.Profession);
+            FormsData.append('Passport', this.state.candidateInfo.Passport);
+            FormsData.append('Insertor', this.state.Insertor);
+            FormsData.append('Editor', this.state.Editor);
+            FormsData.append('Image', this.state.image);
+            FormsData.append('ImageName', this.state.imageName);
+            FormsData.append('placeofissue', this.state.candidateInfo.PlaceOfIssue);
+            FormsData.append('travellingto', this.state.candidateInfo.TrevellingTo);
+            FormsData.append('token', this.state.tokenNO);
 
-            headers: { 'content-type': 'multipart/form-data' } 
+            axios.post('/setcandidate', FormsData, {
 
-        } ).then( response => {
+                headers: { 'content-type': 'multipart/form-data' }
 
-            console.log( response.data );
-            this.props.history.push('/candidatereport');
+            }).then(response => {
 
-        } )
+                this.setState({ loading: false });
+                this.props.history.push('/MedicalExamination/' + Cookies.get('tokenNo'));
+
+            })
+
+        }else
+        {
+
+            toast.dark("Welcome Back " + Cookies.get('LoginID'), {
+                position: 'top-right',
+                progressClassName: 'success-progress-bar',
+                autoClose: 3000,
+            });
+
+        }
 
     }
 
@@ -289,6 +279,7 @@ class CandidateForm extends Component {
                                 className="form-control form-control-sm d-none"
                                 onChange={this.onImageUpload}
                                 name="userImage"
+                                required
                                 ref={fileInput => this.fileInput = fileInput}
                             />
                             <div className="btn-group w-100"
@@ -324,6 +315,7 @@ class CandidateForm extends Component {
                                     className="form-control form-control-sm mb-3 rounded-0"
                                     placeholder="Candidate Name"
                                     onChange={this.onChangeHandler}
+                                    required
                                     name="Name"
                                     value={this.state.candidateInfo.Name}
                                 />
@@ -332,6 +324,7 @@ class CandidateForm extends Component {
                                     className="form-control form-control-sm mb-3 rounded-0"
                                     placeholder="Candidate Age"
                                     onChange={this.onChangeHandler}
+                                    required
                                     name="Age"
                                     value={this.state.candidateInfo.Age}
                                 />
@@ -340,15 +333,18 @@ class CandidateForm extends Component {
                                     className="form-control form-control-sm mb-3 rounded-0"
                                     placeholder="Candidate Nationality"
                                     onChange={this.onChangeHandler}
+                                    required
                                     name="Nationality"
                                     value={this.state.candidateInfo.Nationality}
                                 />
-                                <select name="Gander" className="form-control form-control-sm mb-3 rounded-0" onChange={this.onChangeHandler}>
+                                <select name="Gander" className="form-control form-control-sm mb-3 rounded-0" onChange={this.onChangeHandler}
+                                required>
                                     <option value="">Candidate  Gender</option>
                                     <option value="Male">Male</option>
                                     <option value="FeMale">FeMale</option>
                                 </select>
-                                <select name="MStatus" className="form-control form-control-sm mb-3 rounded-0" onChange={this.onChangeHandler}>
+                                <select name="MStatus" className="form-control form-control-sm mb-3 rounded-0" onChange={this.onChangeHandler}
+                                required>
                                     <option value="">Marital Status</option>
                                 <option value="Married">Married</option>
                                 <option value="UnMarried">UnMarried</option>
@@ -366,6 +362,7 @@ class CandidateForm extends Component {
                                 className="form-control form-control-sm mb-3 rounded-0"
                                 placeholder="Candidate Passport NO."
                                 onChange={this.onChangeHandler}
+                                required
                                 name="Passport"
                                 value={this.state.candidateInfo.Passport}
                             />
@@ -374,6 +371,7 @@ class CandidateForm extends Component {
                                     className="form-control form-control-sm mb-3 rounded-0"
                                     placeholder="Place Of Issue"
                                     onChange={this.onChangeHandler}
+                                    required
                                     name="PlaceOfIssue"
                                     value={this.state.candidateInfo.PlaceOfIssue}
                                 />
@@ -393,6 +391,7 @@ class CandidateForm extends Component {
                     </div>
                 </div>
             </div>
+                <ToastContainer autoClose={3000} />
             </>
 
         );

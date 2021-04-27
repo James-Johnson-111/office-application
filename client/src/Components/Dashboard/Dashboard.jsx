@@ -14,6 +14,7 @@ import ReportPanel from './ReportPanel/ReportPanel';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import $ from 'jquery';
+import axios from '../../axios-instance';
 
 class Dashboard extends Component {
 
@@ -25,13 +26,25 @@ class Dashboard extends Component {
             sideBar: false,
             loading: true,
             showCandidate_info: false,
-            showCandidate_info_icon: 'las la-user-check la-2x'
+            showCandidate_info_icon: 'las la-user-check la-2x',
+            Token: null,
+            Name:null,
+            Passport: null
         }
 
     }
 
     componentDidMount()
     {
+
+        let uniqueID = () => {
+
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+
+        }
+        Cookies.set( 'tokenNo', uniqueID() );
 
         if( Cookies.get('LoginID') === undefined )
         {
@@ -73,7 +86,34 @@ class Dashboard extends Component {
 
             }
             
-        }, 15 * 1000);
+        }, 5 * 1000);
+
+        setInterval( () => {
+            
+            if( Cookies.get('tokenNo') != undefined || Cookies.get('tokenNo') != null )
+            {
+
+                const formsData = new FormData();
+                formsData.append( 'token', Cookies.get('tokenNo') );
+                axios.post( '/gettokendata', formsData ).then( response => { 
+
+                    if( response.data[0] == "N" )
+                    {
+                        
+                        this.setState( { Token: "Not Found", Name: "Not Found", Passport: "Not Found" } );
+
+                    }else
+                    {
+
+                        this.setState( { Token: Cookies.get('tokenNo'), Name: response.data[0].candidate_name, Passport: response.data[0].candidate_passport } );
+
+                    }
+
+                } ).catch(err => {});
+
+            }
+            
+        }, 5 * 1000);
 
     }
 
@@ -115,6 +155,65 @@ class Dashboard extends Component {
                 
             <>
                 <Loading show={this.state.loading} />
+                <button 
+                    className="btn btn-sm current_candidate_btn d-tablet-block"
+                    onClick={ () => {
+                                
+                        if( this.state.showCandidate_info )
+                        {
+
+                            this.setState( { showCandidate_info: false, showCandidate_info_icon: 'las la-user-check la-2x' } )
+
+                        }else
+                        {
+
+                            this.setState( { showCandidate_info: true, showCandidate_info_icon: 'las la-user-times la-2x' } )
+
+                        }
+
+                    } }
+                >
+                    <i className="las la-user-check la-2x"></i>
+                    <div
+                        className="candidate_info_div_mobile"
+                        style={{
+                            // 'left' : this.state.showCandidate_info ? '100%' : '-100%', 
+                            'width': this.state.showCandidate_info ? '300px' : '0',
+                            'opacity': this.state.showCandidate_info ? '1' : '0'
+                        }}
+                    >
+                        <h5 className="font-weight-bold">
+                            Candidate
+                                    </h5>
+                        <div className="text-left mb-3">
+                            <p className="mb-0 font-weight-bold">Token No</p>
+                            {
+                                this.state.Token == "Not Found" || this.state.Token == null ?
+                                    <small>Not Found</small>
+                                    :
+                                    <small>{this.state.Token}</small>
+                            }
+                        </div>
+                        <div className="text-left mb-3">
+                            <p className="mb-0 font-weight-bold">Candidate Name</p>
+                            {
+                                this.state.Name == "Not Found" || this.state.Name == null ?
+                                    <small>Not Found</small>
+                                    :
+                                    <small>{this.state.Name}</small>
+                            }
+                        </div>
+                        <div className="text-left mb-3">
+                            <p className="mb-0 font-weight-bold">Passport No</p>
+                            {
+                                this.state.Passport == "Not Found" || this.state.Passport == null ?
+                                    <small>Not Found</small>
+                                    :
+                                    <small>{this.state.Passport}</small>
+                            }
+                        </div>
+                    </div>
+                </button>
                 <div className="Dashboard">
                     <div className="top_bar d-flex justify-content-between">
                         <div className="d-grid">
@@ -164,34 +263,42 @@ class Dashboard extends Component {
                             <div 
                                 className="candidate_info_div" 
                                 style={ { 
-                                    'left' : this.state.showCandidate_info ? '100%' : '-100%', 
+                                    // 'left' : this.state.showCandidate_info ? '100%' : '-100%', 
+                                    'width' : this.state.showCandidate_info ? '200px' : '0',
                                     'opacity' : this.state.showCandidate_info ? '1' : '0' 
                                 } }
                                 >
                                     <h5 className="font-weight-bold">
                                         Candidate
                                     </h5>
-                                    <div className="d-flex justify-content-center">
-                                        <div className="text-left mr-1">
-                                            <small>Token No</small>
-                                            <input type="text" className="form-control form-control-sm rounded-0 mb-3" value="" />
-                                        </div>
-                                        <div className="text-left ml-1">
-                                            <small>Candidate ID</small>
-                                            <input type="text" className="form-control form-control-sm rounded-0 mb-3" value="" />
-                                        </div>
-                                    </div>
-                                    <div className="d-flex justify-content-center">
-                                        <div className="text-left mr-1">
-                                            <small>Candidate Name</small>
-                                            <input type="text" className="form-control form-control-sm rounded-0 mb-3" value="" />
-                                        </div>
-                                        <div className="text-left ml-1">
-                                            <small>Passport No</small>
-                                            <input type="text" className="form-control form-control-sm rounded-0 mb-3" value="" />
-                                        </div>
-                                    </div>
+                                <div className="text-left mb-3">
+                                    <p className="mb-0 font-weight-bold">Token No</p>
+                                    {
+                                        this.state.Token == "Not Found" || this.state.Token == null ?
+                                        <small>Not Found</small>
+                                        :
+                                        <small>{this.state.Token}</small>
+                                    }
                                 </div>
+                                <div className="text-left mb-3">
+                                    <p className="mb-0 font-weight-bold">Candidate Name</p>
+                                    {
+                                        this.state.Name == "Not Found" || this.state.Name == null ?
+                                        <small>Not Found</small>
+                                        :
+                                        <small>{this.state.Name}</small>
+                                    }
+                                </div>
+                                <div className="text-left mb-3">
+                                    <p className="mb-0 font-weight-bold">Passport No</p>
+                                    {
+                                        this.state.Passport == "Not Found" || this.state.Passport == null ?
+                                        <small>Not Found</small>
+                                        :
+                                        <small>{this.state.Passport}</small>
+                                    }
+                                </div>
+                            </div>
                         </button>
 
                         <div className='h-100' style={{ 'display': 'grid', 'alignItems': 'center' }}>
@@ -218,16 +325,16 @@ class Dashboard extends Component {
                             </button>
                         </div>
                         <div className="action_links" onClick={this.openSideBar}>
-                            <Link to={ "/candidateinfo/" + 10 }>Candidate Info</Link>
+                            <Link to={ "/candidateinfo/" + Cookies.get('tokenNo') }>Candidate Info</Link>
                         </div>
                         <div className="action_links sub-links" onClick={this.openSideBar}>
-                            <Link to={ '/MedicalExamination/' + 10 }>MedicalExamination</Link>
+                            <Link to={ '/MedicalExamination/' + Cookies.get('tokenNo') }>MedicalExamination</Link>
                         </div>
                         <div className="action_links sub-links" onClick={this.openSideBar}>
-                            <Link to={ '/MedicalExamination2/' + 10 }>MedicalExamination2</Link>
+                            <Link to={ '/MedicalExamination2/' + Cookies.get('tokenNo') }>MedicalExamination2</Link>
                         </div>
                         <div className="action_links sub-links" onClick={this.openSideBar}>
-                            <Link to={ '/LaboratoryInvestigation/' + 10 }>Laboratory Investigation</Link>
+                            <Link to={ '/LaboratoryInvestigation/' + Cookies.get('tokenNo') }>Laboratory Investigation</Link>
                         </div>
                         <div className="action_links d-tablet-block" onClick={this.openSideBar}>
                             {createUser}

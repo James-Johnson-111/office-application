@@ -1,7 +1,7 @@
 import react, { Component } from 'react';
 
 import './Loading.css';
-import Loader from '../../../images/1494.gif';
+import Loader from '../../../images/1488.gif';
 
 class Loading extends Component {
 
@@ -22,7 +22,10 @@ class Loading extends Component {
                 style={ { 'display' : this.props.show ? 'grid' : 'none' } }
                 >
                 <div className="loading-inner d-flex justify-content-center">
-                    <img src={Loader} width="50" />
+                    <div className="text-center">
+                        <img src={Loader} width="70" />
+                        <p>labofficial.com</p>
+                    </div>
                 </div>
             </div>
 

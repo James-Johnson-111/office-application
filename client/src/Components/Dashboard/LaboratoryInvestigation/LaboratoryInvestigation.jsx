@@ -98,7 +98,7 @@ class LaboratoryInvestigation extends Component {
 
                                                     <div className="col-lg-4 col-md-12 col-sm-12 d-grid mb-3">
                                                         Polio
-                                                </div>
+                                                    </div>
                                                     <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <select name="" className="form-control form-control-sm rounded-0">
@@ -114,7 +114,7 @@ class LaboratoryInvestigation extends Component {
                                                     </div>
                                                     <div className="col-lg-4 col-md-12 col-sm-12 d-grid mb-3">
                                                         MMR 1
-                                                </div>
+                                                    </div>
                                                     <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <select name="" className="form-control form-control-sm rounded-0">
@@ -130,7 +130,7 @@ class LaboratoryInvestigation extends Component {
                                                     </div>
                                                     <div className="col-lg-4 col-md-12 col-sm-12 d-grid mb-3">
                                                         MMR2
-                                                </div>
+                                                    </div>
                                                     <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <select name="" className="form-control form-control-sm rounded-0">
@@ -146,7 +146,23 @@ class LaboratoryInvestigation extends Component {
                                                     </div>
                                                     <div className="col-lg-4 col-md-12 col-sm-12 d-grid mb-3">
                                                         Meningococcal
-                                                </div>
+                                                    </div>
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
+
+                                                        <select name="" className="form-control form-control-sm rounded-0">
+                                                            <option value="yes">yes</option>
+                                                            <option value="no">no</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
+
+                                                        <input type="date" className="form-control rounded-0 form-control-sm" />
+
+                                                    </div>
+                                                    <div className="col-lg-4 col-md-12 col-sm-12 d-grid mb-3">
+                                                        Covid
+                                                    </div>
                                                     <div className="col-lg-4 col-md-12 col-sm-12 text-center d-grid mb-3">
 
                                                         <select name="" className="form-control form-control-sm rounded-0">
@@ -260,6 +276,25 @@ class LaboratoryInvestigation extends Component {
                                                         name="something"
                                                     />
                                                     <p className="text-uppercase font-weight-bold mb-1">albumin</p>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control form-control-sm rounded-0 mb-3"
+                                                        name="something"
+                                                    />
+
+                                                </div>
+
+                                                <p className="border-bottom tab-btns text-uppercase font-weight-bold" id="COVID">COVID - 19</p>
+
+                                                <div className="COVID_tab options-tabs">
+
+                                                    <p className="text-uppercase font-weight-bold mb-1">Covid PCR</p>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control form-control-sm rounded-0 mb-3"
+                                                        name="something"
+                                                    />
+                                                    <p className="text-uppercase font-weight-bold mb-1">Covid Antibodies</p>
                                                     <input
                                                         type="text"
                                                         className="form-control form-control-sm rounded-0 mb-3"

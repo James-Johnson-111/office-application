@@ -4,6 +4,8 @@ import './ReportPanel.css';
 import axios from '../../../axios-instance';
 import Modal from '../../UI/Modal/Modal';
 import $ from "jquery";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class ReportPanel extends Component {
 
@@ -66,12 +68,14 @@ class ReportPanel extends Component {
             if( response.data[0] == undefined )
             {
 
-                console.log( "No Records Found" );
+                toast.dark("No Records Found", {
+                    position: 'top-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
 
             }else
             {
-
-                console.log( response.data[0] );
 
                 for( let key in response.data )
                 {
@@ -82,7 +86,15 @@ class ReportPanel extends Component {
 
             }
 
-        } );
+        } ).catch( error => {
+
+            toast.dark("Network Error 500 please check your network connection", {
+                position: 'top-center',
+                progressClassName: 'success-progress-bar',
+                autoClose: 3000,
+            });
+
+        } )
 
     }
 
@@ -339,6 +351,7 @@ class ReportPanel extends Component {
                         </div>
                     </div>
                 </div>
+                <ToastContainer autoClose={3000} />
             </>
 
         );

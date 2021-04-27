@@ -9,6 +9,36 @@
     height: 50px;
 }
 
+.current_candidate_btn {
+    position: fixed;
+    top: 88vh;
+    left: 80%;
+    z-index: 200;
+    background-color: #222;
+    color: #fff;
+}
+
+.current_candidate_btn:focus {
+    color: #fff;
+}
+
+.current_candidate_btn .candidate_info_div_mobile {
+    position: absolute;
+    bottom: 100%;
+    right: 100%;
+    padding: 10px;
+    height: min-content;
+    background-color: #fff;
+    /* box-shadow: -8px -10px 10px lightgrey; */
+    border: 1px solid #2222;
+    border-radius: 20px;
+    z-index: 50;
+    color: #000;
+    cursor: auto;
+    font-family: Quicksand;
+    overflow: hidden;
+}
+
 .Dashboard .Dashboard_logo {
     color: #fff;
     font-size: 25px;
@@ -74,17 +104,18 @@
 .Dashboard .candidate_info_btn .candidate_info_div {
     position: absolute;
     top: 0;
-    width: 300px;
+    left: 100%;
     padding: 10px;
     height: min-content;
     background-color: #fff;
     /* border: 1px solid lightgrey; */
     box-shadow: 8px 10px 10px lightgrey;
     z-index: 50;
-    transition: .3s;
+    /* transition: .1s; */
     color: #000;
     cursor: auto;
     font-family: Quicksand;
+    overflow: hidden;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -136,6 +167,22 @@
 
     .Dashboard .side_bar {
         width: 100%;
+    }
+
+}
+
+@media only screen and (max-width: 400px) {
+
+    .current_candidate_btn .candidate_info_div_mobile {
+        max-width: 250px;
+    }
+
+}
+
+@media only screen and (max-width: 350px) {
+
+    .current_candidate_btn .candidate_info_div_mobile {
+        max-width: 200px;
     }
 
 }
