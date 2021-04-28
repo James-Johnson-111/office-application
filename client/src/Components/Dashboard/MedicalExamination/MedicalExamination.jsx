@@ -3,6 +3,10 @@ import react, { Component } from 'react';
 import './MedicalExamination.css';
 import $ from 'jquery';
 import Loading from '../../UI/Loading/Loading';
+import axios from '../../../axios-instance';
+import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class MedicalExamination extends Component {
 
@@ -18,7 +22,8 @@ class MedicalExamination extends Component {
                 height: null,
                 weight: null,
                 bmi: null,
-                bp: null,
+                bp1: null,
+                bp2: null,
                 pulse: null,
                 pr: null,
                 unaidedDistantRtEye: null,
@@ -60,6 +65,71 @@ class MedicalExamination extends Component {
     MedicalExaminationSubmittion = ( event ) => {
 
         event.preventDefault();
+        this.setState( { loading: true } );
+
+        const formsData = new FormData();
+        formsData.append('Token', Cookies.get('tokenNo') );
+        formsData.append('height', this.state.Candidate.height );
+        formsData.append('weight', this.state.Candidate.weight );
+        formsData.append('bmi', this.state.Candidate.bmi );
+        formsData.append('bp1', this.state.Candidate.bp1 );
+        formsData.append('bp2', this.state.Candidate.bp2 );
+        formsData.append('pulse', this.state.Candidate.pulse );
+        formsData.append('pr', this.state.Candidate.pr );
+        formsData.append('unaidedDistantRtEye', this.state.Candidate.unaidedDistantRtEye );
+        formsData.append('unaidedDistantLtEye', this.state.Candidate.unaidedDistantLtEye );
+        formsData.append('aidedDistantRtEye', this.state.Candidate.aidedDistantRtEye );
+        formsData.append('aidedDistantLtEye', this.state.Candidate.aidedDistantLtEye );
+        formsData.append('unaidedNearRtEye', this.state.Candidate.unaidedNearRtEye );
+        formsData.append('unaidedNearLtEye', this.state.Candidate.unaidedNearLtEye );
+        formsData.append('aidedNearRtEye', this.state.Candidate.aidedNearRtEye );
+        formsData.append('aidedNearLtEye', this.state.Candidate.aidedNearLtEye );
+        formsData.append('colorVision', this.state.Candidate.colorVision );
+        formsData.append('RightEar', this.state.Candidate.RightEar );
+        formsData.append('LeftEar', this.state.Candidate.LeftEar );
+        formsData.append('Insertor', Cookies.get('LoginID') );
+
+        axios.post( '/medicalexaminationentry', formsData ).then( response => {
+
+            if( response.data[0] == "Candidate Data Not Found" )
+            {
+                this.setState( { loading: false } );
+
+                toast.dark("Candidate Data Not Found", {
+                    position: 'top-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+
+            }else
+            {
+                this.setState( { loading: false } );
+
+                toast.dark("Medical Examination 1 data inserted successfully", {
+                    position: 'top-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+
+                setTimeout( () => {
+
+                    this.props.history.push( '/MedicalExamination2/' + Cookies.get('tokenNo') );
+        
+                }, 1000 );
+
+            }
+
+        } ).catch( error => {
+
+            this.setState( { loading: false } );
+
+            toast.dark("Network Error 500 please check your network connection", {
+                position: 'top-center',
+                progressClassName: 'success-progress-bar',
+                autoClose: 3000,
+            });
+            
+        } )
 
     }
 
@@ -138,13 +208,23 @@ class MedicalExamination extends Component {
                                                     <p>B.P</p>
                                                 </div>
                                                 <div className="col-lg-3 col-md-3 col-sm-3">
-                                                    <input
-                                                        type="text"
-                                                        className="form-control form-control-sm mb-3 rounded-0 text-center"
-                                                        defaultValue="/"
-                                                        name="bp"
-                                                        onChange={this.onChangeHandler}
-                                                    />
+                                                    <div className="d-flex justify-content-center">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control form-control-sm mb-3 rounded-0 text-center"
+                                                            name="bp1"
+                                                            onChange={this.onChangeHandler}
+                                                        />
+                                                        <div className="d-grid px-2 font-weight-bold">
+                                                            <p>/</p>
+                                                        </div>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control form-control-sm mb-3 rounded-0 text-center"
+                                                            name="bp2"
+                                                            onChange={this.onChangeHandler}
+                                                        />
+                                                    </div>
                                                 </div>
                                                 <div className="col-lg-1 col-md-3 col-sm-3 d-grid">
                                                     <p>Pulse</p>
@@ -708,6 +788,7 @@ class MedicalExamination extends Component {
                         </div>
                     </div>
                 </div>
+                <ToastContainer autoClose={3000} />
             </>
 
         );

@@ -65,7 +65,7 @@ class LaboratoryInvestigation extends Component {
 
                                 <div className="container-fluid">
                                     <h3 className="mb-3">
-                                        LaboratoryInvestigation
+                                        Laboratory Investigation
                             </h3>
                                     <div className="row">
                                         <div className="col-lg-6 col-md-12 col-sm-12 px-0">

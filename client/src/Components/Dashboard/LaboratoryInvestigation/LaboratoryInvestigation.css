@@ -70,6 +70,7 @@
 
     .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content {
         width: 92%;
+        padding: 30px 10px;
     }
 
     .LaboratoryInvestigation .LaboratoryInvestigation-inner .LaboratoryInvestigation-content .form-control {

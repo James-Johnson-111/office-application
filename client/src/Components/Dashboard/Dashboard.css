@@ -22,14 +22,13 @@
     color: #fff;
 }
 
-.current_candidate_btn .candidate_info_div_mobile {
+/* .current_candidate_btn .candidate_info_div_mobile {
     position: absolute;
     bottom: 100%;
     right: 100%;
     padding: 10px;
     height: min-content;
     background-color: #fff;
-    /* box-shadow: -8px -10px 10px lightgrey; */
     border: 1px solid #2222;
     border-radius: 20px;
     z-index: 50;
@@ -37,7 +36,7 @@
     cursor: auto;
     font-family: Quicksand;
     overflow: hidden;
-}
+} */
 
 .Dashboard .Dashboard_logo {
     color: #fff;
@@ -108,14 +107,44 @@
     padding: 10px;
     height: min-content;
     background-color: #fff;
-    /* border: 1px solid lightgrey; */
     box-shadow: 8px 10px 10px lightgrey;
     z-index: 50;
-    /* transition: .1s; */
     color: #000;
     cursor: auto;
     font-family: Quicksand;
     overflow: hidden;
+}
+
+.settings_div {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f5f8fd;
+    z-index: 500;
+    transition: 1s;
+    font-family: Quicksand;
+    font-size: 20px;
+}
+
+.settings_div .settings_div_content {
+    height: 90vh;
+    display: grid;
+    align-items: end;
+}
+
+.settings_div .settings_div_content a[data-toggle="tab"] {
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 10px 29px 0 rgb(68 88 144 / 10%);
+    padding: 5px;
+    width: 100%;
+    display: block;
+    font-size: 16px;
+}
+
+.settings_div .settings_div_content a[data-toggle="tab"]:active, .settings_div .settings_div_content a[data-toggle="tab"].active {
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -171,7 +200,7 @@
 
 }
 
-@media only screen and (max-width: 400px) {
+/* @media only screen and (max-width: 400px) {
 
     .current_candidate_btn .candidate_info_div_mobile {
         max-width: 250px;
@@ -185,7 +214,7 @@
         max-width: 200px;
     }
 
-}
+} */
 
 @media only screen and (max-height: 400px)
 {

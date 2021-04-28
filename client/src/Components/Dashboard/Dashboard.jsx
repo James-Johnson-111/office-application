@@ -26,7 +26,7 @@ class Dashboard extends Component {
             sideBar: false,
             loading: true,
             showCandidate_info: false,
-            showCandidate_info_icon: 'las la-user-check la-2x',
+            showCandidate_info_icon: 'las la-cogs la-2x',
             Token: null,
             Name:null,
             Passport: null
@@ -162,58 +162,151 @@ class Dashboard extends Component {
                         if( this.state.showCandidate_info )
                         {
 
-                            this.setState( { showCandidate_info: false, showCandidate_info_icon: 'las la-user-check la-2x' } )
+                            this.setState( { showCandidate_info: false, showCandidate_info_icon: 'las la-cog la-2x' } )
 
                         }else
                         {
 
-                            this.setState( { showCandidate_info: true, showCandidate_info_icon: 'las la-user-times la-2x' } )
+                            this.setState( { showCandidate_info: true, showCandidate_info_icon: 'las la-cogs la-2x' } )
 
                         }
 
                     } }
                 >
-                    <i className="las la-user-check la-2x"></i>
-                    <div
-                        className="candidate_info_div_mobile"
-                        style={{
-                            // 'left' : this.state.showCandidate_info ? '100%' : '-100%', 
-                            'width': this.state.showCandidate_info ? '300px' : '0',
-                            'opacity': this.state.showCandidate_info ? '1' : '0'
-                        }}
-                    >
-                        <h5 className="font-weight-bold">
-                            Candidate
-                                    </h5>
-                        <div className="text-left mb-3">
-                            <p className="mb-0 font-weight-bold">Token No</p>
-                            {
-                                this.state.Token == "Not Found" || this.state.Token == null ?
-                                    <small>Not Found</small>
-                                    :
-                                    <small>{this.state.Token}</small>
-                            }
+                    <i className="las la-cog la-2x"></i>
+                </button>
+
+                <div 
+                    className="settings_div d-tablet-block"
+                    style={{
+                        'height': this.state.showCandidate_info ? '100vh' : '0',
+                    }}
+                >
+                    <div>
+                        <div className="text-right">
+                            <button
+                                className="btn btn-sm"
+                                onClick={() => {
+
+                                    if (this.state.showCandidate_info) {
+
+                                        this.setState({ showCandidate_info: false, showCandidate_info_icon: 'las la-cog la-2x' })
+
+                                    } else {
+
+                                        this.setState({ showCandidate_info: true, showCandidate_info_icon: 'las la-cogs la-2x' })
+
+                                    }
+
+                                }}
+                            >
+                                <i class="las la-times la-2x"></i>
+                            </button>
                         </div>
-                        <div className="text-left mb-3">
-                            <p className="mb-0 font-weight-bold">Candidate Name</p>
-                            {
-                                this.state.Name == "Not Found" || this.state.Name == null ?
-                                    <small>Not Found</small>
-                                    :
-                                    <small>{this.state.Name}</small>
-                            }
-                        </div>
-                        <div className="text-left mb-3">
-                            <p className="mb-0 font-weight-bold">Passport No</p>
-                            {
-                                this.state.Passport == "Not Found" || this.state.Passport == null ?
-                                    <small>Not Found</small>
-                                    :
-                                    <small>{this.state.Passport}</small>
-                            }
+                        <div className="settings_div_content w-100">
+                            {/* <div className="tab-content px-3" id="nav-tabContent">
+
+                                <div className="tab-pane fade show active" id="current_candidate">
+                                    <h2 className="font-weight-bold">
+                                        Candidate
+                                    </h2>
+                                    <div className="text-left mb-3">
+                                        <p className="mb-0 font-weight-bold">Token No</p>
+                                        {
+                                            this.state.Token == "Not Found" || this.state.Token == null ?
+                                                <small>Not Found</small>
+                                                :
+                                                <small>{this.state.Token}</small>
+                                        }
+                                    </div>
+                                    <div className="text-left mb-3">
+                                        <p className="mb-0 font-weight-bold">Candidate Name</p>
+                                        {
+                                            this.state.Name == "Not Found" || this.state.Name == null ?
+                                                <small>Not Found</small>
+                                                :
+                                                <small>{this.state.Name}</small>
+                                        }
+                                    </div>
+                                    <div className="text-left mb-3">
+                                        <p className="mb-0 font-weight-bold">Passport No</p>
+                                        {
+                                            this.state.Passport == "Not Found" || this.state.Passport == null ?
+                                                <small>Not Found</small>
+                                                :
+                                                <small>{this.state.Passport}</small>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div className="tab-pane fade" id="other_info">
+                                    <h1>other_info</h1>
+                                </div>
+                                
+                                <div className="tab-pane fade" id="settings">
+                                    <h1>settings</h1>
+                                </div>
+
+                            </div> */}
+
+                            <div class="tab-content px-3">
+                                <div class="tab-pane fade show active" id="tab1default">
+                                    <h2 className="font-weight-bold">
+                                        Candidate
+                                    </h2>
+                                    <div className="text-left mb-3">
+                                        <p className="mb-0 font-weight-bold">Token No</p>
+                                        {
+                                            this.state.Token == "Not Found" || this.state.Token == null ?
+                                                <small>Not Found</small>
+                                                :
+                                                <small>{this.state.Token}</small>
+                                        }
+                                    </div>
+                                    <div className="text-left mb-3">
+                                        <p className="mb-0 font-weight-bold">Candidate Name</p>
+                                        {
+                                            this.state.Name == "Not Found" || this.state.Name == null ?
+                                                <small>Not Found</small>
+                                                :
+                                                <small>{this.state.Name}</small>
+                                        }
+                                    </div>
+                                    <div className="text-left mb-3">
+                                        <p className="mb-0 font-weight-bold">Passport No</p>
+                                        {
+                                            this.state.Passport == "Not Found" || this.state.Passport == null ?
+                                                <small>Not Found</small>
+                                                :
+                                                <small>{this.state.Passport}</small>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab2default">
+                                    <h1>Other Info</h1>
+                                </div>
+                                <div class="tab-pane fade" id="tab3default">
+                                    <h1>Settings</h1>
+                                </div>
+                            </div>
+
+                            <div className="d-flex justify-content-center">
+                                <ul className="nav nav-tabs border-bottom-0 d-block text-center w-75">
+                                    <li className="active">
+                                        <a className="mb-3 text-dark" href="#tab1default" data-toggle="tab">Current Candidate</a>
+                                    </li>
+                                    <li className="w-100">
+                                        <a className="mb-3 text-dark" href="#tab2default" data-toggle="tab">Other Info</a>
+                                    </li>
+                                    <li className="w-100">
+                                        <a className="mb-3 text-dark" href="#tab3default" data-toggle="tab">Settings</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </button>
+                </div>
+
                 <div className="Dashboard">
                     <div className="top_bar d-flex justify-content-between">
                         <div className="d-grid">
@@ -247,12 +340,12 @@ class Dashboard extends Component {
                                 if( this.state.showCandidate_info )
                                 {
 
-                                    this.setState( { showCandidate_info: false, showCandidate_info_icon: 'las la-user-check la-2x' } )
+                                    this.setState( { showCandidate_info: false, showCandidate_info_icon: 'las la-cogs la-2x' } )
 
                                 }else
                                 {
 
-                                    this.setState( { showCandidate_info: true, showCandidate_info_icon: 'las la-user-times la-2x' } )
+                                    this.setState( { showCandidate_info: true, showCandidate_info_icon: 'las la-cog la-2x' } )
 
                                 }
 

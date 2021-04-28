@@ -3,6 +3,10 @@ import react, { Component } from 'react';
 import './MedicalExamination2.css';
 import $ from 'jquery';
 import Loading from '../../UI/Loading/Loading';
+import axios from '../../../axios-instance';
+import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class MedicalExamination2 extends Component {
 
@@ -13,7 +17,32 @@ class MedicalExamination2 extends Component {
         this.state = {
 
             buttonDisabled: true,
-            loading: true
+            loading: true,
+
+            Exam2: {
+
+                generalAppearance: null,
+                cardioVascular: null,
+                respiratory: null,
+                ent: null,
+                Abdomen: null,
+                hernia: null,
+                hydrocele: null,
+                exremities: null,
+                back: null,
+                skin: null,
+                cns: null,
+                deformities: null,
+                speech: null,
+                behaviour: null,
+                orientation: null,
+                memory: null,
+                concentration: null,
+                mood: null,
+                thoughts: null,
+                others: null
+
+            }
 
         }
 
@@ -24,16 +53,6 @@ class MedicalExamination2 extends Component {
 
         $('div.options-tabs').slideUp(0);
         $('div.GESTRO_tab').slideDown();
-
-        $('input').on( 'change', function() {
-
-            let values = $('.MedicalExamination2-form');
-            console.log($(values).find("input[type='text'][class='form-control']").innerHtml());
-            if ($(values).find("input[type='text'][class='form-control']").val() != null) {
-                console.log(values);
-            }
-
-        } )
 
         function openClose( name )
         {
@@ -55,6 +74,78 @@ class MedicalExamination2 extends Component {
 
     }
 
+    onChangeHandler = ( event ) => {
+
+        const { name, value } = event.target;
+        const setValues = {
+            ...this.state.Exam2,
+            [name]: value
+        }
+
+        this.setState( { Exam2: setValues } );
+
+    }
+
+    exam2Submittion = ( event ) => {
+
+        event.preventDefault();
+        this.setState( { loading: true } );
+        const formsData = new FormData();
+        formsData.append( 'Token', Cookies.get('tokenNo') );
+        formsData.append( 'generalAppearance', this.state.Exam2.generalAppearance );
+        formsData.append( 'cardioVascular', this.state.Exam2.cardioVascular );
+        formsData.append( 'respiratory', this.state.Exam2.respiratory );
+        formsData.append( 'ent', this.state.Exam2.ent );
+        formsData.append( 'Abdomen', this.state.Exam2.Abdomen );
+        formsData.append( 'hernia', this.state.Exam2.hernia );
+        formsData.append( 'hydrocele', this.state.Exam2.hydrocele );
+        formsData.append( 'exremities', this.state.Exam2.exremities );
+        formsData.append( 'back', this.state.Exam2.back );
+        formsData.append( 'skin', this.state.Exam2.skin );
+        formsData.append( 'cns', this.state.Exam2.cns );
+        formsData.append( 'deformities', this.state.Exam2.deformities );
+        formsData.append( 'speech', this.state.Exam2.speech );
+        formsData.append( 'behaviour', this.state.Exam2.behaviour );
+        formsData.append( 'orientation', this.state.Exam2.orientation );
+        formsData.append( 'memory', this.state.Exam2.memory );
+        formsData.append( 'concentration', this.state.Exam2.concentration );
+        formsData.append( 'mood', this.state.Exam2.mood );
+        formsData.append( 'thoughts', this.state.Exam2.thoughts );
+        formsData.append( 'others', this.state.Exam2.others );
+
+        axios.post( '/medicalexamination2entry', formsData ).then( response => {
+
+            if( response.data[0] == "Candidate Data Not Found" )
+            {
+                this.setState( { loading: false } );
+
+                toast.dark("Candidate Data Not Found", {
+                    position: 'top-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+
+            }else
+            {
+                this.setState( { loading: false } );
+
+                toast.dark("Medical Examination 2 data inserted successfully", {
+                    position: 'top-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+
+                setTimeout( () => {
+
+                    this.props.history.push( '/LaboratoryInvestigation/' + Cookies.get('tokenNo') );
+        
+                }, 1000 );
+
+            }
+
+        } )
+
+    }
     render()
     {
 
@@ -65,7 +156,7 @@ class MedicalExamination2 extends Component {
                 <div className="MedicalExamination2 d-grid">
                     <div className="MedicalExamination2-inner d-flex justify-content-center">
                         <div className="MedicalExamination2-content">
-                            <form className="MedicalExamination2-form">
+                            <form className="MedicalExamination2-form" onSubmit={this.exam2Submittion}>
                                 <h3 className="mb-3">Medical Examination 2</h3>
                                 <nav>
                                     <div className="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -94,28 +185,32 @@ class MedicalExamination2 extends Component {
                                                     <input
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
-                                                        name="loginID"
+                                                        name="generalAppearance"
+                                                        onChange={this.onChangeHandler}
                                                     />
 
                                                     <p className="mb-1">CARDIOVASCULAR</p>
                                                     <input
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
-                                                        name="loginID"
+                                                        name="cardioVascular"
+                                                        onChange={this.onChangeHandler}
                                                     />
 
                                                     <p className="mb-1">RESPIRATORY</p>
                                                     <input
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
-                                                        name="loginID"
+                                                        name="respiratory"
+                                                        onChange={this.onChangeHandler}
                                                     />
 
                                                     <p className="mb-1">ENT</p>
                                                     <input
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
-                                                        name="loginID"
+                                                        name="ent"
+                                                        onChange={this.onChangeHandler}
                                                     />
 
                                                 </div>
@@ -139,9 +234,9 @@ class MedicalExamination2 extends Component {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control form-control-sm mb-3 rounded-0"
-                                                                    placeholder="cm"
-                                                                    name="loginID"
+                                                                    name="Abdomen"
                                                                     placeholder="ABDOMEN"
+                                                                    onChange={this.onChangeHandler}
                                                                 />
                                                             </div>
                                                             <div className="tab-pane fade" id="HERNIA" role="tabpanel" aria-labelledby="HERNIA-tab">
@@ -149,9 +244,9 @@ class MedicalExamination2 extends Component {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control form-control-sm mb-3 rounded-0"
-                                                                    placeholder="cm"
-                                                                    name="loginID"
+                                                                    name="hernia"
                                                                     placeholder="HERNIA"
+                                                                    onChange={this.onChangeHandler}
                                                                 />
                                                             </div>
                                                         </div>
@@ -168,9 +263,9 @@ class MedicalExamination2 extends Component {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control form-control-sm mb-3 rounded-0"
-                                                                    placeholder="cm"
-                                                                    name="loginID"
+                                                                    name="hydrocele"
                                                                     placeholder="HYDROCELE"
+                                                                    onChange={this.onChangeHandler}
                                                                 />
                                                             </div>
                                                         </div>
@@ -188,9 +283,9 @@ class MedicalExamination2 extends Component {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control form-control-sm mb-3 rounded-0"
-                                                                    placeholder="cm"
-                                                                    name="loginID"
+                                                                    name="exremities"
                                                                     placeholder="EXTREMITIES"
+                                                                    onChange={this.onChangeHandler}
                                                                 />
                                                             </div>
                                                             <div className="tab-pane fade" id="BACK" role="tabpanel" aria-labelledby="BACK-tab">
@@ -198,9 +293,9 @@ class MedicalExamination2 extends Component {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control form-control-sm rounded-0"
-                                                                    placeholder="cm"
-                                                                    name="loginID"
+                                                                    name="back"
                                                                     placeholder="BACK"
+                                                                    onChange={this.onChangeHandler}
                                                                 />
                                                             </div>
                                                         </div>
@@ -213,19 +308,22 @@ class MedicalExamination2 extends Component {
                                                     <input
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
-                                                        name="loginID"
+                                                        name="skin"
+                                                        onChange={this.onChangeHandler}
                                                     />
                                                     <p className="mb-1">C.N.S</p>
                                                     <input
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
-                                                        name="loginID"
+                                                        name="cns"
+                                                        onChange={this.onChangeHandler}
                                                     />
                                                     <p className="mb-1">DEFORMITIES</p>
                                                     <input
                                                         type="text"
                                                         className="form-control form-control-sm mb-3 rounded-0"
-                                                        name="loginID"
+                                                        name="deformities"
+                                                        onChange={this.onChangeHandler}
                                                     />
                                                 </div>
 
@@ -263,13 +361,15 @@ class MedicalExamination2 extends Component {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0"
-                                                                name="loginID"
+                                                                name="speech"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                             <p className="mb-1 text-left">Behaviour</p>
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0"
-                                                                name="loginID"
+                                                                name="behaviour"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
 
@@ -280,19 +380,22 @@ class MedicalExamination2 extends Component {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0"
-                                                                name="loginID"
+                                                                name="orientation"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                             <p className="mb-1 text-left">Memory</p>
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0"
-                                                                name="loginID"
+                                                                name="memory"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                             <p className="mb-1 text-left">Concentration</p>
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0"
-                                                                name="loginID"
+                                                                name="concentration"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
 
@@ -303,7 +406,8 @@ class MedicalExamination2 extends Component {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0"
-                                                                name="loginID"
+                                                                name="mood"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
 
@@ -314,7 +418,8 @@ class MedicalExamination2 extends Component {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0"
-                                                                name="loginID"
+                                                                name="thoughts"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
 
@@ -325,7 +430,8 @@ class MedicalExamination2 extends Component {
                                                             <input
                                                                 type="text"
                                                                 className="form-control form-control-sm mb-3 rounded-0"
-                                                                name="loginID"
+                                                                name="others"
+                                                                onChange={this.onChangeHandler}
                                                             />
                                                         </div>
 
@@ -356,6 +462,7 @@ class MedicalExamination2 extends Component {
                         </div>
                     </div>
                 </div>
+                <ToastContainer autoClose={3000} />
             </>
 
         );
