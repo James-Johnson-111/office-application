@@ -112,6 +112,7 @@ class MedicalExamination2 extends Component {
         formsData.append( 'mood', this.state.Exam2.mood );
         formsData.append( 'thoughts', this.state.Exam2.thoughts );
         formsData.append( 'others', this.state.Exam2.others );
+        formsData.append( 'inserter', Cookies.get('LoginID') );
 
         axios.post( '/medicalexamination2entry', formsData ).then( response => {
 

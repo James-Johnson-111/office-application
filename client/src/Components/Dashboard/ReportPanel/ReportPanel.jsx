@@ -6,6 +6,8 @@ import Modal from '../../UI/Modal/Modal';
 import $ from "jquery";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loading from '../../UI/Loading/Loading';
+import Cookies from 'js-cookie';
 
 class ReportPanel extends Component {
 
@@ -15,11 +17,16 @@ class ReportPanel extends Component {
         super( props );
         this.state = {
             candidateInfo: {
-                ID: null
+                ID: null,
+                Token: null
             },
             candidateReportInfo: {},
             showRecordModal: false,
-            modalHeight: null
+            modalHeight: null,
+            loading: true,
+            getAllThroughDate: [],
+            getAllThroughToken: {},
+            getAllThroughShift: []
         }
 
     }
@@ -32,18 +39,33 @@ class ReportPanel extends Component {
             $('input[type=text][name=ID]').val('');
 
         } )
-
-        let modalHeight = null;
-        let halfheight = null;
-
-        modalHeight = $('.Modal').innerHeight();
-        halfheight = modalHeight / 2;
         
-        this.setState( { modalHeight: halfheight } );
+        this.setState( { loading: false } );
 
     }
 
-    ManualChangeHandler = ( event ) => {
+    getDate = ( value ) => {
+
+        let getSplit = value.split('-');
+        let year = getSplit[0];
+        let month = getSplit[1];
+        let date = getSplit[2];
+
+        let removeZeroFromMonth = month.substring(1,2);
+        let getCorrectMonth = removeZeroFromMonth - 1;
+
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        let getMonthName = monthNames[getCorrectMonth];
+
+        let WhatTheCorrectDate = year + "-" + getMonthName + "-" + date;
+        return WhatTheCorrectDate;
+
+    }
+
+    onChangeHandler = ( event ) => {
 
         const { name, value } = event.target;
         const setValues = {
@@ -56,18 +78,20 @@ class ReportPanel extends Component {
 
     }
 
-    ManualEntry = ( event ) => {
+    ManualEntryThrougID = ( event ) => {
 
         event.preventDefault();
+        this.setState( { loading: true } );
         const formsData = new FormData();
 
         formsData.append('CandidateID', this.state.candidateInfo.ID);
 
-        axios.post( '/getcandidatereports', formsData ).then( response => {
+        axios.post( '/getcandidatethroughid', formsData ).then( response => {
 
             if( response.data[0] == undefined )
             {
 
+                this.setState( { loading: false } );
                 toast.dark("No Records Found", {
                     position: 'top-center',
                     progressClassName: 'success-progress-bar',
@@ -79,14 +103,18 @@ class ReportPanel extends Component {
 
                 for( let key in response.data )
                 {
+
                     this.setState( { candidateReportInfo: response.data[key] } );
+
                 }
 
-                this.setState( { showRecordModal: true } );
+                this.setState( { showRecordModal: true, loading: false } );
 
             }
 
         } ).catch( error => {
+
+            this.setState( { loading: false } );
 
             toast.dark("Network Error 500 please check your network connection", {
                 position: 'top-center',
@@ -113,6 +141,160 @@ class ReportPanel extends Component {
             this.setState( { showRecordModal: true } );
 
         }
+
+    }
+
+    getDataThroughDate = ( event ) => {
+
+        this.setState( { loading: true } );
+        const { value } = event.target;
+
+        const formsData = new FormData();
+        formsData.append( 'date', this.getDate(value) );
+
+        axios.post( '/getdatathroughdate', formsData ).then( response => {
+
+            this.setState( { loading: false } );
+            this.setState( { getAllThroughDate: response.data } );
+
+            if( this.state.getAllThroughDate == 0 )
+            {
+
+                toast.dark("No Record Found", {
+                    position: 'bottom-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+
+            }
+
+        } ).catch( error => {
+
+            toast.dark("Network Error 500 please check your network connection", {
+                position: 'bottom-center',
+                progressClassName: 'success-progress-bar',
+                autoClose: 3000,
+            });
+
+        } )
+
+    }
+
+    getDataThroughToken = ( event ) => {
+
+        event.preventDefault();
+        this.setState( { loading: true } );
+        const formsData = new FormData();
+        formsData.append('token', this.state.candidateInfo.Token);
+        axios.post('/gettokendata', formsData).then(response => {
+
+            if (response.data[0] == "N") {
+                
+                this.setState( { loading: false } );
+
+                toast.dark("Not Found", {
+                    position: 'top-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+
+            } else {
+
+                this.setState( { loading: false } );
+                for( let key in response.data )
+                {
+
+                    this.setState( { candidateReportInfo: response.data[key] } );
+
+                }
+
+                this.setState( { showRecordModal: true, loading: false } );
+
+            }
+
+        }).catch(err => {
+
+            this.setState( { loading: false } );
+            toast.dark("Network Error 500 please check your network connection", {
+                position: 'top-center',
+                progressClassName: 'success-progress-bar',
+                autoClose: 3000,
+            });
+
+        });
+
+    }
+
+    getDataThroughShift = ( event ) => {
+
+        this.setState( { loading: true } );
+        const { value } = event.target;
+        if( value !== "nothing" )
+        {
+
+            const formsData = new FormData();
+            formsData.append('shift', value);
+
+            axios.post('getcandidatethroughtime', formsData).then(response => {
+
+                this.setState({ loading: false });
+                this.setState({ getAllThroughShift: response.data });
+
+                if (this.state.getAllThroughShift == 0) {
+
+                    toast.dark("No Record Found", {
+                        position: 'bottom-center',
+                        progressClassName: 'success-progress-bar',
+                        autoClose: 3000,
+                    });
+
+                }
+
+            }).catch(error => {
+
+                toast.dark("Network Error 500 please check your network connection", {
+                    position: 'bottom-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+
+            })
+
+        }else
+        {
+
+            this.setState( { loading: false } );
+
+        }
+
+    }
+
+    getCandidate = ( passport ) => {
+
+        const formsData = new FormData();
+        formsData.append( 'passport', passport );
+        axios.post( '/getcandidatethroughpassport', formsData ).then( response => {
+
+            for (let key in response.data) 
+            {
+
+                this.setState({ candidateReportInfo: response.data[key] });
+
+            }
+
+            this.setState({ showRecordModal: true, loading: false });
+
+        } ).catch( error => {
+
+            this.setState( { loading: false } );
+
+            toast.dark("Network Error 500 please check your network connection", {
+                position: 'top-center',
+                progressClassName: 'success-progress-bar',
+                autoClose: 3000,
+            });
+
+        } )
 
     }
 
@@ -304,6 +486,7 @@ class ReportPanel extends Component {
         return(
 
             <>
+                <Loading show={this.state.loading} />
                 <div className="ReportPanel">
                     <Modal top={this.state.modalHeight} show={this.state.showRecordModal} close={this.modalToggle}>
                         {Records}
@@ -313,38 +496,154 @@ class ReportPanel extends Component {
                             <h3 className="mb-3">Report Panel</h3>
                             <nav>
                                 <div className="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                    <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Manual Entry</a>
-                                    <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">QR Code Scan</a>
+                                    <a className="nav-item nav-link active" id="manualEntry-tab" data-toggle="tab" href="#manualEntry" role="tab" aria-controls="manualEntry" aria-selected="true">Manual Entry</a>
+                                    <a className="nav-item nav-link" id="QR-codeScan-tab" data-toggle="tab" href="#QR-codeScan" role="tab" aria-controls="QR-codeScan" aria-selected="false">QR Code Scan</a>
                                 </div>
                             </nav>
                             <div className="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                                <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                    <div className="container">
+                                <div className="tab-pane fade show active" id="manualEntry" role="tabpanel" aria-labelledby="manualEntry-tab">
 
-                                        <form onSubmit={this.ManualEntry}>
-                                            <div className="row">
-                                                <div className="col-lg-3 col-md-3 col-sm-12 d-grid mb-3">
-                                                    <div>
-                                                        Candidate ID
+                                    <nav>
+                                        <div className="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                            <a className="nav-item nav-link active" id="throughID-tab" data-toggle="tab" href="#throughID" role="tab" aria-controls="throughID" aria-selected="true">Through ID</a>
+                                            <a className="nav-item nav-link" id="throughDate-tab" data-toggle="tab" href="#throughDate" role="tab" aria-controls="throughDate" aria-selected="false">Through Date</a>
+                                            <a className="nav-item nav-link" id="throughToken-tab" data-toggle="tab" href="#throughToken" role="tab" aria-controls="throughToken" aria-selected="false">Through Token</a>
+                                            <a className="nav-item nav-link" id="throughTime-tab" data-toggle="tab" href="#throughTime" role="tab" aria-controls="throughTime" aria-selected="false">Through Time</a>
+                                        </div>
+                                    </nav>
+                                    <div className="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+
+                                        <div className="tab-pane fade show active" id="throughID" role="tabpanel" aria-labelledby="throughID-tab">
+
+                                            <div className="container">
+
+                                                <form onSubmit={this.ManualEntryThrougID}>
+                                                    <div className="row">
+                                                        <div className="col-lg-3 col-md-3 col-sm-12 d-grid mb-3">
+                                                            <div>
+                                                                Candidate ID
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-9 col-md-9 col-sm-12 mb-3">
+                                                            <input
+                                                                type="text"
+                                                                className="form-control form-control-sm rounded-0"
+                                                                name="ID"
+                                                                onChange={this.onChangeHandler}
+                                                            />
+                                                        </div>
+                                                        <div className="col-12 d-grid mb-3">
+                                                            <button className="btn btns" type='submit'>Search</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="col-lg-9 col-md-9 col-sm-12 mb-3">
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div className="tab-pane fade" id="throughDate" role="tabpanel" aria-labelledby="throughDate-tab">
+                                            <h4 className="text-center my-4">Please select a date</h4>
+                                            <div className="px-lg-5 px-md-4 px-sm-0">
+                                                <input
+                                                    type="date"
+                                                    className="form-control form-control-sm mb-3 rounded-0"
+                                                    onChange={this.getDataThroughDate}
+                                                />
+                                            </div>
+
+                                            <div className="Alldata pt-4 container-fluid">
+                                                {
+                                                    this.state.getAllThroughDate.map( ( data, index ) => {
+
+                                                        return (
+
+                                                            <>
+                                                                <div className="row">
+                                                                    <div className="col-lg-1 col-md-1 col-sm-12 d-grid pr-0 pt-2 pb-1" key={ index }>
+                                                                        <div className="col-12 px-0"> <span className="d-mobile-block">Result No. <b>{ index }</b></span> <span className="d-mobile-none"> { index } </span> </div>
+                                                                    </div>
+                                                                    <div className="col-lg-11 col-md-11 colsm-12 d-grid border-top border-left border-right pt-2 pb-1">
+                                                                        <div className="row">
+                                                                            <div className="col-lg-4 col-md-6 col-sm-12"> <b>{data.candidate_name}</b> </div>
+                                                                            <div className="col-lg-5 col-md-6 col-sm-12"> <b>Passport No.</b> {data.candidate_passport} </div>
+                                                                            <div className="col-lg-3 col-md-6 col-sm-12"> <b onClick={ () => { this.getCandidate( data.candidate_passport ) } } className="text-primary" style={ { 'cursor' : 'pointer' } }>View Details</b> </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </>
+
+                                                        )
+
+                                                    } )
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div className="tab-pane fade" id="throughToken" role="tabpanel" aria-labelledby="throughToken-tab">
+                                            <h4 className="text-center my-4">Please enter a valid token No.</h4>
+                                            <div className="px-lg-5 px-md-4 px-sm-0">
+                                                <form onSubmit={this.getDataThroughToken}>
                                                     <input
                                                         type="text"
-                                                        className="form-control form-control-sm rounded-0"
-                                                        name="ID"
-                                                        onChange={this.ManualChangeHandler}
+                                                        className="form-control form-control-sm mb-3 rounded-0"
+                                                        placeholder="Token"
+                                                        onChange={this.onChangeHandler}
+                                                        name="Token"
                                                     />
-                                                </div>
-                                                <div className="col-12 d-grid mb-3">
-                                                    <button className="btn btns" type='submit'>Search</button>
-                                                </div>
+                                                    <button className="btn btn-sm btns btn-block">
+                                                        Search
+                                                    </button>
+                                                </form>
                                             </div>
-                                        </form>
+                                        </div>
+
+                                        <div className="tab-pane fade" id="throughTime" role="tabpanel" aria-labelledby="throughTime-tab">
+                                            <h4 className="text-center my-4">Please select shift</h4>
+                                            <div className="px-lg-5 px-md-4 px-sm-0">
+                                                <select 
+                                                    name="" 
+                                                    className="form-control form-control-sm rounded-0" 
+                                                    onChange={this.getDataThroughShift}
+                                                >
+                                                    <option value="nothing" selected>Please select shif</option>
+                                                    <option value="DayShift">Day</option>
+                                                    <option value="NightShift">Night</option>
+                                                </select>
+                                            </div>
+
+                                            <div className="Alldata pt-4 container-fluid">
+                                                {
+                                                    this.state.getAllThroughShift.map( ( data, index ) => {
+
+                                                        return (
+
+                                                            <>
+                                                                <div className="row">
+                                                                    <div className="col-lg-1 col-md-1 col-sm-12 d-grid pr-0 pt-2 pb-1" key={ index }>
+                                                                        <div className="col-12 px-0"> <span className="d-mobile-block">Result No. <b>{ index }</b></span> <span className="d-mobile-none"> { index } </span> </div>
+                                                                    </div>
+                                                                    <div className="col-lg-11 col-md-11 colsm-12 d-grid border-top border-left border-right pt-2 pb-1">
+                                                                        <div className="row">
+                                                                            <div className="col-lg-4 col-md-6 col-sm-12"> <b>{data.candidate_name}</b> </div>
+                                                                            <div className="col-lg-5 col-md-6 col-sm-12"> <b>Passport No.</b> {data.candidate_passport} </div>
+                                                                            <div className="col-lg-3 col-md-6 col-sm-12"> <b onClick={ () => { this.getCandidate( data.candidate_passport ) } } className="text-primary" style={ { 'cursor' : 'pointer' } }>View Details</b> </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </>
+
+                                                        )
+
+                                                    } )
+                                                }
+                                            </div>
+                                        </div>
 
                                     </div>
+                                    
                                 </div>
-                                <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div className="tab-pane fade" id="QR-codeScan" role="tabpanel" aria-labelledby="QR-codeScan-tab">
                                     Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
 					            </div>
                             </div>

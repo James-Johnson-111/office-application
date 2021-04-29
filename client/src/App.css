@@ -27,7 +27,7 @@
   box-shadow: none;
 }
 
-input[type='text'].form-control, input[type='password'].form-control {
+input[type='text'].form-control, input[type='password'].form-control, input[type='date'].form-control {
   border: rgb(34, 34, 34, .5) 1px solid;
 }
 
@@ -37,6 +37,11 @@ input[type='password'].form-control:focus {
 }
 
 input[type='text'].form-control:focus {
+  box-shadow: none;
+  border: 1px solid #222222;
+}
+
+input[type='date'].form-control:focus {
   box-shadow: none;
   border: 1px solid #222222;
 }

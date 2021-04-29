@@ -109,7 +109,7 @@ class Dashboard extends Component {
 
                     }
 
-                } ).catch(err => {});
+                } )
 
             }
             
