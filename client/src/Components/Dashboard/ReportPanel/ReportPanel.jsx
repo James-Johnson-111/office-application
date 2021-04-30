@@ -1,7 +1,8 @@
 import react, { Component } from 'react';
 
 import './ReportPanel.css';
-import axios from '../../../axios-instance';
+import axios from 'axios';
+// import axios from '../../../axios-instance';
 import Modal from '../../UI/Modal/Modal';
 import $ from "jquery";
 import { ToastContainer, toast } from 'react-toastify';

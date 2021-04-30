@@ -14,7 +14,8 @@ import ReportPanel from './ReportPanel/ReportPanel';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import $ from 'jquery';
-import axios from '../../axios-instance';
+// import axios from '../../axios-instance';
+import axios from 'axios';
 
 class Dashboard extends Component {
 

@@ -2,7 +2,8 @@ import react, { Component } from 'react';
 
 import './LoginForm.css';
 import * as passwordHash from 'password-hash';
-import axios from '../../../axios-instance';
+// import axios from '../../../axios-instance';
+import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loading from '../../UI/Loading/Loading';
 import $ from 'jquery';

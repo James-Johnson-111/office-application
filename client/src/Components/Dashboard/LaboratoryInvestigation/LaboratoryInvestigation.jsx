@@ -3,7 +3,11 @@ import react, { Component } from 'react';
 import './LaboratoryInvestigation.css';
 import $ from 'jquery';
 import Loading from '../../UI/Loading/Loading';
-import axios from '../../../axios-instance';
+// import axios from '../../../axios-instance';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';
 
 class LaboratoryInvestigation extends Component {
 
@@ -80,47 +84,78 @@ class LaboratoryInvestigation extends Component {
         event.preventDefault();
         this.setState( { loading: true } );
         const formsData = new FormData();
-        formsData.append( 'bloodGroup', this.state.Investication.bloodGroup );
-        formsData.append( 'hemoglobin', this.state.Investication.hemoglobin );
-        formsData.append( 'malaria', this.state.Investication.malaria );
-        formsData.append( 'microFilaria', this.state.Investication.microFilaria );
-        formsData.append( 'RBs', this.state.Investication.RBs );
-        formsData.append( 'lft', this.state.Investication.lft );
-        formsData.append( 'creatinine', this.state.Investication.creatinine );
-        formsData.append( 'hivIII', this.state.Investication.hivIII );
-        formsData.append( 'HbsAg', this.state.Investication.HbsAg );
-        formsData.append( 'antiHcv', this.state.Investication.antiHcv );
-        formsData.append( 'vdrl', this.state.Investication.vdrl );
-        formsData.append( 'tpha', this.state.Investication.tpha );
-        formsData.append( 'sugar', this.state.Investication.sugar );
-        formsData.append( 'albumin', this.state.Investication.albumin );
-        formsData.append( 'CovidPCR', this.state.Investication.CovidPCR );
-        formsData.append( 'CovidAntibodies', this.state.Investication.CovidAntibodies );
-        formsData.append( 'helminthes', this.state.Investication.helminthes );
-        formsData.append( 'ova', this.state.Investication.ova );
-        formsData.append( 'cyst', this.state.Investication.cyst );
-        formsData.append( 'others', this.state.Investication.others );
+        if( Cookies.get('tokenNo') !== undefined )
+        {
 
-        formsData.append( 'Polio', this.state.vaccination.Polio );
-        formsData.append( 'PolioDate', this.getDate(this.state.vaccination.PolioDate) );
-        formsData.append( 'MMR1', this.state.vaccination.MMR1 );
-        formsData.append( 'MMR1Date', this.getDate(this.state.vaccination.MMR1Date) );
-        formsData.append( 'MMR2', this.state.vaccination.MMR2 );
-        formsData.append( 'MMR2Date', this.getDate(this.state.vaccination.MMR2Date) );
-        formsData.append( 'Meningococcal', this.state.vaccination.Meningococcal );
-        formsData.append( 'MeningococcalDate', this.getDate(this.state.vaccination.MeningococcalDate) );
-        formsData.append( 'Covid', this.state.vaccination.Covid );
-        formsData.append( 'CovidDate', this.getDate(this.state.vaccination.CovidDate) );
+            formsData.append('bloodGroup', this.state.Investication.bloodGroup);
+            formsData.append('hemoglobin', this.state.Investication.hemoglobin);
+            formsData.append('malaria', this.state.Investication.malaria);
+            formsData.append('microFilaria', this.state.Investication.microFilaria);
+            formsData.append('RBs', this.state.Investication.RBs);
+            formsData.append('lft', this.state.Investication.lft);
+            formsData.append('creatinine', this.state.Investication.creatinine);
+            formsData.append('hivIII', this.state.Investication.hivIII);
+            formsData.append('HbsAg', this.state.Investication.HbsAg);
+            formsData.append('antiHcv', this.state.Investication.antiHcv);
+            formsData.append('vdrl', this.state.Investication.vdrl);
+            formsData.append('tpha', this.state.Investication.tpha);
+            formsData.append('sugar', this.state.Investication.sugar);
+            formsData.append('albumin', this.state.Investication.albumin);
+            formsData.append('CovidPCR', this.state.Investication.CovidPCR);
+            formsData.append('CovidAntibodies', this.state.Investication.CovidAntibodies);
+            formsData.append('helminthes', this.state.Investication.helminthes);
+            formsData.append('ova', this.state.Investication.ova);
+            formsData.append('cyst', this.state.Investication.cyst);
+            formsData.append('others', this.state.Investication.others);
 
-        axios.post( '/laboratoryentry', formsData ).then( response => {
+            formsData.append('Polio', this.state.vaccination.Polio);
+            formsData.append('PolioDate', this.getDate(this.state.vaccination.PolioDate));
+            formsData.append('MMR1', this.state.vaccination.MMR1);
+            formsData.append('MMR1Date', this.getDate(this.state.vaccination.MMR1Date));
+            formsData.append('MMR2', this.state.vaccination.MMR2);
+            formsData.append('MMR2Date', this.getDate(this.state.vaccination.MMR2Date));
+            formsData.append('Meningococcal', this.state.vaccination.Meningococcal);
+            formsData.append('MeningococcalDate', this.getDate(this.state.vaccination.MeningococcalDate));
+            formsData.append('Covid', this.state.vaccination.Covid);
+            formsData.append('CovidDate', this.getDate(this.state.vaccination.CovidDate));
+            formsData.append('Inserter', Cookies.get('LoginID'));
+            formsData.append('Token', Cookies.get('tokenNo'));
 
-            console.log(response.data[0]);
+            axios.post( '/laboratoryentry', formsData ).then( response => {
 
-        } ).catch( error => {
+                this.setState( { loading: false } );
+                toast.dark("Data Inserted Successfully", {
+                    position: 'bottom-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+                // setTimeout( () => {
+    
+                //     this.props.history.push('/dashboard');
+    
+                // }, 1500 );
+    
+            } ).catch( error => {
+    
+                this.setState( { loading: false } );
+                toast.dark("Network Error 500 please check your network connection", {
+                    position: 'top-center',
+                    progressClassName: 'success-progress-bar',
+                    autoClose: 3000,
+                });
+    
+            } );
 
-            console.log( error );
+        }else
+        {
 
-        } );
+            toast.dark("No Candidate data Found", {
+                position: 'top-center',
+                progressClassName: 'success-progress-bar',
+                autoClose: 3000,
+            });
+
+        }
 
     }
 
@@ -484,6 +519,7 @@ class LaboratoryInvestigation extends Component {
                         </div>
                     </div>
                 </div>
+                <ToastContainer autoClose={3000} />
             </>
 
         );

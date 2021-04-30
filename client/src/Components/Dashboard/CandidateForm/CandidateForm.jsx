@@ -1,7 +1,8 @@
 import react, { Component } from 'react';
 
 import './CandidateForm.css';
-import axios from '../../../axios-instance';
+// import axios from '../../../axios-instance';
+import axios from 'axios';
 import Modal from '../../UI/Modal/Modal';
 import Cookies from 'js-cookie';
 import Webcam from 'react-webcam';
