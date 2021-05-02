@@ -1,0 +1,41 @@
+.MedicalExamination {
+    width: 35%;
+    padding: 30px;
+    height: min-content;
+    background-color: #ffffff;
+    position: absolute;
+    top: calc( 50vh - 60vh );
+    left: calc( 35% - 30% );
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    z-index: 0;
+    color: #000;
+    font-family: Raleway;
+    font-size: 12px;
+}
+
+.MedicalExamination i {
+    font-size: 25px;
+    color: #40cfcd;
+}
+
+.MedicalExamination .form-control {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #40cfcd;
+    font-family: Quicksand;
+}
+
+.MedicalExamination .form-control:focus {
+    box-shadow: none;
+}
+
+.MedicalExamination .btn {
+    color: #ffffff;
+    font-family: Exo;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    background-color: #40cfcd;
+}
+
+.errors {
+    font-family: JosefinSans;
+}

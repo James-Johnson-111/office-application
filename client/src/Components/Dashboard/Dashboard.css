@@ -1,0 +1,215 @@
+.Dashboard .top_bar {
+    width: 100%;
+    font-family: Quicksand;
+    background-color: #5C5F6D;
+    color: #fff;
+    padding: 3px 20px;
+    z-index: 201;
+    position: fixed;
+    height: 50px;
+}
+
+.current_candidate_btn {
+    position: fixed;
+    top: 88vh;
+    left: 80%;
+    z-index: 200;
+    background-color: #222;
+    color: #fff;
+}
+
+.current_candidate_btn:focus {
+    color: #fff;
+}
+
+.Dashboard .Dashboard_logo {
+    color: #fff;
+    font-size: 25px;
+}
+
+.Dashboard input[type='search'] {
+    border: 0;
+    border-bottom: 1px solid #fff;
+    border-radius: 0;
+    font-size: 12px;
+    background: none;
+}
+
+.Dashboard input[type='search']::placeholder {
+    color: rgb(255, 255, 255, .5);
+}
+
+.Dashboard .side_fixed_bar {
+    position: fixed;
+    width: 200px;
+    height: 94vh;
+    top: calc(0vh + 50px);
+    background-color: #5C5F6D;
+    color: #fff;
+    z-index: 201;
+}
+
+.Dashboard .side_bar {
+    position: fixed;
+    width: 20%;
+    min-height: calc(100vh - 50px);
+    top: calc(0vh + 50px);
+    background-color: #5C5F6D;
+    color: #fff;
+    z-index: 201;
+    transition: .5s;
+    font-family: JosefinSans;
+}
+
+.Dashboard .side_bar .action_links a {
+    display: block;
+    /* text-align: center; */
+    padding: 10px 30px;
+    /* padding: 10px; */
+    transition: .5s;
+    color: #fff;
+}
+
+.Dashboard .side_bar .action_links.sub-links {
+    padding: 10px 0 0 35px;
+}
+
+.Dashboard .side_bar .action_links a:hover {
+    background-color: rgb(255, 255, 255, .1);
+    color: #fff;
+    text-decoration: none;
+}
+
+.Dashboard .candidate_info_btn {
+    position: relative;
+}
+
+.Dashboard .candidate_info_btn .candidate_info_div {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    padding: 10px;
+    height: min-content;
+    background-color: #fff;
+    box-shadow: 8px 10px 10px lightgrey;
+    z-index: 50;
+    color: #000;
+    cursor: auto;
+    font-family: Quicksand;
+    overflow: hidden;
+}
+
+.settings_div {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f5f8fd;
+    z-index: 500;
+    transition: 1s;
+    font-family: Quicksand;
+    font-size: 20px;
+}
+
+.settings_div .settings_div_content {
+    height: 90vh;
+    display: grid;
+    align-items: end;
+}
+
+.settings_div .settings_div_content a[data-toggle="tab"] {
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 10px 29px 0 rgb(68 88 144 / 10%);
+    padding: 5px;
+    width: 100%;
+    display: block;
+    font-size: 16px;
+}
+
+.settings_div .settings_div_content a[data-toggle="tab"]:active, .settings_div .settings_div_content a[data-toggle="tab"].active {
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .Dashboard .side_bar {
+        width: 30%;
+    }
+
+}
+
+@media only screen and (max-width: 992px) {
+
+    .Dashboard .top_bar {
+        font-size: 16px;
+    }
+
+    .Dashboard .side_bar {
+        width: 35%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    .Dashboard .top_bar .other-grids {
+        display: none;
+    }
+
+    .Dashboard .side_bar {
+        width: 40%;
+    }
+
+    .Dashboard .side_fixed_bar {
+        display: none;
+    }
+
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    .Dashboard .side_bar {
+        width: 50%;
+    }
+
+}
+
+@media only screen and (max-width: 480px) {
+
+    .Dashboard .side_bar {
+        width: 100%;
+    }
+
+}
+
+/* @media only screen and (max-width: 400px) {
+
+    .current_candidate_btn .candidate_info_div_mobile {
+        max-width: 250px;
+    }
+
+}
+
+@media only screen and (max-width: 350px) {
+
+    .current_candidate_btn .candidate_info_div_mobile {
+        max-width: 200px;
+    }
+
+} */
+
+@media only screen and (max-height: 400px)
+{
+
+    .Dashboard .side_bar {
+        font-size: 12px;
+        width: 50%;
+    }
+
+    .Dashboard .side_bar .action_links a {
+        padding: 5px 30px;
+    }
+
+}

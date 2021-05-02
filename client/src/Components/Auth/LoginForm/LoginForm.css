@@ -1,0 +1,68 @@
+.loginForm {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    font-family: Raleway;
+    background-image: url('https://image.freepik.com/free-vector/white-abstract-background-design_23-2148825582.jpg');
+    background-size: 100% 100%;
+    /* background-image: linear-gradient( rgba(1, 50, 67, 1), rgba(197, 239, 247, 1) ); */
+    /* background-color: #fff; */
+    
+    /* background-image: linear-gradient(#1570F8, #54A2E3); */
+}
+
+/* .loginForm::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, .1);
+} */
+
+
+.loginForm .loginForm-inner {
+    position: relative;
+}
+
+.loginForm .loginForm-inner .loginForm-content {
+    width: 30%;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 40px 0 40px 0;
+}
+
+/* .loginForm .loginForm-inner .loginForm-content .form-control {
+    background-color: rgb(21, 112, 248,);
+    border: 1px solid #fff;
+    color: #fff;
+}
+
+.loginForm .loginForm-inner .loginForm-content .form-control::placeholder {
+    color: #fff;
+} */
+
+@media only screen and (max-width: 992px) {
+
+    .loginForm .loginForm-inner .loginForm-content {
+        width: 80%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    .loginForm .loginForm-inner .loginForm-content {
+        width: 90%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .loginForm .loginForm-inner .loginForm-content {
+        width: 92%;
+    }
+
+}

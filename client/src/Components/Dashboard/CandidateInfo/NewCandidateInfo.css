@@ -1,0 +1,64 @@
+.NewCandidateInfo .NewCandidateInfo-content {
+    padding: 20px;
+    position: relative;
+}
+
+.NewCandidateInfo .NewCandidateInfo-content nav {
+    z-index: 10;
+}
+
+.NewCandidateInfo .NewCandidateInfo-content nav .nav-tabs {
+    border: 0;
+}
+
+.NewCandidateInfo .NewCandidateInfo-content .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #1A2476;
+    border-color: transparent transparent #f59b28;
+    border-bottom: 4px solid #f59b28 !important;
+    font-weight: bolder;
+}
+.NewCandidateInfo .NewCandidateInfo-content .nav-tabs .nav-link {
+    color: #1A2476;
+    font-family: Exo;
+    font-weight: bolder;
+    text-transform: uppercase;
+    border: 2px solid transparent;
+    font-size: 15px;
+}
+
+.NewCandidateInfo .NewCandidateInfo-content .nav-tabs .nav-link:hover {
+    border: 2px solid transparent;
+}
+
+.NewCandidateInfo .NewCandidateInfo-content .user_box {
+    font-family: Oxygen;
+    font-weight: bolder;
+    color: #1A2476;
+}
+
+.NewCandidateInfo .NewCandidateInfo-content .user_box p {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.NewCandidateInfo .NewCandidateInfo-content .current_candidate_info {
+    width: 100%;
+    padding: 20px 30px;
+    font-family: JosefinSans;
+    margin: 30px 0 10px 0;
+}
+
+.NewCandidateInfo .NewCandidateInfo-content .current_candidate_info hr {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+
+.NewCandidateInfo .form-back {
+    width: 100%;
+    height: 50vh;
+    background-color: #f59b28;
+    color: #ffffff;
+    position: relative;
+}
