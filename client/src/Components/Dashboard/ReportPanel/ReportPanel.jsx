@@ -23,11 +23,14 @@ class ReportPanel extends Component {
             },
             candidateReportInfo: {},
             showRecordModal: false,
-            modalHeight: null,
             loading: true,
             getAllThroughDate: [],
             getAllThroughToken: {},
-            getAllThroughShift: []
+            getAllThroughShift: [],
+            SByTokenTxt: <h5 className="text-uppercase mb-0 py-3">Search By Token</h5>,
+            SByDateTxt: <h5 className="text-uppercase mb-0 py-3">Search By Date</h5>,
+            SByShiftTxt: <h5 className="text-uppercase mb-0 py-3">Search By Shift</h5>
+
         }
 
     }
@@ -171,6 +174,8 @@ class ReportPanel extends Component {
 
         } ).catch( error => {
 
+            this.setState( { loading: false } );
+
             toast.dark("Network Error 500 please check your network connection", {
                 position: 'bottom-center',
                 progressClassName: 'success-progress-bar',
@@ -299,354 +304,147 @@ class ReportPanel extends Component {
 
     }
 
+    ChangeToTextField = ( whichOne ) => {
+
+        let txt = null;
+        if( whichOne == 'SByToken' )
+        {
+            txt = <> <input type="text" className="form-control form-control-sm rounded-0 SbyTDSInput" placeholder="Token NO." /> </>
+            this.setState( { SByTokenTxt: txt, SByDateTxt: <h5 className="text-uppercase mb-0 py-3">Search By Date</h5>, SByShiftTxt: <h5 className="text-uppercase mb-0 py-3">Search By Shift</h5> } );
+        }
+
+        if( whichOne == 'SByDate' )
+        {
+            txt = <> <input type="date" className="form-control form-control-sm rounded-0 SbyTDSInput" onChange={this.getDataThroughDate} /> </>
+            this.setState( { SByDateTxt: txt, SByTokenTxt: <h5 className="text-uppercase mb-0 py-3">Search By Token</h5>, SByShiftTxt: <h5 className="text-uppercase mb-0 py-3">Search By Shift</h5> } );
+        }
+
+        if( whichOne == 'SByShift' )
+        {
+            txt = <> <input type="text" className="form-control form-control-sm rounded-0 SbyTDSInput" /> </>
+            this.setState( { SByShiftTxt: txt, SByDateTxt: <h5 className="text-uppercase mb-0 py-3">Search By Date</h5>, SByTokenTxt: <h5 className="text-uppercase mb-0 py-3">Search By Token</h5> } );
+        }
+
+    }
+
     render()
     {
-
-        let Records = null;
-
-        if( Object.keys(this.state.candidateReportInfo).length === 0 )
-        {
-            Records = "No Records Found Please Enter The Correct ID.";
-        }else
-        {
-
-            Records = (
-                <>
-                    <div className="container-fluid">
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate ID
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.candidate_id}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Name
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.candidate_name}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Passport
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.candidate_passport}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Age
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.candidate_age}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Nationality
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.candidate_nationality}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Marital Status
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.candidate_marital_status}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Profession
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.candidate_profession}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Insertion Date
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.insert_date}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Inserted By
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.insert_by}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Edition Date
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.edit_date}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3 d-grid">
-                                <p style={ { 'fontSize' : '10px' } }>
-                                    Candidate Edit By
-                                </p>
-                            </div>
-                            <div className="col-9 mb-3">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control form-control-sm"
-                                    value={this.state.candidateReportInfo.edit_by}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )
-
-        }
 
         return(
 
             <>
                 <Loading show={this.state.loading} />
-                <div className="ReportPanel">
-                    <Modal top={this.state.modalHeight} show={this.state.showRecordModal} close={this.modalToggle}>
-                        {Records}
-                    </Modal>
-                    <div className="ReportPanel-inner d-flex justify-content-center">
-                        <div className="ReportPanel-content">
-                            <h3 className="mb-3">Report Panel</h3>
-                            <nav>
-                                <div className="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                    <a className="nav-item nav-link active" id="manualEntry-tab" data-toggle="tab" href="#manualEntry" role="tab" aria-controls="manualEntry" aria-selected="true">Manual Entry</a>
-                                    <a className="nav-item nav-link" id="QR-codeScan-tab" data-toggle="tab" href="#QR-codeScan" role="tab" aria-controls="QR-codeScan" aria-selected="false">QR Code Scan</a>
-                                </div>
-                            </nav>
-                            <div className="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                                <div className="tab-pane fade show active" id="manualEntry" role="tabpanel" aria-labelledby="manualEntry-tab">
-
+                <div className="GetCandidate w-100">
+                    <div className="container-fluid">
+                        <div className="row border-bottom">
+                            <div className="col-lg-8 col-md-8 col-sm-12">
+                                <div className="d-flex justify-content-center">
                                     <nav>
                                         <div className="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                            <a className="nav-item nav-link active" id="throughID-tab" data-toggle="tab" href="#throughID" role="tab" aria-controls="throughID" aria-selected="true">Through ID</a>
-                                            <a className="nav-item nav-link" id="throughDate-tab" data-toggle="tab" href="#throughDate" role="tab" aria-controls="throughDate" aria-selected="false">Through Date</a>
-                                            <a className="nav-item nav-link" id="throughToken-tab" data-toggle="tab" href="#throughToken" role="tab" aria-controls="throughToken" aria-selected="false">Through Token</a>
-                                            <a className="nav-item nav-link" id="throughTime-tab" data-toggle="tab" href="#throughTime" role="tab" aria-controls="throughTime" aria-selected="false">Through Time</a>
+                                            <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Candidate</a>
+                                            <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Reports</a>
+                                            <a className="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Anything Else</a>
+                                            <a className="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Others</a>
                                         </div>
                                     </nav>
-                                    <div className="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-4 col-sm-12">
+                                <div className="d-flex justify-content-center user_box">
+                                    <div className="">
+                                        <img
+                                            src="https://d1bvpoagx8hqbg.cloudfront.net/259/0f326ce8a41915e8b1d21ffaee087fae.jpg"
+                                            width="30"
+                                            height="30"
+                                            className="rounded-circle"
+                                        />
+                                    </div>
+                                    <div className="d-grid px-3">
+                                        <p>Usman Badar</p>
+                                    </div>
+                                    <div className="d-grid">
+                                        <p><i className="las la-user-secret"></i></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="container-fluid">
+                        <div className="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                            <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div className="row">
+                                    <div className="col-lg-12 col-md-12 col-sm-12">
+                                        <div className="search_options d-grid">
+                                            <div className="d-flex justify-content-center">
+                                                <div className="row sec" onClick={ () => this.ChangeToTextField('SByToken') }>
+                                                    <div className="col-4 pr-0 text-center">
+                                                        <i className="las la-money-bill-wave"></i>
+                                                    </div>
+                                                    <div className="col-8 pl-0 text-left d-grid">
+                                                        {this.state.SByTokenTxt}
+                                                    </div>
+                                                </div>
+                                                <div className="row sec" onClick={ () => this.ChangeToTextField('SByDate') }>
+                                                    <div className="col-4 pr-0 text-center">
+                                                        <i className="las la-calendar-day"></i>
+                                                    </div>
+                                                    <div className="col-8 pl-0 text-left d-grid">
+                                                        {this.state.SByDateTxt}
+                                                    </div>
+                                                </div>
+                                                <div className="row sec" onClick={ () => this.ChangeToTextField('SByShift') }>
+                                                    <div className="col-4 pr-0 text-center">
+                                                        <i className="las la-sun"></i>
+                                                    </div>
+                                                    <div className="col-8 pl-0 text-left d-grid">
+                                                        {this.state.SByShiftTxt}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row search_result">
+                                    <div className="container-fluid">
+                                        <div className="row">
+                                            {
+                                                this.state.getAllThroughDate.map( ( data, index ) => {
 
-                                        <div className="tab-pane fade show active" id="throughID" role="tabpanel" aria-labelledby="throughID-tab">
-
-                                            <div className="container">
-
-                                                <form onSubmit={this.ManualEntryThrougID}>
-                                                    <div className="row">
-                                                        <div className="col-lg-3 col-md-3 col-sm-12 d-grid mb-3">
-                                                            <div>
-                                                                Candidate ID
+                                                    return (
+                                                        <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={index}>
+                                                            <div className="candidate_info_div">
+                                                                <div className="row">
+                                                                    <div className="col-6 text-center">
+                                                                        <img
+                                                                            src="data:image/jpeg;base64,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"
+                                                                            width="100"
+                                                                            height='100'
+                                                                        />
+                                                                    </div>
+                                                                    <div className="col-6">
+                                                                        <h5 className="mb-0 font-weight-bolder">{data.candidate_name}</h5>
+                                                                        <p>{data.candidate_nationality}</p>
+                                                                        <button className="btn btn-sm btn-block">View Details</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div className="col-lg-9 col-md-9 col-sm-12 mb-3">
-                                                            <input
-                                                                type="text"
-                                                                className="form-control form-control-sm rounded-0"
-                                                                name="ID"
-                                                                onChange={this.onChangeHandler}
-                                                            />
-                                                        </div>
-                                                        <div className="col-12 d-grid mb-3">
-                                                            <button className="btn btns" type='submit'>Search</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                                    )
 
-                                            </div>
-
+                                                })
+                                            }
                                         </div>
-
-                                        <div className="tab-pane fade" id="throughDate" role="tabpanel" aria-labelledby="throughDate-tab">
-                                            <h4 className="text-center my-4">Please select a date</h4>
-                                            <div className="px-lg-5 px-md-4 px-sm-0">
-                                                <input
-                                                    type="date"
-                                                    className="form-control form-control-sm mb-3 rounded-0"
-                                                    onChange={this.getDataThroughDate}
-                                                />
-                                            </div>
-
-                                            <div className="Alldata pt-4 container-fluid">
-                                                {
-                                                    this.state.getAllThroughDate.map( ( data, index ) => {
-
-                                                        return (
-
-                                                            <>
-                                                                <div className="row">
-                                                                    <div className="col-lg-1 col-md-1 col-sm-12 d-grid pr-0 pt-2 pb-1" key={ index }>
-                                                                        <div className="col-12 px-0"> <span className="d-mobile-block">Result No. <b>{ index }</b></span> <span className="d-mobile-none"> { index } </span> </div>
-                                                                    </div>
-                                                                    <div className="col-lg-11 col-md-11 colsm-12 d-grid border-top border-left border-right pt-2 pb-1">
-                                                                        <div className="row">
-                                                                            <div className="col-lg-4 col-md-6 col-sm-12"> <b>{data.candidate_name}</b> </div>
-                                                                            <div className="col-lg-5 col-md-6 col-sm-12"> <b>Passport No.</b> {data.candidate_passport} </div>
-                                                                            <div className="col-lg-3 col-md-6 col-sm-12"> <b onClick={ () => { this.getCandidate( data.candidate_passport ) } } className="text-primary" style={ { 'cursor' : 'pointer' } }>View Details</b> </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </>
-
-                                                        )
-
-                                                    } )
-                                                }
-                                            </div>
-                                        </div>
-
-                                        <div className="tab-pane fade" id="throughToken" role="tabpanel" aria-labelledby="throughToken-tab">
-                                            <h4 className="text-center my-4">Please enter a valid token No.</h4>
-                                            <div className="px-lg-5 px-md-4 px-sm-0">
-                                                <form onSubmit={this.getDataThroughToken}>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control form-control-sm mb-3 rounded-0"
-                                                        placeholder="Token"
-                                                        onChange={this.onChangeHandler}
-                                                        name="Token"
-                                                    />
-                                                    <button className="btn btn-sm btns btn-block">
-                                                        Search
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-
-                                        <div className="tab-pane fade" id="throughTime" role="tabpanel" aria-labelledby="throughTime-tab">
-                                            <h4 className="text-center my-4">Please select shift</h4>
-                                            <div className="px-lg-5 px-md-4 px-sm-0">
-                                                <select 
-                                                    name="" 
-                                                    className="form-control form-control-sm rounded-0" 
-                                                    onChange={this.getDataThroughShift}
-                                                >
-                                                    <option value="nothing" selected>Please select shif</option>
-                                                    <option value="DayShift">Day</option>
-                                                    <option value="NightShift">Night</option>
-                                                </select>
-                                            </div>
-
-                                            <div className="Alldata pt-4 container-fluid">
-                                                {
-                                                    this.state.getAllThroughShift.map( ( data, index ) => {
-
-                                                        return (
-
-                                                            <>
-                                                                <div className="row">
-                                                                    <div className="col-lg-1 col-md-1 col-sm-12 d-grid pr-0 pt-2 pb-1" key={ index }>
-                                                                        <div className="col-12 px-0"> <span className="d-mobile-block">Result No. <b>{ index }</b></span> <span className="d-mobile-none"> { index } </span> </div>
-                                                                    </div>
-                                                                    <div className="col-lg-11 col-md-11 colsm-12 d-grid border-top border-left border-right pt-2 pb-1">
-                                                                        <div className="row">
-                                                                            <div className="col-lg-4 col-md-6 col-sm-12"> <b>{data.candidate_name}</b> </div>
-                                                                            <div className="col-lg-5 col-md-6 col-sm-12"> <b>Passport No.</b> {data.candidate_passport} </div>
-                                                                            <div className="col-lg-3 col-md-6 col-sm-12"> <b onClick={ () => { this.getCandidate( data.candidate_passport ) } } className="text-primary" style={ { 'cursor' : 'pointer' } }>View Details</b> </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </>
-
-                                                        )
-
-                                                    } )
-                                                }
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    
                                 </div>
-                                <div className="tab-pane fade" id="QR-codeScan" role="tabpanel" aria-labelledby="QR-codeScan-tab">
-                                    Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
-					            </div>
+                            </div>
+                            <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <h1>Reports</h1>
+                            </div>
+                            <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <h1>Anything Else</h1>
+                            </div>
+                            <div className="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                <h1>Others</h1>
                             </div>
                         </div>
                     </div>

@@ -168,7 +168,7 @@ app.post('/setcandidate', (req, res) => {
     let tokenDate = new Date();
     let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
 
-    Image.mv('images/' + imagesNames , ( err ) => {
+    Image.mv('client/public/images/' + imagesNames , ( err ) => {
 
         if(err) {
 

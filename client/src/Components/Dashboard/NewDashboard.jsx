@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 
 import './NewDashboard.css';
 import NewCandidateInfo from './CandidateInfo/NewCandidateInfo';
+import Report from './ReportPanel/ReportPanel';
 
 class Dashboard extends Component {
 
@@ -90,7 +91,7 @@ class Dashboard extends Component {
                     <div className="main-content">
                         <Switch>
                             <Route path='/candidateinfo' component={NewCandidateInfo} />
-                            <Route path='/reports' component={NewCandidateInfo} />
+                            <Route path='/reports' component={Report} />
                         </Switch>
                     </div>
                 </div>
