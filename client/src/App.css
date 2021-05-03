@@ -1,0 +1,96 @@
+.clear_float {
+  clear: both;
+}
+
+.d-tablet-block {
+  display: none !important;
+}
+
+.d-tablet-none {
+  display: block;
+}
+
+.d-mobile-block {
+  display: none;
+}
+
+.d-mobile-none {
+  display: block;
+}
+
+.site-bg {
+  background-color: #f7f7f7;
+}
+
+.d-grid {
+  display: grid;
+  align-items: center;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+/* input[type='text'].form-control, input[type='password'].form-control, input[type='date'].form-control {
+  border: rgb(34, 34, 34, .5) 1px solid;
+}
+
+input[type='password'].form-control:focus {
+  box-shadow: none;
+  border: 1px solid #222222;
+}
+
+input[type='text'].form-control:focus {
+  box-shadow: none;
+  border: 1px solid #222222;
+}
+
+input[type='date'].form-control:focus {
+  box-shadow: none;
+  border: 1px solid #222222;
+} */
+
+.btns {
+  border-radius: 20px 0 20px 0;
+  background-color: #222222;
+  border: 1px solid #222222;
+  color: #fff;
+  transition: .5s;
+  font-size: 12px;
+}
+
+.btns:hover {
+  background: none;
+  border: 1px solid #222222;
+  color: #222222;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .d-tablet-block {
+    display: grid !important;
+  }
+  
+  .d-tablet-none {
+    display: none;
+  }
+
+}
+
+
+@media only screen and (max-width: 600px) {
+
+  .d-mobile-block {
+    display: block;
+  }
+
+  .d-mobile-none {
+    display: none;
+  }
+  .bg-mobile-block {
+    background-color: #222222;
+    color: #fff;
+    padding: 5px 0;
+  }
+
+}
