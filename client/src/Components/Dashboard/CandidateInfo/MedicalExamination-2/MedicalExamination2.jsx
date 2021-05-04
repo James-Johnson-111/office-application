@@ -135,11 +135,7 @@ class MedicalExamination2 extends Component {
                     autoClose: 3000,
                 });
 
-                setTimeout( () => {
-
-                    this.props.history.push( '/LaboratoryInvestigation/' + Cookies.get('tokenNo') );
-        
-                }, 1000 );
+                $('input.form-control').val('');
 
             }
 

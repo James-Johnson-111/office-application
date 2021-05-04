@@ -11,6 +11,7 @@
     background-image: linear-gradient( #1A2476, #0F1345 );
     color: #ffffff;
     z-index: 11;
+    transition: .5s;
 }
 
 .NewDashboard .side_bar hr {
@@ -82,4 +83,128 @@
     width: 85%;
     margin-left: 15%;
     position: relative;
+}
+
+.NewDashboard .fixed_btn {
+    display: none;
+    z-index: 300;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #0F1345;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+.NewDashboard .fixed_btn:active .NewDashboard .side_bar {
+    left: 0;
+}
+
+@media only screen and (max-width: 1370px)
+{
+
+    .NewDashboard .side_bar div .side-links {
+        padding: 0 0 0 30px;
+    }
+
+}
+
+@media only screen and (max-width: 1250px)
+{
+
+    .NewDashboard .side_bar div .side-links {
+        padding: 0 0 0 10px;
+    }
+
+}
+
+@media only screen and (max-width: 1150px)
+{
+
+    .NewDashboard .side_bar div .side-links {
+        padding: 0;
+    }
+
+}
+
+@media only screen and (max-width: 1100px)
+{
+
+    .NewDashboard .side_bar {
+        left: -100%;
+        width: 20%;
+    }
+
+    .NewDashboard .main-content {
+        width: 100%;
+        margin-left: 0;
+        position: relative;
+    }
+
+    .NewDashboard .fixed_btn {
+        top: 90vh;
+        left: 93%;
+        display: block;
+    }
+
+}
+
+@media only screen and (max-width: 992px) 
+{
+    
+    .NewDashboard .side_bar {
+        width: 25%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) 
+{
+
+    .NewDashboard .fixed_btn {
+        left: 90%;
+        top: 90vh;
+        display: block;
+    }
+
+    .NewDashboard .side_bar {
+        width: 35%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) 
+{
+
+    .NewDashboard .fixed_btn {
+        left: 85%;
+    }
+
+    .NewDashboard .side_bar {
+        width: 70%;
+    }
+
+}
+
+@media only screen and (max-width: 350px) 
+{
+
+    .NewDashboard .fixed_btn {
+        left: 80%;
+    }
+
+    .NewDashboard .side_bar {
+        width: 100%;
+    }
+
+}
+
+@media only screen and (max-height: 600px)
+{
+
+    .NewDashboard .side_bar {
+        min-height: 600px;
+        overflow: auto;
+    }
+
 }

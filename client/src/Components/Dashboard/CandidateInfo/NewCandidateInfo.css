@@ -62,3 +62,53 @@
     color: #ffffff;
     position: relative;
 }
+
+@media only screen and (max-width: 992px)
+{
+
+    .NewCandidateInfo .NewCandidateInfo-content .current_candidate_info {
+        width: 100%;
+        padding: 20px 0px;
+        font-family: JosefinSans;
+        margin: 30px 0 100px 0;
+    }
+
+    .NewCandidateInfo .form-back .errors {
+        display: none;
+    }
+    
+
+}
+
+@media only screen and (max-width: 768px)
+{
+
+    .NewCandidateInfo .NewCandidateInfo-content .user_box {
+        display: none !important;
+    }
+    
+}
+
+
+@media only screen and (max-width: 600px)
+{
+
+    .NewCandidateInfo {
+        font-size: 16px;
+    }
+
+    .NewCandidateInfo .NewCandidateInfo-content .current_candidate_info {
+        margin: 10px 0 100px 0;
+    }
+
+    .NewCandidateInfo .NewCandidateInfo-content .current_candidate_info span {
+        display: block;
+        margin: 10px 0 0 0;
+    }
+
+    .NewCandidateInfo .form-back {
+        height: 80vh;
+        margin-bottom: 80px;
+    }
+
+}

@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import './NewDashboard.css';
 import NewCandidateInfo from './CandidateInfo/NewCandidateInfo';
 import Report from './ReportPanel/ReportPanel';
+import $ from 'jquery';
 
 class Dashboard extends Component {
 
@@ -13,7 +14,10 @@ class Dashboard extends Component {
 
         super( props );
         this.state = {
-            tokenNO: null
+            tokenNO: null,
+            show: true,
+            isShowed: false,
+            isHided: false
         }
 
     }
@@ -21,12 +25,12 @@ class Dashboard extends Component {
     componentDidMount()
     {
 
-        // if( Cookies.get('LoginID') === undefined || Cookies.get('LoginID') == null )
-        // {
+        if( Cookies.get('LoginID') === undefined || Cookies.get('LoginID') == null )
+        {
 
-        //     this.props.history.push('/login');
+            this.props.history.push('/login');
 
-        // }
+        }
 
         let uniqueID = () => {
 
@@ -37,6 +41,19 @@ class Dashboard extends Component {
         }
         Cookies.set('tokenNo', uniqueID());
         this.setState( { tokenNO: uniqueID() } );
+
+    }
+
+    openClose = () => {
+
+        if( this.state.show )
+        {
+            this.setState( { show: false } );
+        }else
+        {
+            this.setState( { show: true } );
+        }
+
     }
 
     render()
@@ -46,7 +63,8 @@ class Dashboard extends Component {
 
             <>
                 <div className="NewDashboard">
-                    <div className="side_bar">
+                    <button className='btn fixed_btn' onClick={this.openClose} ><i className="lab la-openid"></i></button>
+                    <div className="side_bar" style={ { 'left' : this.state.show ? '0' : '-100%' } }>
                         <h3 className="text-center pt-3 pb-0 mb-0">
                             lab official
                             <div>online laboratory</div>

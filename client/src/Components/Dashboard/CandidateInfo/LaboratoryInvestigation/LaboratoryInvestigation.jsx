@@ -128,11 +128,8 @@ class LaboratoryInvestigation extends Component {
                     progressClassName: 'success-progress-bar',
                     autoClose: 3000,
                 });
-                // setTimeout( () => {
-    
-                //     this.props.history.push('/dashboard');
-    
-                // }, 1500 );
+                
+                $('input.form-control').val('');
     
             } ).catch( error => {
     

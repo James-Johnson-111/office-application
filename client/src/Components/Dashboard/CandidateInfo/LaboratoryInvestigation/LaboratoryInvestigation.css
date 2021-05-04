@@ -39,3 +39,39 @@
 .errors {
     font-family: JosefinSans;
 }
+
+@media only screen and (max-width: 992px)
+{
+
+    .LaboratoryInvestigation {
+        width: 45%;
+    }
+
+}
+
+@media only screen and (max-width: 768px)
+{
+
+    .LaboratoryInvestigation {
+        width: 55%;
+    }
+
+}
+
+@media only screen and (max-width: 600px)
+{
+
+    .LaboratoryInvestigation {
+        width: 75%;
+    }
+
+}
+
+@media only screen and (max-width: 450px)
+{
+
+    .LaboratoryInvestigation {
+        width: 90%;
+    }
+
+}

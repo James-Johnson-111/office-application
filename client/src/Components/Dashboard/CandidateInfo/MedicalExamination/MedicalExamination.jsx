@@ -112,12 +112,8 @@ class MedicalExamination extends Component {
                     progressClassName: 'success-progress-bar',
                     autoClose: 3000,
                 });
-
-                setTimeout( () => {
-
-                    this.props.history.push( '/MedicalExamination2/' + Cookies.get('tokenNo') );
-        
-                }, 1000 );
+                
+                $('input.form-control').val('');
 
             }
 

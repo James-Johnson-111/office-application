@@ -39,3 +39,39 @@
 .errors {
     font-family: JosefinSans;
 }
+
+@media only screen and (max-width: 992px)
+{
+
+    .MedicalExamination2 {
+        width: 45%;
+    }
+
+}
+
+@media only screen and (max-width: 768px)
+{
+
+    .MedicalExamination2 {
+        width: 55%;
+    }
+
+}
+
+@media only screen and (max-width: 600px)
+{
+
+    .MedicalExamination2 {
+        width: 75%;
+    }
+
+}
+
+@media only screen and (max-width: 450px)
+{
+
+    .MedicalExamination2 {
+        width: 90%;
+    }
+
+}

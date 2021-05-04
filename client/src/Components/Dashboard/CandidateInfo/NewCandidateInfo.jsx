@@ -133,7 +133,7 @@ class NewCandidateInfo extends Component {
 
 
                         <div className="current_candidate_info">
-                            <div className="d-flex justify-content-end">
+                            <div className="d-lg-flex justify-content-end">
                                 <div>
                                     <span className="px-3">
                                         <b>Token NO: </b> <span>{this.state.Token}</span>

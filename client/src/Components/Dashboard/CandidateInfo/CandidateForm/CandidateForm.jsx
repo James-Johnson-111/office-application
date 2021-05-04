@@ -265,29 +265,35 @@ class CandidateForm extends Component {
                     <button className="btn btn-sm btn-block mt-3" onClick={this.takePhoto}>Click</button>
                 </Modal>
                 <Modal show={this.state.showModal} close={this.modalCall} top={this.state.modalHeight}>
-                    <div className="container-fluid">
-                        <p className="text-center"><small><b>SELECT THE WAY YOU WANT TO UPLOAD IMAGE</b></small></p>
-                        <div className="row">
-                            <div className="col-6">
-                                <input
-                                    type="file"
-                                    className="form-control form-control-sm d-none"
-                                    onChange={this.onImageUpload}
-                                    name="userImage"
-                                    required
-                                    ref={fileInput => this.fileInput = fileInput}
-                                />
-                                <div className="btn-group w-100 uploadFile d-grid" onClick={() => this.fileInput.click()}>
-                                    <div className="d-flex justify-content-center">
-                                        <i className="las la-plus la-2x"></i>
+                    {(this.state.candidateInfo.Name != null) && (this.state.candidateInfo.Profession != null) && this.state.candidateInfo.Passport != null ?
+                        <>
+                            <div className="container-fluid">
+                                <p className="text-center"><small><b>SELECT THE WAY YOU WANT TO UPLOAD IMAGE</b></small></p>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <input
+                                            type="file"
+                                            className="form-control form-control-sm d-none"
+                                            onChange={this.onImageUpload}
+                                            name="userImage"
+                                            required
+                                            ref={fileInput => this.fileInput = fileInput}
+                                        />
+                                        <div className="btn-group w-100 uploadFile d-grid" onClick={() => this.fileInput.click()}>
+                                            <div className="d-flex justify-content-center">
+                                                <i className="las la-plus la-2x"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-6">
+                                        <img className="rounded" style={{ 'cursor': 'pointer' }} onClick={this.cameraModalCall} src={cameraImg} width="100%" />
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-6">
-                                <img className="rounded" style={ { 'cursor' : 'pointer' } } onClick={this.cameraModalCall} src={cameraImg} width="100%" />
-                            </div>
-                        </div>
-                    </div>
+                        </>
+                        :
+                        <h3 className="text-center">Please fill the form first.</h3>
+                    }
                 </Modal>
                 <div className="CandidateForm">
 
