@@ -7,24 +7,24 @@ const { send } = require('process');
 
 const PORT = process.env.PORT || 5000;
 
-// const db = mysql.createConnection( 
-//     {
-//         host: 'remotemysql.com',
-//         user: '8tttXb5VZx',
-//         password: 'I7W2CAugk4',
-//         database: '8tttXb5VZx'
-//     }
-// )
-
-
 const db = mysql.createConnection( 
     {
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'office-database'
+        host: 'remotemysql.com',
+        user: '8tttXb5VZx',
+        password: 'I7W2CAugk4',
+        database: '8tttXb5VZx'
     }
 )
+
+
+// const db = mysql.createConnection( 
+//     {
+//         host: 'localhost',
+//         user: 'root',
+//         password: '',
+//         database: 'office-database'
+//     }
+// )
 
 app.use( cors() );
 app.use( express.json() );
@@ -256,32 +256,6 @@ app.post('/setcandidate', (req, res) => {
 
 });
 
-app.post( '/getcandidatethroughpassport', ( req, res ) => {
-
-    const { passport } = req.body;
-
-    db.query(
-        "SELECT * from candidate_info WHERE candidate_passport = '" + passport + "'",
-        ( err, rslt ) => {
-
-            if( err )
-            {
-
-                console.log( err );
-
-            }
-            else
-            {
-
-                res.send( rslt );
-
-            }
-
-        }
-    )
-
-} )
-
 app.post( '/gettokendata', ( req, res ) => {
 
     const { token } = req.body;
@@ -307,29 +281,6 @@ app.post( '/gettokendata', ( req, res ) => {
     )
 
 } )
-
-app.post('/getcandidatethroughid', ( req, res ) => {
-
-    db.query(
-        "SELECT * FROM candidate_info WHERE candidate_id = " + req.body.CandidateID,
-        ( err, rslt ) => {
-
-            if( err )
-            {
-
-                console.log( err );
-
-            }else
-            {
-
-                res.send( rslt );
-
-            }
-
-        }
-    )
-
-} );
 
 app.get('/getuser', ( req, res ) => {
 

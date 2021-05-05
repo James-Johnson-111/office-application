@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as PasswordHash from 'password-hash';
 import QRcode from 'qrcode';
-// import { jsPDF } from "jspdf";
+import print from 'print-js'
 import Token from './Token';
 
 class GetToken extends Component {
@@ -106,17 +106,25 @@ class GetToken extends Component {
 
             setTimeout( () => {
 
-                var backup = document.body.innerHTML;
-                var Pcontent = document.getElementById('tokenContent').innerHTML;
-                document.body.innerHTML = Pcontent;
-                var newow = document.body.style.width;
-                var newoh = document.body.style.height;
-                document.body.style.width="2cm";
-                document.body.style.height="1cm";
+                // var backup = document.body.innerHTML;
+                // var Pcontent = document.getElementById('tokenContent').innerHTML;
+                // document.body.innerHTML = Pcontent;
+                // var newow = document.body.style.width;
+                // var newoh = document.body.style.height;
+                // document.body.style.width="2cm";
+                // document.body.style.height="1cm";
                 window.print();
-                document.body.style.width = newow;
-                document.body.style.height = newoh;
-                document.body.innerHTML = backup;
+                // document.body.style.width = newow;
+                // document.body.style.height = newoh;
+                // document.body.innerHTML = backup;
+                // print(
+                //     {
+                //         printable: 'tokenContent',
+                //         type: 'html',
+                //         targetStyles: ['*'],
+                //         header: 'PrintJS - Print Form With Customized Header'
+                //     }
+                // )
 
             }, 1000 )
             setTimeout(() => {

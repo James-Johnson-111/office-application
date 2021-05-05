@@ -97,6 +97,19 @@ class Dashboard extends Component {
                                         reports
                                     </div>
                                 </NavLink>
+                                {
+                                    Cookies.get('LoginID') === 'Admin' ?
+                                        <NavLink activeClassName="linkActive" to="/reports">
+                                            <div className="d-grid pr-1">
+                                                <i className="las la-user-edit"></i>
+                                            </div>
+                                            <div className="d-grid pl-1">
+                                                New User
+                                            </div>
+                                        </NavLink>
+                                    :
+                                    null
+                                }
                             </div>
                             <div className="logout_div">
                                 <div className="side-links mb-0 pb-0">

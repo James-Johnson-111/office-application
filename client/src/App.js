@@ -6,6 +6,7 @@ import NewDashboard from './Components/Dashboard/NewDashboard';
 import Error from './Components/UI/404Error/404Error';
 import Logout from './Components/Auth/Logout/Logout';
 import GetToken from './Components/GetToken/GetToken';
+import CandidateForm from './Components/Dashboard/CandidateInfo/CandidateForm/CandidateForm';
 
 class App extends Component {
 
@@ -24,7 +25,7 @@ class App extends Component {
           <Route path='/candidateinfo' component={ NewDashboard } />
           <Route path='/reports' component={ NewDashboard } />
           <Route path='/gettoken' component={ GetToken } />
-          <Route path='/welcomecandidate/:id' component={ GetToken } />          
+          <Route path='/welcomecandidate/:id' component={ CandidateForm } />          
 
           <Route path='/login' component={ LoginForm } />
           <Route path='/logout' component={ Logout } />
