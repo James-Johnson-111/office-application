@@ -168,7 +168,7 @@ app.post('/setcandidate', (req, res) => {
     let tokenDate = new Date();
     let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
 
-    Image.mv('client/public/images/' + imagesNames , ( err ) => {
+    Image.mv('client/public/images/candidates/' + imagesNames , ( err ) => {
 
         if(err) {
 
@@ -256,12 +256,38 @@ app.post('/setcandidate', (req, res) => {
 
 });
 
+app.post( '/getcurrentcandidate', ( req, res ) => {
+
+    const { token } = req.body;
+
+    db.query(
+        "SELECT candidate_info.*, candidate_tokens.token_no FROM candidate_info INNER JOIN candidate_tokens ON candidate_info.candidate_id = candidate_tokens.candidate_id WHERE candidate_tokens.token_no = '" + token + "'",
+        ( err, rslt ) => {
+
+            if( err )
+            {
+
+                console.log( err );
+
+            }
+            else
+            {
+
+                res.send(rslt);
+
+            }
+
+        }
+    )
+
+} )
+
 app.post( '/gettokendata', ( req, res ) => {
 
     const { token } = req.body;
 
     db.query(
-        "SELECT candidate_info.*, candidate_images.candidate_image, candidate_tokens.candidate_id from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id INNER JOIN candidate_tokens ON candidate_info.candidate_id = candidate_tokens.candidate_id WHERE candidate_tokens.token_no = '" + token + "'",
+        "SELECT candidate_info.*, users.*, candidate_images.candidate_image, candidate_tokens.token_no from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id INNER JOIN candidate_tokens ON candidate_info.candidate_id = candidate_tokens.candidate_id INNER JOIN users ON users.login_id = candidate_info.insert_by",
         ( err, rslt ) => {
 
             if( err )
@@ -306,13 +332,23 @@ app.get('/getuser', ( req, res ) => {
 } );
 
 app.post('/createuser', (req, res) => {
-    const loginID = req.body.loginID;
-    const loginPass = req.body.loginPass;
-    const params = req.body.params;
+    const { LoginID, Password, Params, Role, ImageName } = req.body;
+    const Img = req.files.Image;
+    let ImgWithExtension = ImageName + '.png';
+
+    Img.mv('client/public/images/users/' + ImgWithExtension , ( err ) => {
+
+        if(err) {
+
+            console.log(err);
+
+        }
+
+    });
     
     db.query(
-        'INSERT INTO users(login_id,params,user_password) VALUES(?,?,?)',
-        [loginID,params,loginPass],
+        'INSERT INTO users(login_id,params,user_password,user_role,user_image) VALUES(?,?,?,?,?)',
+        [LoginID,Params,Password,Role,ImgWithExtension],
         ( err, rslt ) => {
 
             if(err)
@@ -337,7 +373,7 @@ app.post( '/getdatathroughdate', ( req, res ) => {
     const { date } = req.body;
 
     db.query(
-        "SELECT candidate_info.*, candidate_images.candidate_image from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id WHERE insert_date LIKE '%" + date + "%'",
+        "SELECT candidate_info.*, users.*, candidate_images.candidate_image from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id INNER JOIN users ON candidate_info.insert_by = users.login_id WHERE insert_date LIKE '%" + date + "%'",
         (err, rslt) => {
 
             if (err) {
@@ -359,7 +395,7 @@ app.post( '/getcandidatethroughtime', ( req, res ) => {
     const { time1, time2 } = req.body;
 
     db.query(
-        "SELECT * FROM candidate_info WHERE candidate_info.inserted_time > '" + time1 + "' AND candidate_info.inserted_time < '" + time2 + "'",
+        "SELECT candidate_info.*, users.*, candidate_images.candidate_image from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id INNER JOIN users ON candidate_info.insert_by = users.login_id WHERE candidate_info.inserted_time between '" + time1 + "' AND '" + time2 + "'",
         ( err, rslt ) => {
 
             if( err )
