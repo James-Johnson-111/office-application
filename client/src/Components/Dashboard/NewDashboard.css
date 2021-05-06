@@ -1,0 +1,234 @@
+.user_box_container {
+    position: fixed;
+    top: 2.9vh;
+    left: 82%;
+    z-index: 102;
+}
+
+.user_box_container .user_box {
+    font-family: Oxygen;
+    font-weight: bolder;
+    color: #1A2476;
+}
+
+.user_box_container .user_box p {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.NewDashboard {
+    position: relative;
+}
+
+.NewDashboard .side_bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 15%;
+    height: 100vh;
+    background-image: linear-gradient( #1A2476, #0F1345 );
+    color: #ffffff;
+    z-index: 11;
+    transition: .5s;
+    border: 0;
+}
+
+.NewDashboard .side_bar hr {
+    width: 70%;
+    float: right;
+    background-color: #566BE3;
+}
+
+.NewDashboard .side_bar h3 {
+    font-family: Quicksand;
+    font-weight: bolder;
+    color: #40CFCD;
+}
+
+.NewDashboard .side_bar h3 div {
+    font-size: 12px;
+    text-align: right;
+    padding: 0 20px;
+    color: #ffffff;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.NewDashboard .side_bar div .side-links {
+    padding: 0 0 0 50px;
+}
+
+.NewDashboard .side_bar div .side-links a {
+    display: flex;  
+    padding: 15px;
+    color: #566BE3;
+    text-transform: uppercase;
+    font-size: 12px;
+    transition: .5s;
+    border-radius: 5px 0 0 5px;
+    /* background-color: ; */
+    font-weight: bolder;
+    font-family: Quicksand;
+}
+
+.NewDashboard .side_bar div .side-links a:hover {
+    background-color: #ffffff;
+    color: #0F1345;
+    text-decoration: none;
+}
+
+.linkActive {
+    background-color: #ffffff;
+    color: #0F1345;
+    text-decoration: none;
+
+}
+
+.NewDashboard .side_bar div .side-links a i {
+    font-size: 20px;
+}
+
+.NewDashboard .side_bar .logout_div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90%;
+    display: grid;
+    align-items: end;
+    z-index: -1;
+}
+
+.NewDashboard .main-content {
+    width: 85%;
+    margin-left: 15%;
+    position: relative;
+}
+
+.NewDashboard .fixed_btn {
+    display: none;
+    z-index: 300;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #40CFCD;
+    color: #ffffff;
+    border: 1px solid #40CFCD;
+}
+
+.NewDashboard .fixed_btn:active .NewDashboard .side_bar {
+    left: 0;
+}
+
+@media only screen and (max-width: 1370px)
+{
+
+    .NewDashboard .side_bar div .side-links {
+        padding: 0 0 0 30px;
+    }
+
+}
+
+@media only screen and (max-width: 1250px)
+{
+
+    .NewDashboard .side_bar div .side-links {
+        padding: 0 0 0 10px;
+    }
+
+}
+
+@media only screen and (max-width: 1150px)
+{
+
+    .NewDashboard .side_bar div .side-links {
+        padding: 0;
+    }
+
+}
+
+@media only screen and (max-width: 1100px)
+{
+
+    .NewDashboard .side_bar {
+        left: -100%;
+        width: 20%;
+    }
+
+    .NewDashboard .main-content {
+        width: 100%;
+        margin-left: 0;
+        position: relative;
+    }
+
+    .NewDashboard .fixed_btn {
+        top: 90vh;
+        left: 93%;
+        display: block;
+    }
+
+}
+
+@media only screen and (max-width: 992px) 
+{
+    
+    .NewDashboard .side_bar {
+        width: 25%;
+    }
+
+    .user_box_container {
+        left: 75%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) 
+{
+
+    .NewDashboard .fixed_btn {
+        left: 90%;
+        top: 90vh;
+        display: block;
+    }
+
+    .NewDashboard .side_bar {
+        width: 35%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) 
+{
+
+    .NewDashboard .fixed_btn {
+        left: 85%;
+    }
+
+    .NewDashboard .side_bar {
+        width: 70%;
+    }
+
+}
+
+@media only screen and (max-width: 350px) 
+{
+
+    .NewDashboard .fixed_btn {
+        left: 80%;
+    }
+
+    .NewDashboard .side_bar {
+        width: 100%;
+    }
+
+}
+
+@media only screen and (max-height: 600px)
+{
+
+    .NewDashboard .side_bar {
+        min-height: 600px;
+        overflow: auto;
+    }
+
+}

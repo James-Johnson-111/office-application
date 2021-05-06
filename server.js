@@ -7,24 +7,24 @@ const { send } = require('process');
 
 const PORT = process.env.PORT || 5000;
 
-const db = mysql.createConnection( 
-    {
-        host: 'remotemysql.com',
-        user: '8tttXb5VZx',
-        password: 'I7W2CAugk4',
-        database: '8tttXb5VZx'
-    }
-)
-
-
 // const db = mysql.createConnection( 
 //     {
-//         host: 'localhost',
-//         user: 'root',
-//         password: '',
-//         database: 'office-database'
+//         host: 'remotemysql.com',
+//         user: '8tttXb5VZx',
+//         password: 'I7W2CAugk4',
+//         database: '8tttXb5VZx'
 //     }
 // )
+
+
+const db = mysql.createConnection( 
+    {
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'office-database'
+    }
+)
 
 app.use( cors() );
 app.use( express.json() );
