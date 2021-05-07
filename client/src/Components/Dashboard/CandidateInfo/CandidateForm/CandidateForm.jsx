@@ -20,16 +20,16 @@ class CandidateForm extends Component {
         super( props );
         this.state = {
             candidateInfo: {
-                Id: null,
-                Name: null,
-                Age: null,
-                Nationality: null,
-                Gander: null,
-                MStatus: null,
-                Profession: null,
-                Passport: null,
-                PlaceOfIssue: null,
-                TrevellingTo: null
+                candidate_id: null,
+                candidate_name: null,
+                candidate_age: null,
+                candidate_nationality: null,
+                candidate_gender: null,
+                candidate_marital_status: null,
+                candidate_profession: null,
+                candidate_passport: null,
+                place_of_issue: null,
+                travelling_to: null
             },
             Insertor: null,
             Editor: null,
@@ -38,7 +38,8 @@ class CandidateForm extends Component {
             candidateImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU',
             image: null,
             imageName: null,
-            loading: true
+            loading: true,
+            tokens: null
         }
 
     }
@@ -46,15 +47,51 @@ class CandidateForm extends Component {
     componentDidMount()
     {
 
+        axios.get('/getalltokens').then( response => {
+
+            this.setState( { tokens: response.data } );
+
+            const forsmData = new FormData();
+            forsmData.append('token', this.state.tokens[0].token);
+            axios.post('/getcurrentcandidate', forsmData).then(response => {
+
+                if (response.data[0] == "N") {
+    
+                    // this.setState({ Token: "Not Found", Name: "Not Found" });
+    
+                } else {
+
+                    this.props.filledData(response.data);
+                    this.setState( { candidateInfo: response.data[0], candidateImg: "images/candidates/" + response.data[0].candidate_image } );
+    
+                }
+    
+            }).catch(error => {
+    
+                // this.setState({ Token: "Not Found", Name: "Not Found" });
+    
+            })
+
+        } ).catch( err => {
+
+            console.log( err );
+
+        } )
+
         if( Cookies.get( 'LoginID' ) != null )
         {
 
-            this.setState( { Editor: Cookies.get( 'LoginID' ), Insertor: Cookies.get( 'LoginID' ) } );
+            this.setState( { Editor: Cookies.get( 'LoginID' ), Insertor: Cookies.get( 'LoginID' ), candidateInfo: this.props.filledData } );
 
         }
 
         this.setState( { loading: false } );
 
+    }
+
+    nextCandidate = () => {
+        let removeFirstEle = this.state.tokens.shift();
+        this.setState( { tokens: removeFirstEle } );
     }
 
     b64toBlob = (b64Data, contentType, sliceSize) => {
@@ -130,19 +167,19 @@ class CandidateForm extends Component {
 
         const FormsData = new FormData();
 
-        FormsData.append('Name', this.state.candidateInfo.Name);
-        FormsData.append('Age', this.state.candidateInfo.Age);
-        FormsData.append('Nationality', this.state.candidateInfo.Nationality);
-        FormsData.append('Gander', this.state.candidateInfo.Gander);
-        FormsData.append('MStatus', this.state.candidateInfo.MStatus);
-        FormsData.append('Profession', this.state.candidateInfo.Profession);
-        FormsData.append('Passport', this.state.candidateInfo.Passport);
+        FormsData.append('Name', this.state.candidateInfo.candidate_name);
+        FormsData.append('Age', this.state.candidateInfo.candidate_age);
+        FormsData.append('Nationality', this.state.candidateInfo.candidate_nationality);
+        FormsData.append('Gander', this.state.candidateInfo.candidate_gender);
+        FormsData.append('MStatus', this.state.candidateInfo.candidate_marital_status);
+        FormsData.append('Profession', this.state.candidateInfo.candidate_profession);
+        FormsData.append('Passport', this.state.candidateInfo.candidate_passport);
         FormsData.append('Insertor', this.state.Insertor);
         FormsData.append('Editor', this.state.Editor);
         FormsData.append('Image', this.state.image);
         FormsData.append('ImageName', this.state.imageName);
-        FormsData.append('placeofissue', this.state.candidateInfo.PlaceOfIssue);
-        FormsData.append('travellingto', this.state.candidateInfo.TrevellingTo);
+        FormsData.append('placeofissue', this.state.candidateInfo.place_of_issue);
+        FormsData.append('travellingto', this.state.candidateInfo.travelling_to);
         FormsData.append('token', Cookies.get('tokenNo'));
 
         axios.post('/setcandidate', FormsData, {
@@ -311,8 +348,8 @@ class CandidateForm extends Component {
                                 placeholder="Candidate Name"
                                 onChange={this.onChangeHandler}
                                 required
-                                name="Name"
-                                defaultValue={this.state.candidateInfo.Name}
+                                name="candidate_name"
+                                defaultValue={this.state.candidateInfo.candidate_name}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -325,8 +362,8 @@ class CandidateForm extends Component {
                                 placeholder="Candidate Age"
                                 onChange={this.onChangeHandler}
                                 required
-                                name="Age"
-                                defaultValue={this.state.candidateInfo.Age}
+                                name="candidate_age"
+                                defaultValue={this.state.candidateInfo.candidate_age}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -339,30 +376,30 @@ class CandidateForm extends Component {
                                 placeholder="Candidate Nationality"
                                 onChange={this.onChangeHandler}
                                 required
-                                name="Nationality"
-                                defaultValue={this.state.candidateInfo.Nationality}
+                                name="candidate_nationality"
+                                defaultValue={this.state.candidateInfo.candidate_nationality}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
                             <div className="d-grid mr-2">
                                 <i className="las la-mercury"></i>
                             </div>
-                            <select name="Gander" className="form-control form-control-sm rounded-0" onChange={this.onChangeHandler}
+                            <select name="candidate_gender" className="form-control form-control-sm rounded-0" onChange={this.onChangeHandler}
                                 required>
                                 <option >Candidate Gender</option>
-                                <option>Male</option>
-                                <option>FeMale</option>
+                                <option selected={this.state.candidateInfo.candidate_gender == 'Male' ? true : false}>Male</option>
+                                <option selected={this.state.candidateInfo.candidate_gender == 'FeMale' ? true : false}>FeMale</option>
                             </select>
                         </div>
                         <div className="d-flex justify-content-center mb-3">
                             <div className="d-grid mr-2">
                                 <i className="las la-ring"></i>
                             </div>
-                            <select name="MStatus" className="form-control form-control-sm rounded-0" onChange={this.onChangeHandler}
+                            <select name="candidate_marital_status" className="form-control form-control-sm rounded-0" onChange={this.onChangeHandler}
                                 required>
                                 <option>Marital Status</option>
-                                <option>Married</option>
-                                <option>UnMarried</option>
+                                <option selected={this.state.candidateInfo.candidate_marital_status == 'Married' ? true : false} >Married</option>
+                                <option selected={this.state.candidateInfo.candidate_marital_status == 'UnMarried' ? true : false}>UnMarried</option>
                             </select>
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -374,8 +411,8 @@ class CandidateForm extends Component {
                                 className="form-control form-control-sm rounded-0"
                                 placeholder="Candidate Profession"
                                 onChange={this.onChangeHandler}
-                                name="Profession"
-                                defaultValue={this.state.candidateInfo.Profession}
+                                name="candidate_profession"
+                                defaultValue={this.state.candidateInfo.candidate_profession}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -388,8 +425,8 @@ class CandidateForm extends Component {
                                 placeholder="Candidate Passport NO."
                                 onChange={this.onChangeHandler}
                                 required
-                                name="Passport"
-                                defaultValue={this.state.candidateInfo.Passport}
+                                name="candidate_passport"
+                                defaultValue={this.state.candidateInfo.candidate_passport}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -402,8 +439,8 @@ class CandidateForm extends Component {
                                 placeholder="Place Of Issue"
                                 onChange={this.onChangeHandler}
                                 required
-                                name="PlaceOfIssue"
-                                defaultValue={this.state.candidateInfo.PlaceOfIssue}
+                                name="place_of_issue"
+                                defaultValue={this.state.candidateInfo.place_of_issue}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -415,8 +452,8 @@ class CandidateForm extends Component {
                                 className="form-control form-control-sm rounded-0"
                                 placeholder="Trevelling To"
                                 onChange={this.onChangeHandler}
-                                name="TrevellingTo"
-                                defaultValue={this.state.candidateInfo.TrevellingTo}
+                                name="travelling_to"
+                                defaultValue={this.state.candidateInfo.travelling_to}
                             />
                         </div>
                         <div className="text-center">

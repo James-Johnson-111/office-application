@@ -15,7 +15,6 @@ class Dashboard extends Component {
 
         super( props );
         this.state = {
-            tokenNO: null,
             show: true,
             isShowed: false,
             isHided: false,
@@ -47,17 +46,6 @@ class Dashboard extends Component {
             this.setState( { shortScreen: false } );
 
         }
-
-
-        let uniqueID = () => {
-
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-
-        }
-        Cookies.set('tokenNo', uniqueID());
-        this.setState( { tokenNO: uniqueID() } );
 
     }
 

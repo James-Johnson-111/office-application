@@ -1,15 +1,13 @@
 import react, { Component, useRef } from 'react';
 
 import './GetToken.css';
-import * as passwordHash from 'password-hash';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loading from '../UI/Loading/Loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as PasswordHash from 'password-hash';
 import QRcode from 'qrcode';
-import print from 'print-js'
+import axios from '../../axios-instance';
 
 class GetToken extends Component {
 
@@ -67,10 +65,10 @@ class GetToken extends Component {
         {
             tokenTXT = token;
         }
-        let hashedTokenNo = PasswordHash.generate(tokenTXT);
-        let Url = 'localhost:3000/#/welcomecandidate/' + hashedTokenNo;
+        let hashedTokenNo = "056723" + tokenTXT + "LBOFF";
+        let Url = 'https://labofficial.surge.sh/#/welcomecandidate/' + hashedTokenNo;
         QRcode.toDataURL(Url).then( response => {
-            
+
             var fullTime = null;
 
             const date = new Date();
@@ -83,9 +81,21 @@ class GetToken extends Component {
             var fullTimes = hours + ':' + minutes + ' ' + ampm;
             fullTime = fullTimes.toString();
 
+            const formsData = new FormData();
+            formsData.append('token', tokenTXT);
+            formsData.append('time', fullTime);
+            axios.post( '/storetoken', formsData ).then( response => {
+
+                console.log('token stored');
+
+            } ).catch( error => {
+
+                console.log( error );
+
+            } )
+
             let content = null;
             content = <>
-                {/* <Token response={response} tokenTXT={tokenTXT} fullTime={fullTime} /> */}
                 <div className="container-fluid" id="tokenContent">
                     <div className="row">
                         <div className="col-6">
@@ -106,17 +116,11 @@ class GetToken extends Component {
 
             setTimeout( () => {
 
-                // var backup = document.body.innerHTML;
-                // var Pcontent = document.getElementById('tokenContent').innerHTML;
-                // document.body.innerHTML = Pcontent;
-                // var newow = document.body.style.width;
-                // var newoh = document.body.style.height;
-                // document.body.style.width="2cm";
-                // document.body.style.height="1cm";
+                var backup = document.body.innerHTML;
+                var Pcontent = document.getElementById('tokenContent').innerHTML;
+                document.body.innerHTML = Pcontent;
                 window.print();
-                // document.body.style.width = newow;
-                // document.body.style.height = newoh;
-                // document.body.innerHTML = backup;
+                document.body.innerHTML = backup;
                 // print(
                 //     {
                 //         printable: 'tokenContent',
@@ -127,6 +131,7 @@ class GetToken extends Component {
                 // )
 
             }, 1000 )
+
             setTimeout(() => {
 
                 content = <>

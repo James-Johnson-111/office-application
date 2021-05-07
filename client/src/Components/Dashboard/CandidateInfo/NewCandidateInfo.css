@@ -61,6 +61,20 @@
     background-color: rgb(255, 255, 255, .3);
 }
 
+.NewCandidateInfo .next-btn {
+    border: #ffffff 1px solid;
+    color: #ffffff;
+    padding: 10px 30px;
+    z-index: 0;
+    position: absolute;
+    transition: .5s;
+}
+
+.NewCandidateInfo .next-btn:hover {
+    background-color: #ffffff;
+    color: #f59b28;
+}
+
 @media only screen and (max-width: 1250px)
 {
 

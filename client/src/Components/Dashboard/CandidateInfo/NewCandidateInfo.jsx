@@ -21,13 +21,46 @@ class NewCandidateInfo extends Component {
             Token: 'Not Found',
             Name: 'Not Found',
             screenWidth: '',
-            error: null
+            error: null,
+            tokens: null,
+            firstNum: 0,
+            data: null
         }
 
     }
 
     componentDidMount()
     {
+
+        // axios.get('/getalltokens').then( response => {
+
+        //     this.setState( { tokens: response.data } );
+
+        //     const forsmData = new FormData();
+        //     forsmData.append('token', this.state.tokens[0].token);
+        //     axios.post('/getcurrentcandidate', forsmData).then(response => {
+
+        //         if (response.data[0] == "N") {
+    
+        //             this.setState({ Token: "Not Found", Name: "Not Found" });
+    
+        //         } else {
+    
+        //             this.setState({ Token: response.data[0].token_no, Name: response.data[0].candidate_name, data: [response.data[0]] });
+    
+        //         }
+    
+        //     }).catch(error => {
+    
+        //         this.setState({ Token: "Not Found", Name: "Not Found" });
+    
+        //     })
+
+        // } ).catch( err => {
+
+        //     console.log( err );
+
+        // } )
 
         this.setState( { ActiveTabName: 'Candidate Information' } );
         //Get Screen width for responsive
@@ -58,37 +91,34 @@ class NewCandidateInfo extends Component {
 
         } );
 
-        if( Cookies.get('tokenNo') !== undefined )
-        {
+    }
 
-            setInterval( () => {
-            
-                this.setState({ Token: "Loading", Name: "Loading" });
-    
-                const formsData = new FormData();
-                formsData.append('token', Cookies.get('tokenNo'));
-                axios.post('/getcurrentcandidate', formsData).then(response => {
-    
-                    // console.log(response.data);
-                    if (response.data[0] == "N") {
-    
-                        this.setState({ Token: "Not Found", Name: "Not Found" });
-    
-                    } else {
-    
-                        this.setState({ Token: response.data[0].token_no, Name: response.data[0].candidate_name });
-    
-                    }
-    
-                }).catch(error => {
-    
-                    this.setState({ Token: "Not Found", Name: "Not Found" });
-    
-                })
-                
-            }, 5 * 1000);
+    nextCandidate = () => {
 
-        }
+        let nextNum = 1 + this.state.firstNum;
+        this.setState( { firstNum: nextNum } );
+        this.setState({ Token: "Loading", Name: "Loading" });
+
+        const formsData = new FormData();
+        formsData.append('token', Cookies.get('tokenNo'));
+        axios.post('/getcurrentcandidate', formsData).then(response => {
+
+            // console.log(response.data);
+            if (response.data[0] == "N") {
+
+                this.setState({ Token: "Not Found", Name: "Not Found" });
+
+            } else {
+
+                this.setState({ Token: response.data[0].token_no, Name: response.data[0].candidate_name });
+
+            }
+
+        }).catch(error => {
+
+            this.setState({ Token: "Not Found", Name: "Not Found" });
+
+        })
 
     }
 
@@ -147,6 +177,17 @@ class NewCandidateInfo extends Component {
 
     }
 
+    datas = ( dta ) => {
+
+        this.setState( { data: dta } );
+        this.setState({ Token: this.state.data[0].token_no, Name: this.state.data[0].candidate_name });
+
+    }
+
+    next = () => {
+        this.refs.NCandidate.nextCandidate();
+    }
+
     render()
     {
 
@@ -203,7 +244,7 @@ class NewCandidateInfo extends Component {
                         <div className="form-back d-flex justify-content-end">
                             <div className="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                                 <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                    <Candidate error={this.error} position="absolute" />
+                                    <Candidate ref='NCandidate' filledData={this.datas}  error={this.error} position="absolute" />
                                 </div>
                                 <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                     <MedicalExam1 />
@@ -217,6 +258,10 @@ class NewCandidateInfo extends Component {
                             </div>
                             <div className="w-50 errors">
                                 <h1> { this.state.ActiveTabName } </h1>
+                                <button className="btn btn-sm next-btn" onClick={ this.next }>
+                                    Next 
+                                    <i class="las la-chevron-circle-right"></i>
+                                </button>
                                 {
                                     this.state.error === null ?
                                     null

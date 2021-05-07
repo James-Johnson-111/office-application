@@ -60,6 +60,85 @@ setInterval( () => {
 
 }, 1 * 1000 );
 
+app.get( '/getalltokens', ( req, res ) => {
+
+    const { token }= req.body;
+
+    db.query(
+        "SELECT * FROM tokens",
+        ( err, rslt ) => {
+
+            if( err )
+            {
+
+                console.log( err );
+
+            }else
+            {
+
+                res.send(rslt);
+
+            }
+
+        }
+    )
+
+} )
+
+app.post( '/gettoken', ( req, res ) => {
+
+    const { token }= req.body;
+
+    db.query(
+        "SELECT * FROM tokens WHERE token = '" + token + "'",
+        ( err, rslt ) => {
+
+            if( err )
+            {
+
+                console.log( err );
+
+            }else
+            {
+
+                res.send(rslt);
+
+            }
+
+        }
+    )
+
+} )
+
+app.post( '/storetoken', ( req, res ) => {
+
+    const { token, time }= req.body;
+
+    let tokenDate = new Date();
+    let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+
+    db.query(
+        "INSERT INTO tokens(token, token_time, token_date) VALUES(?,?,?)",
+        [ token, time, date ],
+        ( err, rslt ) => {
+
+            if( err )
+            {
+
+                console.log( err );
+
+            }else
+            {
+
+                res.send("Success");
+
+            }
+
+        }
+    )
+
+} )
+
 app.post( '/exam1', ( req, res ) => {
 
     const { Token, height, weight, bmi, bp1, bp2, pulse, pr, unaidedDistantRtEye, unaidedDistantLtEye, aidedDistantRtEye, aidedDistantLtEye, unaidedNearRtEye, unaidedNearLtEye, aidedNearRtEye, aidedNearLtEye, colorVision, RightEar, LeftEar, Insertor }= req.body;
@@ -159,6 +238,102 @@ app.post( '/medicalexamination2entry', ( req, res ) => {
     )
 
 } )
+
+app.post('/databycandidate', (req, res) => {
+    const { Name, Age, Nationality, Gander, MStatus, Profession, Passport, ImageName, placeofissue, travellingto, token } = req.body;
+    const Image = req.files.Image;
+    let imagesNames = ImageName + '.png';
+
+    let tokenDate = new Date();
+    let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+
+    Image.mv('client/public/images/candidates/' + imagesNames , ( err ) => {
+
+        if(err) {
+
+            console.log(err);
+
+        }
+
+    });
+    
+    db.query(
+        'INSERT INTO candidate_info(candidate_name,candidate_passport,candidate_age,candidate_nationality,candidate_gender,candidate_marital_status,candidate_profession, insert_date, inserted_time, place_of_issue, travelling_to ) VALUES(?,?,?,?,?,?,?,?,?,?,?)',
+        [Name,Passport,Age,Nationality,Gander,MStatus,Profession,date,fullTime,placeofissue,travellingto],
+        ( err, rslt ) => {
+
+            if( !err )
+            {
+
+                db.query(
+                    'SELECT candidate_id from candidate_info WHERE candidate_passport ='+ Passport,
+                    ( err, rslt ) => {
+    
+                        if( err )
+                        {
+    
+                            console.log( err );
+    
+                        }else
+                        {
+    
+                            db.query(
+                                'INSERT INTO candidate_images(candidate_id, candidate_image) VALUES(?,?)',
+                                [ rslt[0].candidate_id, imagesNames ],
+                                ( err, rsltt ) => {
+    
+                                    if( err )
+                                    {
+    
+                                        console.log( err );
+    
+                                    }else
+                                    {
+
+                                        let tokenDate = new Date();
+                                        let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+    
+                                        db.query(
+                                            'INSERT INTO candidate_tokens(candidate_id, token_no, token_date, token_time) VALUES (?,?,?,?)',
+                                            [ rslt[0].candidate_id, token, date, fullTime ],
+                                            ( err, rslt ) => {
+
+                                                if( err )
+                                                {
+
+                                                    console.log( err );
+
+                                                }else
+                                                {
+
+                                                    res.send('Data inserted successfully');
+
+                                                }
+
+                                            }
+                                        )
+    
+                                    }
+    
+                                }
+                            )
+    
+                        }
+    
+                    }
+                )
+
+            }else
+            {
+
+                console.log( err );
+
+            }
+
+        }
+    );
+
+});
 
 app.post('/setcandidate', (req, res) => {
     const { Name, Age, Nationality, Gander, MStatus, Profession, Passport, Insertor, ImageName, placeofissue, travellingto, token } = req.body;
@@ -261,7 +436,7 @@ app.post( '/getcurrentcandidate', ( req, res ) => {
     const { token } = req.body;
 
     db.query(
-        "SELECT candidate_info.*, candidate_tokens.token_no FROM candidate_info INNER JOIN candidate_tokens ON candidate_info.candidate_id = candidate_tokens.candidate_id WHERE candidate_tokens.token_no = '" + token + "'",
+        "SELECT candidate_info.*, candidate_tokens.token_no, candidate_images.candidate_image FROM candidate_info INNER JOIN candidate_tokens ON candidate_info.candidate_id = candidate_tokens.candidate_id INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id WHERE candidate_tokens.token_no = '" + token + "'",
         ( err, rslt ) => {
 
             if( err )

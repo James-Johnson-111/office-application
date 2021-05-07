@@ -1,0 +1,11 @@
+Token
+-> gen. token
+-> token List
+token no, date time , status, can id, namw, COUNTER/DEP, 
+001, 7may 1141, b.p dept , 0961
+002, 7may 1141, blood test dept , 0962
+003,
+
+PP0010
+A0009
+
