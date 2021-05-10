@@ -1,0 +1,8 @@
+upload server files to heroku, follow the following steps
+
+first add all files
+commit them
+now type the following command
+git push origin master:main
+
+//here 'origin' contains https://github.com/James-Johnson-111/office-app-server.git
