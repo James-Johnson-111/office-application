@@ -1,0 +1,45 @@
+.clear_float {
+  clear: both;
+}
+
+.d-mobile-600-none {
+  display: block;
+}
+
+.d-mobile-600-block {
+  display: none;
+}
+
+.d-mobile-768-none {
+  display: block;
+}
+
+.d-grid {
+  display: grid;
+  align-items: center;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .d-mobile-768-none {
+    display: none;
+  }
+
+}
+
+
+@media only screen and (max-width: 600px) {
+
+  .d-mobile-600-none {
+    display: none;
+  }
+
+  .d-mobile-600-block {
+    display: block;
+  }
+
+}

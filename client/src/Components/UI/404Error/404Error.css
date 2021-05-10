@@ -1,0 +1,66 @@
+.Error {
+    position: relative;
+    background-image: url('../../../images//404.PNG');
+    background-size: 100% 85%;
+}
+
+.Error h1 {
+    font-family: Quicksand;
+    font-weight: bolder;
+}
+
+.Error h4 {
+    font-family: Quicksand;
+}
+
+.Error .btn {
+    width: 25%;
+}
+
+@media only screen and (max-width: 992px) {
+
+    .Error {
+        background-image: url('../../../images//404-tablet.PNG');
+        background-size: 100% 100%;
+    }
+
+    .Error .btn {
+        width: 50%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .Error {
+        background-image: url('../../../images//404-mobile.PNG');
+        background-size: 100% 100%;
+    }
+
+    .Error h1 {
+        font-size: 26px;
+    }
+
+    .Error h4 {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+
+    .Error .btn {
+        width: 75%;
+    }
+
+}
+
+/* .Error .Error-inner {
+    position: relative;
+}
+
+.Error .Error-inner .err-status {
+    position: absolute;
+    font-size: 280px;
+    z-index: -1;
+    opacity: .2;
+    font-family: Roboto;
+    top: -180px;
+} */

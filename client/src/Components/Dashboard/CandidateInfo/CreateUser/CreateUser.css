@@ -1,0 +1,117 @@
+.createuser_back {
+    position: relative;
+    width: 100%;
+    height: 30vh;
+    background-color: #f59b28;
+    margin-top: 150px;
+}
+
+.CreateUser {
+    width: 35%;
+    padding: 30px;
+    height: min-content;
+    background-color: #ffffff;
+    position: absolute;
+    top: calc( 50vh - 60vh );
+    left: calc( 35% - 30% );
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    z-index: 0;
+}
+
+.CreateUser-container nav {
+    z-index: 10;
+}
+
+.CreateUser-container nav .nav-tabs {
+    border: 0;
+}
+
+.CreateUser-container .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #1A2476;
+    border-color: transparent transparent #f59b28;
+    border-bottom: 4px solid #f59b28 !important;
+    font-weight: bolder;
+}
+.CreateUser-container .nav-tabs .nav-link {
+    color: #1A2476;
+    font-family: Exo;
+    font-weight: bolder;
+    text-transform: uppercase;
+    border: 2px solid transparent;
+    font-size: 15px;
+}
+
+.CreateUser-container .nav-tabs .nav-link:hover {
+    border: 2px solid transparent;
+}
+
+.uploadFile {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: 1px solid lightgrey;
+    cursor: pointer;
+}
+
+.CreateUser i {
+    font-size: 25px;
+    color: #40cfcd;
+}
+
+.CreateUser .form-control {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #40cfcd;
+    font-family: Quicksand;
+}
+
+.CreateUser .form-control:focus {
+    box-shadow: none;
+}
+
+.CreateUser .btn[type='submit'] {
+    color: #ffffff;
+    font-family: Exo;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    background-color: #40cfcd;
+}
+
+.errors {
+    font-family: JosefinSans;
+}
+
+@media only screen and (max-width: 992px)
+{
+
+    .CreateUser {
+        width: 45%;
+    }
+
+}
+
+@media only screen and (max-width: 768px)
+{
+
+    .CreateUser {
+        width: 55%;
+    }
+
+}
+
+@media only screen and (max-width: 600px)
+{
+
+    .CreateUser {
+        width: 75%;
+    }
+
+}
+
+@media only screen and (max-width: 450px)
+{
+
+    .CreateUser {
+        width: 90%;
+    }
+
+}

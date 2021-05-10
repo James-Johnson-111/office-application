@@ -1,0 +1,125 @@
+.DashboardHome .DashboardHome-content {
+    padding: 20px;
+    position: relative;
+}
+
+.DashboardHome .DashboardHome-content nav {
+    z-index: 10;
+}
+
+.DashboardHome .DashboardHome-content nav .nav-tabs {
+    border: 0;
+}
+
+.DashboardHome .DashboardHome-content .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #1A2476;
+    border-color: transparent transparent #f59b28;
+    border-bottom: 4px solid #f59b28 !important;
+    font-weight: bolder;
+}
+.DashboardHome .DashboardHome-content .nav-tabs .nav-link {
+    color: #1A2476;
+    font-family: Exo;
+    font-weight: bolder;
+    text-transform: uppercase;
+    border: 2px solid transparent;
+    font-size: 15px;
+}
+
+.DashboardHome .DashboardHome-content .nav-tabs .nav-link:hover {
+    border: 2px solid transparent;
+}
+
+.material-switch > input[type="checkbox"] {
+    display: none;   
+}
+
+.material-switch > label {
+    cursor: pointer;
+    height: 0px;
+    position: relative; 
+    width: 40px;  
+}
+
+.material-switch > label::before {
+    background: rgb(0, 0, 0);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    content: '';
+    height: 16px;
+    margin-top: -8px;
+    position:absolute;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
+}
+.material-switch > label::after {
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 24px;
+    left: -4px;
+    margin-top: -8px;
+    position: absolute;
+    top: -4px;
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: inherit;
+    opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: inherit;
+    left: 20px;
+}
+
+.DashboardHome .DashboardHome-content .startProcessDiv {
+    font-family: Raleway;
+    background-color: #40cfcd;
+    padding: 10px 0;
+    border-radius: 5px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 1250px)
+{
+
+}
+
+@media only screen and (max-width: 992px)
+{
+
+}
+
+@media only screen and (max-width: 768px)
+{
+
+    .DashboardHome .DashboardHome-content {
+        font-size: 16px;
+    }
+    
+}
+
+
+@media only screen and (max-width: 600px)
+{
+
+    .DashboardHome {
+        font-size: 16px;
+    }
+
+}
+
+@media only screen and (max-width: 450px)
+{
+
+    .DashboardHome .DashboardHome-content .startProcessDiv {
+        display: block !important;
+        padding: 5px 10px !important;
+        text-align: center;
+    }
+
+}
