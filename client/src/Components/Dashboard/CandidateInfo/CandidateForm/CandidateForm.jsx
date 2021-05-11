@@ -48,7 +48,9 @@ class CandidateForm extends Component {
     componentDidMount()
     {
 
-        axios.get('/getalltokens').then( response => {
+        const formsData = new FormData();
+        formsData.append('counter', Cookies.get('LoginID'));
+        axios.post('/getalltokens', formsData).then( response => {
 
             if( response.data.length != 0 )
             {
@@ -61,12 +63,13 @@ class CandidateForm extends Component {
 
                     if (response.data.length == 0) {
 
-                        this.props.filledData([{ token_no: this.state.tokens[0].token, candidate_name: 'Not Found' }]);
+                        this.props.filledData([{ token_no: this.state.tokens[0].token != undefined ? this.state.tokens[0].token : 'Not Found', candidate_name: 'Not Found' }]);
+                        this.setState( { filled: false } );
 
                     } else {
 
                         this.props.filledData(response.data);
-                        this.setState({ candidateInfo: response.data[0], candidateImg: "images/candidates/" + response.data[0].candidate_image });
+                        this.setState({ candidateInfo: response.data[0], candidateImg: "images/candidates/" + response.data[0].candidate_image, filled: true });
 
                         this.setState({ image: response.data[0].candidate_image, imageName: this.state.candidateImg, filled: true });
 
@@ -96,8 +99,44 @@ class CandidateForm extends Component {
     }
 
     nextCandidate = () => {
-        let removeFirstEle = this.state.tokens.shift();
-        this.setState( { tokens: removeFirstEle } );
+        const formsData = new FormData();
+        formsData.append('counter', Cookies.get('LoginID'));
+        axios.post('/getalltokens', formsData).then( response => {
+
+            if( response.data.length != 0 )
+            {
+
+                this.setState({ tokens: [response.data] });
+
+                const forsmData = new FormData();
+                forsmData.append('token', this.state.tokens[0].token);
+                axios.post('/getcurrentcandidate', forsmData).then(response => {
+
+                    if (response.data.length == 0) {
+
+                        this.props.filledData([{ token_no: this.state.tokens[0].token != undefined ? this.state.tokens[0].token : 'Not Found', candidate_name: 'Not Found' }]);
+                        this.setState( { filled: false } );
+
+                    } else {
+
+                        this.props.filledData(response.data);
+                        this.setState({ candidateInfo: response.data[0], candidateImg: "images/candidates/" + response.data[0].candidate_image, filled: true });
+
+                        this.setState({ image: response.data[0].candidate_image, imageName: this.state.candidateImg, filled: true });
+
+                    }
+
+                }).catch(error => {
+
+                })
+
+            }
+
+        } ).catch( err => {
+
+            console.log( err );
+
+        } );
     }
 
     b64toBlob = (b64Data, contentType, sliceSize) => {
@@ -138,10 +177,10 @@ class CandidateForm extends Component {
         // this.onImageUpload( blob );
 
         let Name = this.state.candidateInfo.candidate_name;
-        let subName = Name.substring(0,2);
+        let subName = Name.substring(0,3);
 
         let Profession = this.state.candidateInfo.candidate_profession;
-        let subProfession = Profession.substring(0,3);
+        let subProfession = Profession.substring(0,4);
 
         let Passport = this.state.candidateInfo.candidate_passport;
         let subPassport = Passport.substring(0,4);
@@ -200,8 +239,8 @@ class CandidateForm extends Component {
             this.setState({ loading: false });
             this.props.error(response.data);
 
-            // $('input.form-control').val('');
-            // $('img.user_img').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU');
+            $('input.form-control').val('');
+            $('img.user_img').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU');
 
         }).catch( err => {
 

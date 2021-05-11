@@ -460,7 +460,7 @@ class ReportPanel extends Component {
                                                 this.state.getAllCandidates.map( ( data, index ) => {
 
                                                     return (
-                                                        <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={index} onClick={ () => this.showDetails( index ) }>
+                                                        <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={index}>
                                                             <div className="candidate_info_div">
                                                                 <div className="row">
                                                                     <div className="col-lg-6 col-md-6 col-sm-12 text-center">
@@ -471,19 +471,19 @@ class ReportPanel extends Component {
                                                                         />
                                                                     </div>
                                                                     <div className="col-lg-6 col-md-6 col-sm-12">
-                                                                        <h5 className="mb-0 font-weight-bolder">{data.candidate_name}</h5>
+                                                                        <h5 className="mb-0 font-weight-bolder">{data.candidate_name.length < 12 ? data.candidate_name : data.candidate_name.substring(0, 9) + '...'}</h5>
                                                                         <p>{data.candidate_nationality}</p>
-                                                                        <button className="btn btn-sm btn-block">View Details</button>
+                                                                        <button className="btn btn-sm btn-block" onClick={ () => this.showDetails( index ) }>View Details</button>
                                                                     </div>
                                                                     <div className="candidate_info_div_bottom w-100 border mt-3">
                                                                         <div className="d-flex justify-content-center">
                                                                             <div className="border w-50 text-center" style={ { 'borderRadius' : '20px 0 0 0' } }>
                                                                                 <p className="mb-1 font-weight-bold" style={ { 'color' : '#1A2476' } }>Passport</p>
-                                                                                <p className="mb-0 font-weight-bold" style={ { 'color' : '#f59b28', 'fontSize' : '12px' } }> { data.candidate_passport } </p>
+                                                                                <p className="mb-0 font-weight-bold" style={ { 'color' : '#f59b28', 'fontSize' : '12px' } }> { data.candidate_passport.length < 16 ? data.candidate_passport : data.candidate_passport.substring(0, 15) + '...' } </p>
                                                                             </div>
                                                                             <div className="border w-50 text-center" style={ { 'borderRadius' : '0 20px 0 0' } }>
                                                                                 <p className="mb-1 font-weight-bold" style={ { 'color' : '#1A2476' } }>Profession</p>
-                                                                                <p className="mb-0 font-weight-bold" style={ { 'color' : '#40CFCD', 'fontSize' : '12px' } }> { data.candidate_profession } </p>
+                                                                                <p className="mb-0 font-weight-bold" style={ { 'color' : '#40CFCD', 'fontSize' : '12px' } }> { data.candidate_profession.length < 15 ? data.candidate_profession : data.candidate_profession.substring(0, 10) + '...' } </p>
                                                                             </div>
                                                                         </div>
                                                                         <div className="d-flex justify-content-center py-2">
@@ -508,7 +508,7 @@ class ReportPanel extends Component {
                                                         </div>
                                                     )
 
-                                                }).slice(0, 6)
+                                                })
                                             }
                                         </div>
                                     </div>

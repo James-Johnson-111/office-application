@@ -5,9 +5,11 @@ import Cookies from 'js-cookie';
 import './NewDashboard.css';
 import NewCandidateInfo from './CandidateInfo/NewCandidateInfo';
 import Report from './ReportPanel/ReportPanel';
-import $ from 'jquery';
+import Loading from '../UI/Loading/Loading';
 import CreateUser from './CandidateInfo/CreateUser/CreateUser';
 import DashboardHome from './DashboardHome/DashboardHome';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Dashboard extends Component {
 
@@ -19,7 +21,8 @@ class Dashboard extends Component {
             show: true,
             isShowed: false,
             isHided: false,
-            shortScreen: false
+            shortScreen: false,
+            loading: true
         }
 
     }
@@ -27,15 +30,23 @@ class Dashboard extends Component {
     componentDidMount()
     {
 
+        this.setState( { loading: false } );
+        this.props.history.push('/dashboard');
+        // the following block of code is to check that user has login id or not after every second
         setInterval( () => {
 
             if (Cookies.get('LoginID') === undefined || Cookies.get('LoginID') == null) {
-
+                
+                // toast.dark("Your Session Has Expired, Login", {
+                //     position: 'bottom-center',
+                //     progressClassName: 'success-progress-bar',
+                //     autoClose: 3000,
+                // });
                 this.props.history.push('/login');
 
             }
 
-        }, 1 * 1000 );
+        }, 0.1 * 1000 );
 
         //Get Screen width for responsive
         let ScWd = window.outerWidth;
@@ -50,9 +61,11 @@ class Dashboard extends Component {
             this.setState( { shortScreen: false } );
 
         }
+        
 
     }
 
+    // the following block of code is to open & close the side bar
     openClose = () => {
 
         if( this.state.show )
@@ -71,6 +84,7 @@ class Dashboard extends Component {
         return(
 
             <>
+                <Loading show={this.state.loading} />
                 <div className="user_box_container d-mobile-768-none">
                     <div className="d-flex justify-content-center user_box">
                         <div className="">
@@ -163,6 +177,7 @@ class Dashboard extends Component {
                         </Switch>
                     </div>
                 </div>
+                <ToastContainer autoClose={3000} />
             </>
             
         )

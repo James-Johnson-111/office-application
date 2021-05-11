@@ -36,27 +36,25 @@ class DashboardHome extends Component {
     startStopP = () => {
         
         let date = new Date();
-        date.setTime(date.getTime() + (20 * 60 * 1000));
+        date.setTime(date.getTime() + (0.10 * 1000));
 
         if( this.state.startProcess )
         {
-
+            $('.startBtn').html('Start');
             Cookies.set('ProcessStatus', 'Process Has Stoped', { expires: date });
-            this.setState( { startProcess: false, startProcessTxt: Cookies.get('ProcessStatus') } );
+            this.setState( { startProcess: false, startProcessTxt: 'Start Process' } );
 
         }else
         {
-            
+            $('.startBtn').html('Stop');
             Cookies.set('ProcessStatus', 'Process Has Started', { expires: date });
             this.setState( { startProcess: true, startProcessTxt: 'Loading...' } );
             axios.get('/startprocess').then( response => {
 
-                console.log( response.data );
                 this.setState( { startProcessTxt: 'Process Has Started' } );
 
             } ).catch( error => {
 
-                console.log( error );
                 this.setState( { startProcessTxt: 'Operation Failed' } );
 
                 setTimeout( () => {
@@ -106,9 +104,8 @@ class DashboardHome extends Component {
                                             <div className="d-grid">
                                                 <p className="mb-1 strtprtxt"> { this.state.startProcessTxt } </p>
                                             </div>
-                                            <div class="material-switch pull-right mb-0">
-                                                <input onChange={this.startStopP} checked={this.state.startProcess ? true : false } id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox" />
-                                                <label for="someSwitchOptionPrimary" class="label-primary"></label>
+                                            <div>
+                                                <button className="btn btn-sm startBtn" onClick={this.startStopP}>Start</button>
                                             </div>
                                         </div>
                                     </div>

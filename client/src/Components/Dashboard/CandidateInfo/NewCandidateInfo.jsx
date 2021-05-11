@@ -149,7 +149,6 @@ class NewCandidateInfo extends Component {
 
     datas = ( dta ) => {
 
-        console.log(dta);
         this.setState( { data: dta } );
         this.setState({ Token: this.state.data[0].token_no, Name: this.state.data[0].candidate_name });
 
