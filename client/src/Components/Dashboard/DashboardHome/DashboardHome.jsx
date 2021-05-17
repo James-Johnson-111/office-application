@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 
 import './DashboardHome.css';
 import Loading from '../../UI/Loading/Loading';
@@ -49,7 +49,10 @@ class DashboardHome extends Component {
             $('.startBtn').html('Stop');
             Cookies.set('ProcessStatus', 'Process Has Started', { expires: date });
             this.setState( { startProcess: true, startProcessTxt: 'Loading...' } );
-            axios.get('/startprocess').then( response => {
+
+            const Data = new FormData();
+            Data.append( 'logger', Cookies.get('LoginID') );
+            axios.post('/startprocess', Data ).then( response => {
 
                 this.setState( { startProcessTxt: 'Process Has Started' } );
 

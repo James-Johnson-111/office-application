@@ -1,4 +1,4 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 
 import './NewCandidateInfo.css';
 import Cookies from 'js-cookie';
@@ -73,8 +73,7 @@ class NewCandidateInfo extends Component {
         formsData.append('token', Cookies.get('tokenNo'));
         axios.post('/getcurrentcandidate', formsData).then(response => {
 
-            // console.log(response.data);
-            if (response.data[0] == "N") {
+            if (response.data[0] === "N") {
 
                 this.setState({ Token: "Not Found", Name: "Not Found" });
 
@@ -214,30 +213,30 @@ class NewCandidateInfo extends Component {
                         <div className="form-back d-flex justify-content-end">
                             <div className="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                                 <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                    <Candidate ref='NCandidate' filledData={this.datas}  error={this.error} position="absolute" />
+                                    <Candidate ref='NCandidate' filledData={this.datas} error={this.error} position="absolute" />
                                 </div>
                                 <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                    <MedicalExam1 />
+                                    <MedicalExam1 error={this.error} />
                                 </div>
                                 <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                    <MedicalExam2 />
+                                    <MedicalExam2 error={this.error} />
                                 </div>
                                 <div className="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                    <Investigation />
+                                    <Investigation error={this.error} />
                                 </div>
                             </div>
                             <div className="w-50 errors">
                                 <h1> { this.state.ActiveTabName } </h1>
-                                <button className="btn btn-sm next-btn" onClick={ this.next }>
-                                    Next 
-                                    <i class="las la-chevron-circle-right"></i>
-                                </button>
                                 {
                                     this.state.error === null ?
                                     null
                                     :
-                                    <h4 className="error_msg"> <i class="las la-exclamation-triangle"></i> { this.state.error } </h4>
+                                    <h4 className="error_msg"> <i className="las la-exclamation-triangle"></i> { this.state.error } </h4>
                                 }
+                                <button className="btn btn-sm next-btn" onClick={this.next}>
+                                    Next
+                                    <i className="las la-chevron-circle-right"></i>
+                                </button>
                             </div>
                         </div>
                     </div>

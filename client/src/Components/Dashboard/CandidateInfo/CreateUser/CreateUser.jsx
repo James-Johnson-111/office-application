@@ -1,9 +1,8 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 
 import './CreateUser.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import axios from '../../../axios-instance';
 import axios from '../../../../axios-instance';
 import * as passwordHash from 'password-hash';
 import Loading from '../../../UI/Loading/Loading';
@@ -54,7 +53,7 @@ class CreateUser extends Component {
         this.setState( { loading: false } );
         $('.eye-btn').on( 'click', () => {
 
-            if( $('input.password').attr('type') == 'text' )
+            if( $('input.password').attr('type') === 'text' )
             {
 
                 $('input.password').attr('type', 'password');
@@ -110,7 +109,7 @@ class CreateUser extends Component {
         let loginRole = this.state.userInfo.roles;
         let role = loginRole.toLowerCase();
         
-        if(role == 'admin')
+        if(role === 'admin')
         {
 
             this.setState( { loading: false } );
@@ -132,6 +131,7 @@ class CreateUser extends Component {
             FormsData.append( 'Role', this.state.userInfo.roles );
             FormsData.append('Image', this.state.image);
             FormsData.append('ImageName', this.state.imageName);
+            FormsData.append('logger', Cookies.get('LoginID'));
     
             axios.post( '/createuser', FormsData, {
 
@@ -333,7 +333,7 @@ class CreateUser extends Component {
                                         </div>
                                     </div>
                                     <div className="col-6">
-                                        <img className="rounded" style={{ 'cursor': 'pointer' }} onClick={this.cameraModalCall} src={cameraImg} width="100%" />
+                                        <img alt="camera" className="rounded" style={{ 'cursor': 'pointer' }} onClick={this.cameraModalCall} src={cameraImg} width="100%" />
                                     </div>
                                 </div>
                             </div>
@@ -370,6 +370,7 @@ class CreateUser extends Component {
                                         className="rounded-circle user_img"
                                         onClick={this.modalCall}
                                         style={{ 'cursor': 'pointer' }}
+                                        alt="Candidate img"
                                     />
                                 </div>
                                 <div className="d-flex justify-content-center mb-3">

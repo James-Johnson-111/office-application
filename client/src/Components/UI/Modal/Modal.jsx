@@ -1,6 +1,5 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import BackDark from './BackDark/BackDark';
-import $ from 'jquery';
 
 import './Modal.css';
 

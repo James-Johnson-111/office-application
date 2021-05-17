@@ -1,5 +1,5 @@
-import react, { Component } from 'react';
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import React, { Component } from 'react';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import './NewDashboard.css';
@@ -8,7 +8,7 @@ import Report from './ReportPanel/ReportPanel';
 import Loading from '../UI/Loading/Loading';
 import CreateUser from './CandidateInfo/CreateUser/CreateUser';
 import DashboardHome from './DashboardHome/DashboardHome';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 class Dashboard extends Component {
@@ -93,6 +93,7 @@ class Dashboard extends Component {
                                 width="30"
                                 height="30"
                                 className="rounded-circle"
+                                alt="user img"
                             />
                         </div>
                         <div className="d-grid px-3">
@@ -114,7 +115,7 @@ class Dashboard extends Component {
                         <div className="clear_float"></div>
                         <div className="d-grid">
                             <div className="side-links">
-                                <NavLink onClick={ this.state.shortScreen ? this.openClose : '' } activeClassName="linkActive" to={ "/dashboard" }>
+                                <NavLink onClick={ this.state.shortScreen ? this.openClose : null } activeClassName="linkActive" to={ "/dashboard" }>
                                     <div className="d-grid pr-1">
                                         <i className="las la-home"></i>
                                     </div>
@@ -122,7 +123,7 @@ class Dashboard extends Component {
                                         dashboard
                                     </div>
                                 </NavLink>
-                                <NavLink onClick={ this.state.shortScreen ? this.openClose : '' } activeClassName="linkActive" to={ "/candidateinfo" }>
+                                <NavLink onClick={ this.state.shortScreen ? this.openClose : null } activeClassName="linkActive" to={ "/candidateinfo" }>
                                     <div className="d-grid pr-1">
                                         <i className="las la-info-circle"></i>
                                     </div>
@@ -130,7 +131,7 @@ class Dashboard extends Component {
                                         candidate info
                                     </div>    
                                 </NavLink>
-                                <NavLink onClick={ this.state.shortScreen ? this.openClose : '' } activeClassName="linkActive" to="/reports">
+                                <NavLink onClick={ this.state.shortScreen ? this.openClose : null } activeClassName="linkActive" to="/reports">
                                     <div className="d-grid pr-1">
                                         <i className="las la-print"></i>
                                     </div>
@@ -140,7 +141,7 @@ class Dashboard extends Component {
                                 </NavLink>
                                 {
                                     Cookies.get('Role') === 'Admin' ?
-                                        <NavLink onClick={ this.state.shortScreen ? this.openClose : '' } activeClassName="linkActive" to="/createuser">
+                                        <NavLink onClick={ this.state.shortScreen ? this.openClose : null } activeClassName="linkActive" to="/createuser">
                                             <div className="d-grid pr-1">
                                                 <i className="las la-user-edit"></i>
                                             </div>
@@ -154,7 +155,7 @@ class Dashboard extends Component {
                             </div>
                             <div className="logout_div">
                                 <div className="side-links mb-0 pb-0">
-                                    <NavLink onClick={ this.state.shortScreen ? this.openClose : '' } activeClassName="linkActive" to="/logout" className="mb-0">
+                                    <NavLink onClick={ this.state.shortScreen ? this.openClose : null } activeClassName="linkActive" to="/logout" className="mb-0">
                                         <div className="d-grid pr-1">
                                             <i className="las la-sign-out-alt"></i>
                                         </div>

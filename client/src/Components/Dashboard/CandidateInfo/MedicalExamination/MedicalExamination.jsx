@@ -1,12 +1,11 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 
 import './MedicalExamination.css';
 import $ from 'jquery';
 import Loading from '../../../UI/Loading/Loading';
-// import axios from '../../../axios-instance';
 import axios from '../../../../axios-instance';
 import Cookies from 'js-cookie';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 class MedicalExamination extends Component {
@@ -69,6 +68,7 @@ class MedicalExamination extends Component {
         this.setState( { loading: true } );
 
         const formsData = new FormData();
+        formsData.append('logger', Cookies.get('LoginID') );
         formsData.append('Token', Cookies.get('tokenNo') );
         formsData.append('height', this.state.Candidate.height );
         formsData.append('weight', this.state.Candidate.weight );
@@ -91,27 +91,18 @@ class MedicalExamination extends Component {
         formsData.append('Insertor', Cookies.get('LoginID') );
 
         axios.post( '/exam1', formsData ).then( response => {
-            console.log( response.data );
 
-            if( response.data[0] == "Candidate Data Not Found" )
+            if( response.data[0] === "Candidate Data Not Found" )
             {
                 this.setState( { loading: false } );
 
-                toast.dark("Candidate Data Not Found", {
-                    position: 'top-center',
-                    progressClassName: 'success-progress-bar',
-                    autoClose: 3000,
-                });
+                this.props.error("Candidate Data Not Found");
 
             }else
             {
                 this.setState( { loading: false } );
 
-                toast.dark("Medical Examination 1 data inserted successfully", {
-                    position: 'top-center',
-                    progressClassName: 'success-progress-bar',
-                    autoClose: 3000,
-                });
+                this.props.error("Exam 1 data has inserted");
                 
                 $('input.form-control').val('');
 
@@ -120,12 +111,7 @@ class MedicalExamination extends Component {
         } ).catch( error => {
 
             this.setState( { loading: false } );
-
-            toast.dark("Network Error 500 please check your network connection", {
-                position: 'top-center',
-                progressClassName: 'success-progress-bar',
-                autoClose: 3000,
-            });
+            this.props.error("Network Error 500");
             
         } )
 
@@ -290,16 +276,16 @@ class MedicalExamination extends Component {
                                         <div className="col-lg-12 col-md-12 text-center col-sm-12 d-grid mb-3">
                                             <h6 className="font-weight-bold mb-0 pb-0">UnAided</h6>
                                         </div>
-                                        <div className="col-lg-4 offset-4 text-center">
+                                        <div className="col-4 offset-lg-4 offset-md-4 offset-sm-4 text-center">
                                             <p>Rt.Eye</p>
                                         </div>
-                                        <div className="col-lg-4 text-center">
+                                        <div className="col-4 text-center">
                                             <p>Lt.Eye</p>
                                         </div>
-                                        <div className="col-4 d-grid">
+                                        <div className="col-lg-4 col-md-12 col-sm-12 d-grid">
                                             <p className="mb-0">Distant</p>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4 col-md-6 col-sm-6">
                                             <input
                                                 type="text"
                                                 className="form-control form-control-sm rounded-0 text-center"
@@ -308,7 +294,7 @@ class MedicalExamination extends Component {
                                                 onChange={this.onChangeHandler}
                                             />
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4 col-md-6 col-sm-6">
                                             <input
                                                 type="text"
                                                 className="form-control form-control-sm rounded-0 text-center"
@@ -317,10 +303,10 @@ class MedicalExamination extends Component {
                                                 onChange={this.onChangeHandler}
                                             />
                                         </div>
-                                        <div className="col-4 d-grid">
+                                        <div className="col-lg-4 col-md-12 col-sm-12 d-grid">
                                             <p className="mb-0">Near</p>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4 col-md-6 col-sm-6">
                                             <input
                                                 type="text"
                                                 className="form-control form-control-sm rounded-0 text-center"
@@ -329,7 +315,7 @@ class MedicalExamination extends Component {
                                                 onChange={this.onChangeHandler}
                                             />
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4 col-md-6 col-sm-6">
                                             <input
                                                 type="text"
                                                 className="form-control form-control-sm rounded-0 text-center"
@@ -361,16 +347,16 @@ class MedicalExamination extends Component {
                                         <div className="col-lg-12 col-md-12 text-center col-sm-12 d-grid my-3">
                                             <h6 className="font-weight-bold mb-0 pb-0">Aided</h6>
                                         </div>
-                                        <div className="col-lg-4 offset-4 text-center">
+                                        <div className="col-4 offset-lg-4 offset-md-4 offset-sm-4 text-center">
                                             <p>Rt.Eye</p>
                                         </div>
-                                        <div className="col-lg-4 text-center">
+                                        <div className="col-4 text-center">
                                             <p>Lt.Eye</p>
                                         </div>
-                                        <div className="col-4 d-grid">
+                                        <div className="col-lg-4 col-md-12 col-sm-12 d-grid">
                                             <p className="mb-0">Distant</p>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4 col-md-6 col-sm-6">
                                             <input
                                                 type="text"
                                                 className="form-control form-control-sm rounded-0 text-center"
@@ -379,7 +365,7 @@ class MedicalExamination extends Component {
                                                 onChange={this.onChangeHandler}
                                             />
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4 col-md-6 col-sm-6">
                                             <input
                                                 type="text"
                                                 className="form-control form-control-sm rounded-0 text-center"
@@ -388,10 +374,10 @@ class MedicalExamination extends Component {
                                                 onChange={this.onChangeHandler}
                                             />
                                         </div>
-                                        <div className="col-4 d-grid">
+                                        <div className="col-lg-4 col-md-12 col-sm-12 d-grid">
                                             <p className="mb-0">Near</p>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4 col-md-6 col-sm-6">
                                             <input
                                                 type="text"
                                                 className="form-control form-control-sm rounded-0 text-center"
@@ -400,7 +386,7 @@ class MedicalExamination extends Component {
                                                 onChange={this.onChangeHandler}
                                             />
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4 col-md-6 col-sm-6">
                                             <input
                                                 type="text"
                                                 className="form-control form-control-sm rounded-0 text-center"

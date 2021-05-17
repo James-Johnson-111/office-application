@@ -1,15 +1,8 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 
 import './BackDark.css';
 
 class BackDark extends Component {
-
-    constructor( props )
-    {
-
-        super( props );
-
-    }
 
     render()
     {

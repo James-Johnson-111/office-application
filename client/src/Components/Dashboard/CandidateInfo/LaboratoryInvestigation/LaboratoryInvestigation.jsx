@@ -1,11 +1,10 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 
 import './LaboratoryInvestigation.css';
 import $ from 'jquery';
 import Loading from '../../../UI/Loading/Loading';
-// import axios from '../../../axios-instance';
 import axios from '../../../../axios-instance';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
 
@@ -107,33 +106,22 @@ class LaboratoryInvestigation extends Component {
             axios.post( '/laboratoryentry', formsData ).then( response => {
 
                 this.setState( { loading: false } );
-                toast.dark("Data Inserted Successfully", {
-                    position: 'bottom-center',
-                    progressClassName: 'success-progress-bar',
-                    autoClose: 3000,
-                });
+                this.props.error("Laboratory Data inserted successfully");
                 
                 $('input.form-control').val('');
     
             } ).catch( error => {
     
                 this.setState( { loading: false } );
-                toast.dark("Network Error 500 please check your network connection", {
-                    position: 'top-center',
-                    progressClassName: 'success-progress-bar',
-                    autoClose: 3000,
-                });
+                this.props.error("Network Error 500");
     
             } );
 
         }else
         {
 
-            toast.dark("No Candidate data Found", {
-                position: 'top-center',
-                progressClassName: 'success-progress-bar',
-                autoClose: 3000,
-            });
+            
+            this.props.error("No Candidate found");
 
         }
 

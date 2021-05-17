@@ -1,14 +1,13 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 
 import './CandidateForm.css';
-// import axios from '../../../axios-instance';
 import axios from '../../../../axios-instance';
 import Modal from '../../../UI/Modal/Modal';
 import Cookies from 'js-cookie';
 import Webcam from 'react-webcam';
 import $ from 'jquery';
 import Loading from '../../../UI/Loading/Loading';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import cameraImg from '../../../../images/pngtree-camera-icon-vector-png-image_1747970.jpg';
 
@@ -52,18 +51,19 @@ class CandidateForm extends Component {
         formsData.append('counter', Cookies.get('LoginID'));
         axios.post('/getalltokens', formsData).then( response => {
 
-            if( response.data.length != 0 )
+            if( response.data.length !== 0 )
             {
 
                 this.setState({ tokens: [response.data] });
 
+                Cookies.set('tokenNo', this.state.tokens[0].token);
                 const forsmData = new FormData();
                 forsmData.append('token', this.state.tokens[0].token);
                 axios.post('/getcurrentcandidate', forsmData).then(response => {
 
-                    if (response.data.length == 0) {
+                    if (response.data.length === 0) {
 
-                        this.props.filledData([{ token_no: this.state.tokens[0].token != undefined ? this.state.tokens[0].token : 'Not Found', candidate_name: 'Not Found' }]);
+                        this.props.filledData([{ token_no: this.state.tokens[0].token !== undefined ? this.state.tokens[0].token : 'Not Found', candidate_name: 'Not Found' }]);
                         this.setState( { filled: false } );
 
                     } else {
@@ -87,7 +87,7 @@ class CandidateForm extends Component {
 
         } );
 
-        if( Cookies.get( 'LoginID' ) != null )
+        if( Cookies.get( 'LoginID' ) !== null )
         {
 
             this.setState( { Editor: Cookies.get( 'LoginID' ), Insertor: Cookies.get( 'LoginID' ), candidateInfo: this.props.filledData } );
@@ -103,18 +103,19 @@ class CandidateForm extends Component {
         formsData.append('counter', Cookies.get('LoginID'));
         axios.post('/getalltokens', formsData).then( response => {
 
-            if( response.data.length != 0 )
+            if( response.data.length !== 0 )
             {
 
                 this.setState({ tokens: [response.data] });
+                Cookies.set('tokenNo', this.state.tokens[0].token);
 
                 const forsmData = new FormData();
                 forsmData.append('token', this.state.tokens[0].token);
                 axios.post('/getcurrentcandidate', forsmData).then(response => {
 
-                    if (response.data.length == 0) {
+                    if (response.data.length === 0) {
 
-                        this.props.filledData([{ token_no: this.state.tokens[0].token != undefined ? this.state.tokens[0].token : 'Not Found', candidate_name: 'Not Found' }]);
+                        this.props.filledData([{ token_no: this.state.tokens[0].token !== undefined ? this.state.tokens[0].token : 'Not Found', candidate_name: 'Not Found' }]);
                         this.setState( { filled: false } );
 
                     } else {
@@ -342,7 +343,7 @@ class CandidateForm extends Component {
                     <button className="btn btn-sm btn-block mt-3" onClick={this.takePhoto}>Click</button>
                 </Modal>
                 <Modal show={this.state.showModal} close={this.modalCall}>
-                    {(this.state.candidateInfo.candidate_name != null) && (this.state.candidateInfo.candidate_profession != null) && this.state.candidateInfo.candidate_passport != null ?
+                    {this.state.candidateInfo.candidate_name != null && this.state.candidateInfo.candidate_profession != null && this.state.candidateInfo.candidate_passport != null ?
                         <>
                             <div className="container-fluid">
                                 <p className="text-center"><small><b>SELECT THE WAY YOU WANT TO UPLOAD IMAGE</b></small></p>
@@ -363,7 +364,7 @@ class CandidateForm extends Component {
                                         </div>
                                     </div>
                                     <div className="col-6">
-                                        <img className="rounded" style={{ 'cursor': 'pointer' }} onClick={this.cameraModalCall} src={cameraImg} width="100%" />
+                                        <img alt="camera" className="rounded" style={{ 'cursor': 'pointer' }} onClick={this.cameraModalCall} src={cameraImg} width="100%" />
                                     </div>
                                 </div>
                             </div>
@@ -374,10 +375,11 @@ class CandidateForm extends Component {
                 </Modal>
                 <div className="CandidateForm" style={ { 'position' : this.props.position, 'top' : this.props.position === 'absolute' ? 'calc( 50vh - 60vh )' : null, 'left' : this.props.position === 'absolute' ? 'calc( 35% - 30% )' : null } }>
 
-                    {/* <form onSubmit={this.CandidateDataEntry}> */}
+                    <form>
                         
-                        <div className="user_img text-center w-100 mb-4">
+                    <div className="user_img text-center w-100 mb-4">
                             <img
+                                alt="Candidate img"
                                 src={this.state.candidateImg}
                                 width="120"
                                 height="120"
@@ -435,8 +437,8 @@ class CandidateForm extends Component {
                             <select name="candidate_gender" className="form-control form-control-sm rounded-0" onChange={this.onChangeHandler}
                                 required>
                                 <option >Candidate Gender</option>
-                                <option selected={this.state.candidateInfo.candidate_gender == 'Male' ? true : false}>Male</option>
-                                <option selected={this.state.candidateInfo.candidate_gender == 'FeMale' ? true : false}>FeMale</option>
+                                <option selected={this.state.candidateInfo.candidate_gender === 'Male' ? true : false}>Male</option>
+                                <option selected={this.state.candidateInfo.candidate_gender === 'FeMale' ? true : false}>FeMale</option>
                             </select>
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -446,8 +448,8 @@ class CandidateForm extends Component {
                             <select name="candidate_marital_status" className="form-control form-control-sm rounded-0" onChange={this.onChangeHandler}
                                 required>
                                 <option>Marital Status</option>
-                                <option selected={this.state.candidateInfo.candidate_marital_status == 'Married' ? true : false} >Married</option>
-                                <option selected={this.state.candidateInfo.candidate_marital_status == 'UnMarried' ? true : false}>UnMarried</option>
+                                <option selected={this.state.candidateInfo.candidate_marital_status === 'Married' ? true : false} >Married</option>
+                                <option selected={this.state.candidateInfo.candidate_marital_status === 'UnMarried' ? true : false}>UnMarried</option>
                             </select>
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -505,9 +507,10 @@ class CandidateForm extends Component {
                             />
                         </div>
                         <div className="text-center">
-                            <button onClick={this.CandidateDataEntry} className="btn btn-sm w-50">Submit</button>
+                            <button type="button" onClick={this.CandidateDataEntry} className="btn btn-sm w-50">Submit</button>
                         </div>
-                    {/* </form> */}
+                        
+                    </form>
 
                 </div>
                 <ToastContainer autoClose={3000} />

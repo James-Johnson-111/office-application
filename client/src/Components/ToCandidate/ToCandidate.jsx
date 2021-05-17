@@ -1,13 +1,10 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import Webcam from 'react-webcam';
 
-import CandidateForm from '../Dashboard/CandidateInfo/CandidateForm/CandidateForm';
 import Loading from '../UI/Loading/Loading';
 import Modal from '../UI/Modal/Modal';
 import './ToCandidate.css';
-import $ from 'jquery';
 import cameraImg from '../../images/pngtree-camera-icon-vector-png-image_1747970.jpg';
-import Cookies from 'js-cookie';
 import axios from '../../axios-instance';
 
 class ToCandidate extends Component {
@@ -49,8 +46,7 @@ class ToCandidate extends Component {
 
         axios.post( '/gettoken', formsData ).then( response => {
 
-            console.log( response.data );
-            if( response.data.length == 0 )
+            if( response.data.length === 0 )
             {
                 this.props.history.push('/error');
             }else
@@ -157,12 +153,7 @@ class ToCandidate extends Component {
         }).then(response => {
 
             this.setState({ loading: false });
-
-            let setContent =    <>
-                                    <h1 className="text-center">Your Data Has Been Submitted</h1>
-                                    <h1 className="text-center">THANK YOU</h1>
-                                </>
-            $('div.ToCandidate-content').html(setContent);
+            alert("Data inserted successfully, Thank you");
 
         }).catch( err => {
 
@@ -284,7 +275,7 @@ class ToCandidate extends Component {
                                         </div>
                                     </div>
                                     <div className="col-6">
-                                        <img className="rounded" style={{ 'cursor': 'pointer' }} onClick={this.cameraModalCall} src={cameraImg} width="100%" />
+                                        <img alt="camera" className="rounded" style={{ 'cursor': 'pointer' }} onClick={this.cameraModalCall} src={cameraImg} width="100%" />
                                     </div>
                                 </div>
                             </div>
@@ -295,7 +286,7 @@ class ToCandidate extends Component {
                 </Modal>
                 <div className="w-100 d-grid ToCandidate">
                     <div className="d-flex justify-content-center ToCandidate-inner">
-                        <div className="ToCandidate-content">
+                        <div className="ToCandidate-content" id="ToCandidate-content">
                             <div className="user_img text-center w-100 mb-4">
                                 <img
                                     src={this.state.candidateImg}
@@ -304,6 +295,7 @@ class ToCandidate extends Component {
                                     className="rounded-circle user_img"
                                     onClick={this.modalCall}
                                     style={{ 'cursor': 'pointer' }}
+                                    alt="candidate img"
                                 />
                             </div>
                             <div className="d-flex justify-content-center mb-3">

@@ -1,11 +1,11 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 
 import './MedicalExamination2.css';
 import $ from 'jquery';
 import Loading from '../../../UI/Loading/Loading';
 import axios from '../../../../axios-instance';
 import Cookies from 'js-cookie';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 class MedicalExamination2 extends Component {
@@ -74,6 +74,7 @@ class MedicalExamination2 extends Component {
         event.preventDefault();
         this.setState( { loading: true } );
         const formsData = new FormData();
+        formsData.append('logger', Cookies.get('LoginID') );
         formsData.append( 'Token', Cookies.get('tokenNo') );
         formsData.append( 'generalAppearance', this.state.Exam2.generalAppearance );
         formsData.append( 'cardioVascular', this.state.Exam2.cardioVascular );
@@ -99,31 +100,24 @@ class MedicalExamination2 extends Component {
 
         axios.post( '/medicalexamination2entry', formsData ).then( response => {
 
-            if( response.data[0] == "Candidate Data Not Found" )
+            if( response.data[0] === "Candidate Data Not Found" )
             {
                 this.setState( { loading: false } );
-
-                toast.dark("Candidate Data Not Found", {
-                    position: 'top-center',
-                    progressClassName: 'success-progress-bar',
-                    autoClose: 3000,
-                });
+                this.props.error("Candidate Not Found");
 
             }else
             {
                 this.setState( { loading: false } );
-
-                toast.dark("Medical Examination 2 data inserted successfully", {
-                    position: 'top-center',
-                    progressClassName: 'success-progress-bar',
-                    autoClose: 3000,
-                });
+                this.props.error("Exam 2 Data inserted");
 
                 $('input.form-control').val('');
 
             }
 
-        } )
+        } ).catch( err => {
+            this.props.error("Network Error 500");
+            }
+         )
 
     }
     render()

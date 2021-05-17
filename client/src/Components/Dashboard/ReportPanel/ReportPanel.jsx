@@ -1,4 +1,4 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 
 import './ReportPanel.css';
 import axios from '../../../axios-instance';
@@ -95,7 +95,7 @@ class ReportPanel extends Component {
                 this.setState({ loading: false });
                 this.setState({ getAllCandidates: response.data });
 
-                if (this.state.getAllCandidates == 0) {
+                if (this.state.getAllCandidates === 0) {
 
                     toast.dark("No Record Found", {
                         position: 'bottom-center',
@@ -146,9 +146,8 @@ class ReportPanel extends Component {
     
                     switch(response)
                     {
-                        case response.data.length == 0:
+                        case response.data.length === 0:
                         case response.data.length < 0:
-                            console.log("not found");
                             this.setState({ loading: false });
     
                             toast.dark("Not Found", {
@@ -217,7 +216,7 @@ class ReportPanel extends Component {
                     this.setState({ loading: false });
                     this.setState({ getAllCandidates: response.data });
 
-                    if (this.state.getAllCandidates == 0) {
+                    if (this.state.getAllCandidates === 0) {
 
                         toast.dark("No Record Found", {
                             position: 'bottom-center',
@@ -261,19 +260,19 @@ class ReportPanel extends Component {
     ChangeToTextField = ( whichOne ) => {
 
         let txt = null;
-        if( whichOne == 'SByToken' )
+        if( whichOne === 'SByToken' )
         {
             txt = <> <input type="text" className="form-control form-control-sm rounded-0 SbyTDSInput" placeholder="Token NO." onChange={ this.getDataThroughToken } /> </>
             this.setState( { SByTokenTxt: txt, SByDateTxt: <h5 className="text-uppercase mb-0 py-3">Search By Date</h5>, SByShiftTxt: <h5 className="text-uppercase mb-0 py-3">Search By Shift</h5> } );
         }
 
-        if( whichOne == 'SByDate' )
+        if( whichOne === 'SByDate' )
         {
             txt = <> <input type="date" className="form-control form-control-sm rounded-0 SbyTDSInput" onChange={this.getDataThroughDate} /> </>
             this.setState( { SByDateTxt: txt, SByTokenTxt: <h5 className="text-uppercase mb-0 py-3">Search By Token</h5>, SByShiftTxt: <h5 className="text-uppercase mb-0 py-3">Search By Shift</h5> } );
         }
 
-        if( whichOne == 'SByShift' )
+        if( whichOne === 'SByShift' )
         {
             
             txt =   <> 
@@ -380,6 +379,7 @@ class ReportPanel extends Component {
                                                         <img
                                                             src={"images/candidates/" + data.candidate_image}
                                                             width="100%"
+                                                            alt="candidate img"
                                                         />
                                                     </div>
                                                     <div className="col-lg-6 col-md-6 col-sm-12">
@@ -468,10 +468,11 @@ class ReportPanel extends Component {
                                                                             src={"images/candidates/" + data.candidate_image}
                                                                             width="100"
                                                                             height='100'
+                                                                            alt="candidate img"
                                                                         />
                                                                     </div>
                                                                     <div className="col-lg-6 col-md-6 col-sm-12">
-                                                                        <h5 className="mb-0 font-weight-bolder">{data.candidate_name.length < 12 ? data.candidate_name : data.candidate_name.substring(0, 9) + '...'}</h5>
+                                                                        <h5 className="mb-0 font-weight-bolder" title={ data.candidate_name }>{data.candidate_name.length < 12 ? data.candidate_name : data.candidate_name.substring(0, 9) + '...'}</h5>
                                                                         <p>{data.candidate_nationality}</p>
                                                                         <button className="btn btn-sm btn-block" onClick={ () => this.showDetails( index ) }>View Details</button>
                                                                     </div>
@@ -479,11 +480,11 @@ class ReportPanel extends Component {
                                                                         <div className="d-flex justify-content-center">
                                                                             <div className="border w-50 text-center" style={ { 'borderRadius' : '20px 0 0 0' } }>
                                                                                 <p className="mb-1 font-weight-bold" style={ { 'color' : '#1A2476' } }>Passport</p>
-                                                                                <p className="mb-0 font-weight-bold" style={ { 'color' : '#f59b28', 'fontSize' : '12px' } }> { data.candidate_passport.length < 16 ? data.candidate_passport : data.candidate_passport.substring(0, 15) + '...' } </p>
+                                                                                <p className="mb-0 font-weight-bold" style={ { 'color' : '#f59b28', 'fontSize' : '12px' } } title={ data.candidate_passport }> { data.candidate_passport.length < 16 ? data.candidate_passport : data.candidate_passport.substring(0, 15) + '...' } </p>
                                                                             </div>
                                                                             <div className="border w-50 text-center" style={ { 'borderRadius' : '0 20px 0 0' } }>
                                                                                 <p className="mb-1 font-weight-bold" style={ { 'color' : '#1A2476' } }>Profession</p>
-                                                                                <p className="mb-0 font-weight-bold" style={ { 'color' : '#40CFCD', 'fontSize' : '12px' } }> { data.candidate_profession.length < 15 ? data.candidate_profession : data.candidate_profession.substring(0, 10) + '...' } </p>
+                                                                                <p className="mb-0 font-weight-bold" style={ { 'color' : '#40CFCD', 'fontSize' : '12px' } } title={ data.candidate_profession }> { data.candidate_profession.length < 15 ? data.candidate_profession : data.candidate_profession.substring(0, 10) + '...' } </p>
                                                                             </div>
                                                                         </div>
                                                                         <div className="d-flex justify-content-center py-2">
@@ -493,6 +494,7 @@ class ReportPanel extends Component {
                                                                                     width="50"
                                                                                     height='50'
                                                                                     className="shadow-sm"
+                                                                                    alt="candidate img"
                                                                                 />
                                                                             </div>
                                                                             <div className="d-grid">
