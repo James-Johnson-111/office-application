@@ -39,7 +39,8 @@ class CandidateForm extends Component {
             imageName: null,
             loading: true,
             tokens: null,
-            filled: false
+            filled: false,
+            camera: false
         }
 
     }
@@ -47,6 +48,7 @@ class CandidateForm extends Component {
     componentDidMount()
     {
 
+        navigator.getUserMedia( { video: true }, () => { this.setState( { camera: true } ); }, () => { this.setState( { camera: false } ); } );
         const formsData = new FormData();
         formsData.append('counter', Cookies.get('LoginID'));
         axios.post('/getalltokens', formsData).then( response => {
@@ -333,14 +335,21 @@ class CandidateForm extends Component {
             <>
                 <Loading show={this.state.loading} />
                 <Modal show={this.state.ShowCamera} close={this.cameraModalCall}>
-                    <Webcam
-                        audio={false}
-                        screenshotFormat="image/jpeg"
-                        width='100%'
-                        ref='webcam'
-                        videoConstraints={videoConstraints}
-                    />
-                    <button className="btn btn-sm btn-block mt-3" onClick={this.takePhoto}>Click</button>
+                    {
+                        this.state.camera ? 
+                            <>
+                                <Webcam
+                                    audio={false}
+                                    screenshotFormat="image/jpeg"
+                                    width='100%'
+                                    ref='webcam'
+                                    videoConstraints={videoConstraints}
+                                />
+                                <button className="btn btn-sm btn-block mt-3" onClick={this.takePhoto}>Click</button>
+                            </>
+                        :
+                        <h1 className="text-center">Camera Not Found</h1>
+                    }
                 </Modal>
                 <Modal show={this.state.showModal} close={this.modalCall}>
                     {this.state.candidateInfo.candidate_name != null && this.state.candidateInfo.candidate_profession != null && this.state.candidateInfo.candidate_passport != null ?

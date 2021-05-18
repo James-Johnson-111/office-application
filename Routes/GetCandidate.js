@@ -1,21 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
-
-const db = mysql.createConnection( 
-    {
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'office-database'
-    }
-    // {
-    //     host: 'remotemysql.com',
-    //     user: '8tttXb5VZx',
-    //     password: 'I7W2CAugk4',
-    //     database: '8tttXb5VZx'
-    // }
-)
+const db = require('../db/connection');
 
 // here is an array in which all month names are stored with whcich we can store month name into database
 
@@ -75,7 +60,7 @@ router.post( '/gettokendata', ( req, res ) => {
 
 router.post( '/getdatathroughdate', ( req, res ) => {
 
-    const { date } = req.body;
+    const { date, logger } = req.body;
 
     db.query(
         "SELECT candidate_info.*, users.*, candidate_images.candidate_image from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id INNER JOIN users ON candidate_info.insert_by = users.login_id WHERE insert_date LIKE '%" + date + "%'",
@@ -86,8 +71,22 @@ router.post( '/getdatathroughdate', ( req, res ) => {
                 console.log(err);
 
             } else {
+                let tokenDate = new Date();
+                let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
 
-                res.send( rslt );
+                db.query(
+                    "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                    ['Search candidates data through date', logger, date, fullTime],
+                    (err, rslts) => {
+
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.send( rslt );
+                        }
+
+                    }
+                )
 
             }
         }
@@ -99,7 +98,7 @@ router.post( '/getdatathroughdate', ( req, res ) => {
 
 router.post( '/getcandidatethroughtime', ( req, res ) => {
 
-    const { time1, time2 } = req.body;
+    const { time1, time2, logger } = req.body;
 
     db.query(
         "SELECT candidate_info.*, users.*, candidate_images.candidate_image from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id INNER JOIN users ON candidate_info.insert_by = users.login_id WHERE candidate_info.inserted_time between '" + time1 + "' AND '" + time2 + "'",
@@ -113,8 +112,22 @@ router.post( '/getcandidatethroughtime', ( req, res ) => {
             }else
             {
 
-                // console.log(rslt);
-                res.send( rslt );
+                let tokenDate = new Date();
+                let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+
+                db.query(
+                    "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                    ['Search candidates data through time', logger, date, fullTime],
+                    (err, rslts) => {
+
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.send( rslt );
+                        }
+
+                    }
+                )
 
             }
 

@@ -10,8 +10,10 @@ class Logout extends Component {
         if( Cookies.get('LognID') !== undefined || Cookies.get('LoginID') !== null )
         {
 
-            Cookies.remove('LoginID');
-            this.props.history.push('/login');
+            setTimeout( () => {
+                Cookies.remove('LoginID');
+                this.props.history.push('/login');
+            }, 300 );
 
         }else
         {

@@ -12,7 +12,13 @@ class Loading extends Component {
 
             <div 
                 className="loading d-grid" 
-                style={ { 'display' : this.props.show ? 'grid' : 'none' } }
+                style={ 
+                    { 
+                        'display' : this.props.show ? 'grid' : 'none', 
+                        'position' : this.props.position === undefined ? 'fixed' : this.props.position, 
+                        // 'height' : this.props.position === undefined ? '100vh' : '100%' 
+                    } 
+                }
                 >
                 <div className="loading-inner d-flex justify-content-center">
                     <div className="loading-content">

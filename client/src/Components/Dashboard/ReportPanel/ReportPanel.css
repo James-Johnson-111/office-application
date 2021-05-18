@@ -1,3 +1,61 @@
+.candidateDetails .leftSide {
+    width: 80%;
+    padding: 15px 10px;
+    text-align: center;
+    background-color: #1A2476;
+    color: #fff !important;
+}
+
+.candidateDetails .leftSide img {
+    border-radius: 20px;
+    border: 4px solid #fff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.candidateDetails .leftSide .details_item .heading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: .3;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.candidateDetails .leftSide .details_item {
+    border: 1px solid #40CFCD;
+    border-radius: 10px;
+    width: 100%;
+    height: min-content;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.candidateDetails .rightSide {
+    width: 20%;
+    padding: 10px;
+    background-color: #f59b28;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+.candidateDetails .rightSide i {
+    padding: 20px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.candidateDetails .rightSide i:hover {
+    background-color: #fff;
+    color: #f59b28;
+}
+
 .GetCandidate {
     padding: 20px;
     position: relative;
@@ -60,6 +118,7 @@
     background-color: #ecedf3;
     padding: 30px;
     margin-top: 50px;
+    position: relative;
 }
 
 .GetCandidate .SbyTDSInput {

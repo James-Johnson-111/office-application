@@ -1,21 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
-
-const db = mysql.createConnection( 
-    {
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'office-database'
-    }
-    // {
-    //     host: 'remotemysql.com',
-    //     user: '8tttXb5VZx',
-    //     password: 'I7W2CAugk4',
-    //     database: '8tttXb5VZx'
-    // }
-)
+const db = require('../db/connection');
 
 // here is an array in which all month names are stored with whcich we can store month name into database
 

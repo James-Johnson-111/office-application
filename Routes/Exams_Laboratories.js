@@ -1,21 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
-
-const db = mysql.createConnection( 
-    {
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'office-database'
-    }
-    // {
-    //     host: 'remotemysql.com',
-    //     user: '8tttXb5VZx',
-    //     password: 'I7W2CAugk4',
-    //     database: '8tttXb5VZx'
-    // }
-)
+const db = require('../db/connection');
 
 // here is an array in which all month names are stored with whcich we can store month name into database
 
@@ -77,7 +62,7 @@ router.post( '/exam1', ( req, res ) => {
                             let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
 
                             db.query(
-                                "INSERT INTO logs(log, logger, log_date, log_time) VALUES(?,?,?,?)",
+                                "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
                                 ['Exam 1 data inserted', logger, date, fullTime],
                                 (err, rslt) => {
 
@@ -143,7 +128,7 @@ router.post( '/medicalexamination2entry', ( req, res ) => {
                                 let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
 
                                 db.query(
-                                    "INSERT INTO logs(log, logger, log_date, log_time) VALUES(?,?,?,?)",
+                                    "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
                                     ['Exam 2 data inserted', logger, date, fullTime],
                                     (err, rslt) => {
 
@@ -406,7 +391,7 @@ router.post('/laboratoryentry', ( req, res ) => {
                                                                                                                                                                             {
 
                                                                                                                                                                                 db.query(
-                                                                                                                                                                                    "INSERT INTO logs(log, logger, log_date, log_time) VALUES(?,?,?,?)",
+                                                                                                                                                                                    "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
                                                                                                                                                                                     ['Laboratory investigation data inserted', logger, date, fullTime],
                                                                                                                                                                                     (err, rslt) => {
 

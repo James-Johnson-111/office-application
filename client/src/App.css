@@ -1,3 +1,7 @@
+.p-absolute {
+  position: absolute;
+}
+
 .clear_float {
   clear: both;
 }

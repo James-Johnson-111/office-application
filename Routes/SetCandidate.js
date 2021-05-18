@@ -1,21 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
-
-const db = mysql.createConnection( 
-    {
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'office-database'
-    }
-    // {
-    //     host: 'remotemysql.com',
-    //     user: '8tttXb5VZx',
-    //     password: 'I7W2CAugk4',
-    //     database: '8tttXb5VZx'
-    // }
-)
+const db = require('../db/connection');
 
 // here is an array in which all month names are stored with whcich we can store month name into database
 
@@ -114,8 +99,20 @@ router.post('/setcandidate', (req, res) => {
                                                                     console.log( err );
                                                                 }else
                                                                 {
-                                
-                                                                    res.send('Data Inserted Successfully');
+                            
+                                                                    db.query(
+                                                                        "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                                                                        ['candidate data inserted', logger, date, fullTime],
+                                                                        (err, rslt) => {
+
+                                                                            if (err) {
+                                                                                console.log(err);
+                                                                            } else {
+                                                                                res.send("Data Inserted Successfully");
+                                                                            }
+
+                                                                        }
+                                                                    )
                                 
                                                                 }
                                 
@@ -165,7 +162,7 @@ router.post('/setcandidate', (req, res) => {
             });
 
             db.query(
-                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id,
+                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_gender = '" + Gander + "', candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id,
                 (err, rslt) => {
 
                     if (!err) {
@@ -200,7 +197,19 @@ router.post('/setcandidate', (req, res) => {
                                                         }else
                                                         {
                         
-                                                            res.send('Data Updated Successfully');
+                                                            db.query(
+                                                                "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                                                                ['candidate data updated', logger, date, fullTime],
+                                                                (err, rslt) => {
+
+                                                                    if (err) {
+                                                                        console.log(err);
+                                                                    } else {
+                                                                        res.send("Data Updated Successfully");
+                                                                    }
+
+                                                                }
+                                                            )
                         
                                                         }
                         
@@ -230,7 +239,7 @@ router.post('/setcandidate', (req, res) => {
         {
 
             db.query(
-                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id,
+                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_gender = '" + Gander + "' candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id,
                 (err, rslt) => {
 
                     if (!err) {
@@ -255,7 +264,31 @@ router.post('/setcandidate', (req, res) => {
                                             }else
                                             {
             
-                                                res.send('Data Updated Successfully');
+                                                db.query(
+                                                    "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                                                    ['candidate data updated', logger, date, fullTime],
+                                                    (err, rslt) => {
+
+                                                        if (err) {
+                                                            console.log(err);
+                                                        } else {
+                                                            db.query(
+                                                                "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                                                                ['candidate data updated', logger, date, fullTime],
+                                                                (err, rslt) => {
+
+                                                                    if (err) {
+                                                                        console.log(err);
+                                                                    } else {
+                                                                        res.send("Data Updated Successfully");
+                                                                    }
+
+                                                                }
+                                                            )
+                                                        }
+
+                                                    }
+                                                )
             
                                             }
             
@@ -293,7 +326,7 @@ router.post('/setcandidate', (req, res) => {
             });
 
             db.query(
-                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id,
+                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_gender = '" + Gander + "', candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id,
                 (err, rslt) => {
 
                     if (!err) {
@@ -328,7 +361,19 @@ router.post('/setcandidate', (req, res) => {
                                                         }else
                                                         {
                         
-                                                            res.send('Data Updated Successfully');
+                                                            db.query(
+                                                                "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                                                                ['candidate data updated', logger, date, fullTime],
+                                                                (err, rslt) => {
+
+                                                                    if (err) {
+                                                                        console.log(err);
+                                                                    } else {
+                                                                        res.send("Data Updated Successfully");
+                                                                    }
+
+                                                                }
+                                                            )
                         
                                                         }
                         
@@ -462,7 +507,7 @@ router.post('/databycandidate', (req, res) => {
 
 router.post( '/getcurrentcandidate', ( req, res ) => {
 
-    const { token, viewer } = req.body;
+    const { token } = req.body;
 
     db.query(
         "SELECT candidate_info.*, candidate_tokens.token_no, candidate_images.candidate_image FROM candidate_info INNER JOIN candidate_tokens ON candidate_info.candidate_id = candidate_tokens.candidate_id INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id WHERE candidate_tokens.token_no = '" + token + "'",

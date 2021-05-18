@@ -25,7 +25,8 @@ class ReportPanel extends Component {
             SByTokenTxt: <h5 className="text-uppercase mb-0 py-3">Search By Token</h5>,
             SByDateTxt: <h5 className="text-uppercase mb-0 py-3 sebyda">Search By Date</h5>,
             SByShiftTxt: <h5 className="text-uppercase mb-0 py-3">Search By Shift</h5>,
-            showModal: false
+            showModal: false,
+            showData: 6
 
         }
 
@@ -35,6 +36,29 @@ class ReportPanel extends Component {
     {
 
         this.setState( {loading: false } );
+        window.addEventListener( 'scroll', () => {
+
+            const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+            if ( scrollTop + clientHeight >= scrollHeight )
+            {
+                
+                this.showMore();
+
+            }
+
+        } );
+
+    }
+
+    showMore = () => {
+
+        setTimeout( () => {
+
+            let three = 3;
+            let cards = this.state.showData + three;
+            this.setState({ showData: cards });
+
+        }, 300 );
 
     }
 
@@ -89,6 +113,7 @@ class ReportPanel extends Component {
 
             const formsData = new FormData();
             formsData.append('date', this.getDate(value));
+            formsData.append('logger', Cookies.get('LoginID') );
 
             axios.post('/getdatathroughdate', formsData).then(response => {
 
@@ -210,6 +235,7 @@ class ReportPanel extends Component {
                 const formsData = new FormData();
                 formsData.append('time1', this.state.getTime.time1);
                 formsData.append('time2', this.state.getTime.time2);
+                formsData.append('logger', Cookies.get('LoginID') );
 
                 axios.post('/getcandidatethroughtime', formsData).then(response => {
 
@@ -365,39 +391,72 @@ class ReportPanel extends Component {
         return(
 
             <>
-                <Modal show={this.state.showModal} close={this.modalCall}>
-                    <div className="container-fluid">
-                        <div className="row">
-                            {
-                                this.state.detailsData.map((data, index) => {
+                <Modal show={this.state.showModal} close={this.modalCall} wid="60%">
+                    {
+                        this.state.detailsData.map((data, index) => {
 
-                                    return (
-                                        <div className="col-lg-12 col-md-12 col-sm-12" key={index}>
-                                            <div className="candidate_info_div">
-                                                <div className="row">
-                                                    <div className="col-lg-6 col-md-6 col-sm-12 text-center">
-                                                        <img
-                                                            src={"images/candidates/" + data.candidate_image}
-                                                            width="100%"
-                                                            alt="candidate img"
-                                                        />
-                                                    </div>
-                                                    <div className="col-lg-6 col-md-6 col-sm-12">
-                                                        <h5 className="mb-0 font-weight-bolder">{data.candidate_name}</h5>
-                                                        <p>{data.candidate_nationality}</p>
-                                                        <button className="btn btn-sm btn-block">View Details</button>
+                            return (
+                                <>
+                                    <div key={index} className="w-100 d-flex justify-content-center candidateDetails">
+                                        <div className="leftSide">
+                                            <img
+                                                src={"images/candidates/" + data.candidate_image}
+                                                width="120"
+                                                height='120'
+                                                alt="candidate img"
+                                            />
+                                            <div className="pt-4 pb-2 text-center w-100 font-weight-bolder">
+                                                <h3 style={ { 'fontFamily' : 'JosefinSans', 'color' : '#40CFCD' } }> { data.candidate_name } </h3>
+                                                <p className="font-weight-normal">I'm <b>{ data.candidate_profession }</b> & My nationality is <b>{ data.candidate_nationality }</b> </p>
+                                                <div className="container-fluid">
+                                                    <div className="row">
+                                                        <div className="col-lg-3 col-md-6 col-sm-12">
+                                                            <div className="details_item" title={ data.candidate_passport }>
+                                                                <h5 className="heading">Passport</h5>
+                                                                <i className="las la-passport la-2x"></i>
+                                                                <small className="d-block"> { data.candidate_passport.length < 12 ? data.candidate_passport : data.candidate_passport.substring(0, 9) + '...' } </small>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-3 col-md-6 col-sm-12">
+                                                            <div className="details_item" title={ data.place_of_issue }>
+                                                                <h5 className="heading">Issue Place</h5>
+                                                                <i className="las la-city la-2x"></i>
+                                                                <small className="d-block"> { data.place_of_issue.length < 12 ? data.place_of_issue : data.place_of_issue.substring(0, 9) + '...' } </small>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-3 col-md-6 col-sm-12">
+                                                            <div className="details_item" title={ data.travelling_to }>
+                                                                <h5 className="heading">Travelling To</h5>
+                                                                <i className="las la-plane-departure la-2x"></i>
+                                                                <small className="d-block"> { data.travelling_to.length < 12 ? data.travelling_to : data.travelling_to.substring(0, 9) + '...' } </small>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-3 col-md-6 col-sm-12">
+                                                            <div className="details_item" title={ data.candidate_gender }>
+                                                                <h5 className="heading">Gender</h5>
+                                                                <i className="las la-mercury la-2x"></i>
+                                                                <small className="d-block"> { data.candidate_gender.length < 12 ? data.candidate_gender : data.candidate_gender.substring(0, 9) + '...' } </small>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-12 mt-2 col-md-12 col-sm-12 text-center">
+                                                            <small className="d-block p-0 m-0">This Candidate was created by <b>{ data.insert_by }</b> </small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    )
+                                        <div className="rightSide text-center text-white">
+                                            <i className="lar la-user la-2x" title="About Candidate"></i>
+                                            <i className="las la-comment-dots la-2x" title="Candidate More Information"></i>
+                                            <i className="las la-address-card la-2x" title="About User"></i>
+                                        </div>
+                                    </div>
+                                </>
+                            )
 
-                                })
-                            }
-                        </div>
-                    </div>
+                        })
+                    }
                 </Modal>
-                <Loading show={this.state.loading} />
                 <div className="GetCandidate w-100">
                     <div className="container-fluid">
                         <div className="row border-bottom">
@@ -454,10 +513,11 @@ class ReportPanel extends Component {
                                     </div>
                                 </div>
                                 <div className="row search_result">
+                                    <Loading show={this.state.loading} position='absolute' />
                                     <div className="container-fluid">
                                         <div className="row">
                                             {
-                                                this.state.getAllCandidates.map( ( data, index ) => {
+                                                this.state.getAllCandidates.slice(0, this.state.showData).map( ( data, index ) => {
 
                                                     return (
                                                         <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={index}>

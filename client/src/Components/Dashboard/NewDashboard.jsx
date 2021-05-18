@@ -49,18 +49,20 @@ class Dashboard extends Component {
         }, 0.1 * 1000 );
 
         //Get Screen width for responsive
-        let ScWd = window.outerWidth;
-        if( ScWd < 1101 )
-        {
+        window.addEventListener( 'resize', () => {
 
-            this.setState( { shortScreen: true } );
+            let ScWd = window.outerWidth;
+            if (ScWd < 1101) {
 
-        }else
-        {
+                this.setState({ shortScreen: true });
 
-            this.setState( { shortScreen: false } );
+            } else {
 
-        }
+                this.setState({ shortScreen: false, show: true });
+
+            }
+
+        } );
         
 
     }
