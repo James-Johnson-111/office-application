@@ -38,6 +38,9 @@ router.post('/setcandidate', (req, res) => {
         const Image = req.files.Image;
         let imagesNames = ImageName + '.png';
 
+        let tokenDate = new Date();
+        let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+
         Image.mv('client/public/images/candidates/' + imagesNames, (err) => {
 
             if (err) {
@@ -66,8 +69,8 @@ router.post('/setcandidate', (req, res) => {
                             } else {
 
                                 db.query(
-                                    'INSERT INTO candidate_images(candidate_id, candidate_image) VALUES(?,?)',
-                                    [rslt[0].candidate_id, imagesNames],
+                                    "INSERT INTO candidate_images(candidate_id, candidate_image) VALUES(?,?); INSERT INTO candidate_tokens(candidate_id, token_no, token_status, token_date, token_time) VALUES (?,?,?,?,?); UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'; INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                                    [rslt[0].candidate_id, imagesNames, rslt[0].candidate_id, token, 'encountered', date, fullTime, 'candidate data inserted', logger, date, fullTime],
                                     (err, rsltt) => {
 
                                         if (err) {
@@ -76,53 +79,7 @@ router.post('/setcandidate', (req, res) => {
 
                                         } else {
 
-                                            let tokenDate = new Date();
-                                            let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
-
-                                            db.query(
-                                                'INSERT INTO candidate_tokens(candidate_id, token_no, token_status, token_date, token_time) VALUES (?,?,?,?,?)',
-                                                [rslt[0].candidate_id, token, 'encountered', date, fullTime],
-                                                (err, rslt) => {
-
-                                                    if (err) {
-
-                                                        console.log(err);
-
-                                                    } else {
-
-                                                        db.query(
-                                                            "UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'",
-                                                            ( err, rslt ) => {
-                                
-                                                                if( err )
-                                                                {
-                                                                    console.log( err );
-                                                                }else
-                                                                {
-                            
-                                                                    db.query(
-                                                                        "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
-                                                                        ['candidate data inserted', logger, date, fullTime],
-                                                                        (err, rslt) => {
-
-                                                                            if (err) {
-                                                                                console.log(err);
-                                                                            } else {
-                                                                                res.send("Data Inserted Successfully");
-                                                                            }
-
-                                                                        }
-                                                                    )
-                                
-                                                                }
-                                
-                                                            }
-                                                        )
-
-                                                    }
-
-                                                }
-                                            )
+                                            res.send("Data Inserted Successfully");
 
                                         }
 
@@ -162,69 +119,13 @@ router.post('/setcandidate', (req, res) => {
             });
 
             db.query(
-                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_gender = '" + Gander + "', candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id,
+                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_gender = '" + Gander + "', candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id + "; UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'; UPDATE candidate_tokens SET token_status = 'encountered' WHERE token_no = '" + token + "'; UPDATE candidate_images SET candidate_image = '" + imagesNames + "' WHERE candidate_id = '" + id + "'; INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                ['candidate data updated', logger, date, fullTime],
                 (err, rslt) => {
 
                     if (!err) {
 
-                        db.query(
-                            "UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'",
-                            ( err, rslt ) => {
-
-                                if( err )
-                                {
-                                    console.log( err );
-                                }else
-                                {
-
-                                    db.query(
-                                        "UPDATE candidate_tokens SET token_status = 'encountered' WHERE token_no = '" + token + "'",
-                                        ( err, rslt ) => {
-            
-                                            if( err )
-                                            {
-                                                console.log( err );
-                                            }else
-                                            {
-            
-                                                db.query(
-                                                    "UPDATE candidate_images SET candidate_image = '" + imagesNames + "' WHERE candidate_id = '" + id + "'",
-                                                    ( err, rslt ) => {
-                        
-                                                        if( err )
-                                                        {
-                                                            console.log( err );
-                                                        }else
-                                                        {
-                        
-                                                            db.query(
-                                                                "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
-                                                                ['candidate data updated', logger, date, fullTime],
-                                                                (err, rslt) => {
-
-                                                                    if (err) {
-                                                                        console.log(err);
-                                                                    } else {
-                                                                        res.send("Data Updated Successfully");
-                                                                    }
-
-                                                                }
-                                                            )
-                        
-                                                        }
-                        
-                                                    }
-                                                )
-            
-                                            }
-            
-                                        }
-                                    )
-
-                                }
-
-                            }
-                        )
+                        res.send("Data Updated Successfully");
 
                     } else {
 
@@ -239,66 +140,13 @@ router.post('/setcandidate', (req, res) => {
         {
 
             db.query(
-                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_gender = '" + Gander + "' candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id,
+                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_gender = '" + Gander + "' candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id + "; UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'; UPDATE candidate_tokens SET token_status = 'encountered' WHERE token_no = '" + token + "'; INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?); INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                ['candidate data updated', logger, date, fullTime, 'candidate data updated', logger, date, fullTime],
                 (err, rslt) => {
 
                     if (!err) {
 
-                        db.query(
-                            "UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'",
-                            ( err, rslt ) => {
-
-                                if( err )
-                                {
-                                    console.log( err );
-                                }else
-                                {
-
-                                    db.query(
-                                        "UPDATE candidate_tokens SET token_status = 'encountered' WHERE token_no = '" + token + "'",
-                                        ( err, rslt ) => {
-            
-                                            if( err )
-                                            {
-                                                console.log( err );
-                                            }else
-                                            {
-            
-                                                db.query(
-                                                    "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
-                                                    ['candidate data updated', logger, date, fullTime],
-                                                    (err, rslt) => {
-
-                                                        if (err) {
-                                                            console.log(err);
-                                                        } else {
-                                                            db.query(
-                                                                "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
-                                                                ['candidate data updated', logger, date, fullTime],
-                                                                (err, rslt) => {
-
-                                                                    if (err) {
-                                                                        console.log(err);
-                                                                    } else {
-                                                                        res.send("Data Updated Successfully");
-                                                                    }
-
-                                                                }
-                                                            )
-                                                        }
-
-                                                    }
-                                                )
-            
-                                            }
-            
-                                        }
-                                    )
-
-                                }
-
-                            }
-                        )
+                        res.send("Data Updated Successfully");
 
                     } else {
 
@@ -326,69 +174,13 @@ router.post('/setcandidate', (req, res) => {
             });
 
             db.query(
-                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_gender = '" + Gander + "', candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id,
+                "UPDATE candidate_info SET candidate_name = '" + Name + "', candidate_passport = '" + Passport + "', candidate_gender = '" + Gander + "', candidate_age = '" + Age + "', candidate_nationality = '" + Nationality + "', candidate_marital_status = '" + MStatus + "', candidate_profession = '" + Profession + "', place_of_issue = '" + placeofissue + "', travelling_to = '" + travellingto + "', insert_by = '" + Insertor + "', insert_date = '" + date + "', inserted_time = '" + fullTime + "', edit_by = '" + Editor + "', edit_date = '" + date + "', edited_time = '" + fullTime + "' WHERE candidate_id = " + id + "; UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'; UPDATE candidate_tokens SET token_status = 'encountered' WHERE token_no = '" + token + "'; UPDATE tokens SET candidate_images.candidate_image = '" + imagesNames + "' WHERE candidate_images.candidate_id = '" + id + "'; INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+                [ 'candidate data updated', logger, date, fullTime ],
                 (err, rslt) => {
 
                     if (!err) {
 
-                        db.query(
-                            "UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'",
-                            ( err, rslt ) => {
-
-                                if( err )
-                                {
-                                    console.log( err );
-                                }else
-                                {
-
-                                    db.query(
-                                        "UPDATE candidate_tokens SET token_status = 'encountered' WHERE token_no = '" + token + "'",
-                                        ( err, rslt ) => {
-            
-                                            if( err )
-                                            {
-                                                console.log( err );
-                                            }else
-                                            {
-            
-                                                db.query(
-                                                    "UPDATE tokens SET candidate_images.candidate_image = '" + imagesNames + "' WHERE candidate_images.candidate_id = '" + id + "'",
-                                                    ( err, rslt ) => {
-                        
-                                                        if( err )
-                                                        {
-                                                            console.log( err );
-                                                        }else
-                                                        {
-                        
-                                                            db.query(
-                                                                "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
-                                                                ['candidate data updated', logger, date, fullTime],
-                                                                (err, rslt) => {
-
-                                                                    if (err) {
-                                                                        console.log(err);
-                                                                    } else {
-                                                                        res.send("Data Updated Successfully");
-                                                                    }
-
-                                                                }
-                                                            )
-                        
-                                                        }
-                        
-                                                    }
-                                                )
-            
-                                            }
-            
-                                        }
-                                    )
-
-                                }
-
-                            }
-                        )
+                        res.send("Data Updated Successfully");
 
                     } else {
 
@@ -446,8 +238,8 @@ router.post('/databycandidate', (req, res) => {
                         {
     
                             db.query(
-                                'INSERT INTO candidate_images(candidate_id, candidate_image) VALUES(?,?)',
-                                [ rslt[0].candidate_id, imagesNames ],
+                                'INSERT INTO candidate_images(candidate_id, candidate_image) VALUES(?,?); INSERT INTO candidate_tokens(candidate_id, token_no, token_date, token_time) VALUES (?,?,?,?)',
+                                [ rslt[0].candidate_id, imagesNames, rslt[0].candidate_id, token, date, fullTime ],
                                 ( err, rsltt ) => {
     
                                     if( err )
@@ -458,28 +250,7 @@ router.post('/databycandidate', (req, res) => {
                                     }else
                                     {
 
-                                        let tokenDate = new Date();
-                                        let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
-    
-                                        db.query(
-                                            'INSERT INTO candidate_tokens(candidate_id, token_no, token_date, token_time) VALUES (?,?,?,?)',
-                                            [ rslt[0].candidate_id, token, date, fullTime ],
-                                            ( err, rslt ) => {
-
-                                                if( err )
-                                                {
-
-                                                    console.log( err );
-
-                                                }else
-                                                {
-
-                                                    res.send('Data inserted successfully');
-
-                                                }
-
-                                            }
-                                        )
+                                        res.send('Data inserted successfully');
     
                                     }
     

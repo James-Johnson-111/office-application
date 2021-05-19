@@ -1,39 +1,81 @@
 const mysql = require('mysql');
 const SQLconfig = require('./sql-config');
-const SQLdb = require('mssql');
+const SQL = require('mssql');
 
-const db = SQLdb.connect( SQLconfig, ( err ) => {
+// SQL.on( 'error', err => {
 
-    if ( err  ) console.log( err );
+//     console.log( err.message );
 
-    let request = new SQLdb.Request();
-    let query = "SELECT * from users";
+// } )
 
-    request.query( query, ( err, rslt ) => {
+// async function connecting()
+// {
 
-        if ( err ) console.log( err );
-
-        console.log( rslt );
-
-        SQLdb.close();
-
-    } )
-
-} )
-
-// const db = mysql.createConnection( 
+//     try
 //     {
-//         host: 'localhost',
-//         user: 'root',
-//         password: '',
-//         database: 'office-database'
+
+//         let pool = await SQL.connect( SQLconfig );
+//         let result = await pool.request().query("SELECT * FROM users");
+//         console.log( result );
+//         SQL.close();
+
+//     }catch ( err )
+//     {
+
+//         console.log( err );
+//         SQL.close();
+
 //     }
-//     // {
-//     //     host: 'remotemysql.com',
-//     //     user: '8tttXb5VZx',
-//     //     password: 'I7W2CAugk4',
-//     //     database: '8tttXb5VZx'
-//     // }
-// );
+
+// }
+
+// connecting();
+
+// const db = new SQLdb.ConnectionPool( SQLconfig );
+// let req = new SQLdb.Request( db );
+
+// const get = () => {
+
+//     db.connect( ( err ) => { 
+
+//         req.query("SELECT * FROM users", ( err, recordset ) => {
+
+//             if ( err )
+//             {
+
+//                 console.log( err );
+
+//             }else
+//             {
+
+//                 console.log( recordset );
+
+//             }
+//             db.close();
+
+//         } );
+
+//     } )
+
+// }
+
+// get();
+
+const db = mysql.createConnection( 
+    // {
+    //     host: 'localhost',
+    //     user: 'root',
+    //     password: '',
+    //     database: 'office-database',
+    //     multipleStatements: true
+    // }
+    {
+        host: 'remotemysql.com',
+        user: '8tttXb5VZx',
+        password: 'I7W2CAugk4',
+        database: '8tttXb5VZx',
+        multipleStatements: true
+    }
+);
 
 module.exports = db;

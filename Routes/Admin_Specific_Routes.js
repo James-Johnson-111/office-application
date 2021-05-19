@@ -31,36 +31,21 @@ setInterval( () => {
 router.post( '/startprocess', ( req, res ) => {
 
     const { logger } = req.body;
+    let tokenDate = new Date();
+    let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+    
     db.query(
-        "DELETE FROM tokens",
-        ( err, rslt ) => {
+        "DELETE FROM tokens; INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
+        ['Start the day process', logger, date, fullTime],
+        (err, rslt) => {
 
-            if( err )
-            {
+            if (err) {
 
-                console.log( err );
+                console.log(err);
 
-            }
-            else
-            {
-                let tokenDate = new Date();
-                let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+            } else {
 
-                db.query(
-                    "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
-                    [ 'Start the day process', logger, date, fullTime ],
-                    ( err, rslt ) => {
-
-                        if( err )
-                        {
-                            console.log( err );
-                        }else
-                        {
-                            res.send(rslt);
-                        }
-
-                    }
-                )
+                res.send(rslt);
 
             }
 
@@ -76,6 +61,9 @@ router.post('/createuser', (req, res) => {
     const Img = req.files.Image;
     let ImgWithExtension = ImageName + '.png';
 
+    let tokenDate = new Date();
+    let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+
     Img.mv('client/public/images/users/' + ImgWithExtension , ( err ) => {
 
         if(err) {
@@ -87,8 +75,8 @@ router.post('/createuser', (req, res) => {
     });
     
     db.query(
-        'INSERT INTO users(login_id,params,user_password,user_role,user_image) VALUES(?,?,?,?,?)',
-        [LoginID,Params,Password,Role,ImgWithExtension],
+        'INSERT INTO users(login_id,params,user_password,user_role,user_image) VALUES(?,?,?,?,?); INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)',
+        [ LoginID, Params, Password, Role, ImgWithExtension, 'Create a new user ' + LoginID, logger, date, fullTime],
         ( err, rslt ) => {
 
             if(err)
@@ -99,24 +87,7 @@ router.post('/createuser', (req, res) => {
             }else
             {
 
-                let tokenDate = new Date();
-                let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
-
-                db.query(
-                    "INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
-                    [ 'Create a new user ' + LoginID, logger, date, fullTime ],
-                    ( err, rslt ) => {
-
-                        if( err )
-                        {
-                            console.log( err );
-                        }else
-                        {
-                            res.send( "User Has Been Created" );
-                        }
-
-                    }
-                )
+                res.send( "User Has Been Created" );
 
             }
 
