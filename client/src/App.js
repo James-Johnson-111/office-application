@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import LoginForm from './Components/Auth/LoginForm/LoginForm';  
@@ -7,26 +7,8 @@ import Error from './Components/UI/404Error/404Error';
 import Logout from './Components/Auth/Logout/Logout';
 import GetToken from './Components/GetToken/GetToken';
 import ToCandidate from './Components/ToCandidate/ToCandidate';
-import SQL from 'mssql';
 
 const App = () => {
-
-  useEffect( () => {
-
-    async();
-
-  }, [] );
-
-  async () => {
-    try {
-        // make sure that any items are correctly URL encoded in the connection string
-        await sql.connect('Server=localhost,1433;Database=database;User Id=username;Password=password;Encrypt=true')
-        const result = await sql.query`select * from mytable where id = ${value}`
-        console.dir(result)
-    } catch (err) {
-        // ... error checks
-    }
-}
   
   return (
     <>
