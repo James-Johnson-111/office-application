@@ -3,6 +3,14 @@
     position: relative;
 }
 
+.DashboardHome .DashboardHome-content .chart {
+    width: 100%;
+    height: min-content;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 10px 20px;
+    font-family: Quicksand;
+}
+
 .DashboardHome .DashboardHome-content nav {
     z-index: 10;
 }
@@ -30,28 +38,33 @@
     border: 2px solid transparent;
 }
 
-.DashboardHome .DashboardHome-content .btn {
-    color: #40cfcd;
+.DashboardHome .DashboardHome-content .startProcessDiv .btn {
+    color: #ffffff;
     font-family: Exo;
-    background-color: #ffffff;
+    background-color: #40cfcd;
     padding: 3px 50px;
     transition: .5s;
-    border: 1px solid #ffffff;
+    border: 1px solid #40cfcd;
 }
 
 .DashboardHome .DashboardHome-content .btn:hover {
     background: none;
-    border: 1px solid #ffffff;
-    color: #ffffff;
+    border: 1px solid #40cfcd;
+    color: #40cfcd;
 }
 
 .DashboardHome .DashboardHome-content .startProcessDiv {
     font-family: Raleway;
-    background-color: #40cfcd;
+    background-color: #ffffff;
     padding: 10px 0;
     border-radius: 5px;
-    color: #ffffff;
+    color: #40cfcd;
     font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.DashboardHome .DashboardHome-content .startProcessDiv .strtprtxt {
+    border: 2px solid #1A2476;
 }
 
 @media only screen and (max-width: 1250px)
@@ -79,6 +92,16 @@
 
     .DashboardHome {
         font-size: 16px;
+    }
+
+    .DashboardHome .DashboardHome-content .startProcessDiv .btn {
+        width: 100% !important;
+    }
+
+    .DashboardHome .DashboardHome-content .startProcessDiv .strtprtxt {
+        border: 0;
+        padding: 0 !important;
+        margin-bottom: 10px !important;
     }
 
 }

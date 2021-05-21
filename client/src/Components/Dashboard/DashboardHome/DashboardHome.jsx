@@ -6,6 +6,9 @@ import Loading from '../../UI/Loading/Loading';
 import $ from 'jquery';
 import axios from '../../../axios-instance';
 
+import { Line } from 'react-chartjs-2';
+import waiting from '../../../images/827.gif';
+
 class DashboardHome extends Component {
 
     constructor( props )
@@ -16,7 +19,11 @@ class DashboardHome extends Component {
 
             loading: true,
             startProcess: false,
-            startProcessTxt: 'Start Process'
+            startProcessTxt: 'Start Process',
+            candidateChartsCounts: [],
+            candidateChartsTime: [],
+            shortChart: false,
+            msg: <><span className="px-2">Waiting For Connection</span><img src={ waiting } width='20' alt="waiting" /></>
 
         }
 
@@ -30,6 +37,64 @@ class DashboardHome extends Component {
             this.setState( { startProcess: true, startProcessTxt: Cookies.get('ProcessStatus') } );
         }
         this.setState( { loading: false } );
+
+        // * Here I'm conting all records of candidates stored in database and show the result in chart
+        let ids = [];
+        let time = [];
+        axios.get( '/getcandidates' ).then( response => {
+
+            // console.log( response.data );
+            this.setState( { candidateChartsCounts: [ ...response.data ] } );
+            for( let i = 0; i < this.state.candidateChartsCounts.length; i++ )
+            {
+                ids[i] = this.state.candidateChartsCounts[i].id;
+                time[i] = this.state.candidateChartsCounts[i].date;
+            }
+            this.setState( { candidateChartsCounts: ids, candidateChartsTime: time } );
+            if ( this.state.candidateChartsCounts.length === 0 )
+            {
+
+                this.setState( { msg: <><span className="px-2">No Previous Record Found</span></> } );
+
+            }else
+            {
+
+                this.setState( { msg: <><span className="px-2"></span></> } );
+
+            }
+
+        } ).catch( err => {
+
+            this.setState( { msg: "Connection Failed!!!",  } );
+
+        } );
+
+        let ScWd = window.outerWidth;
+            if (ScWd < 900) {
+
+                this.setState({ shortChart: true });
+
+            } else {
+
+                this.setState({ shortChart: false });
+
+            }
+
+        // ? Get Screen width for responsive
+        window.addEventListener( 'resize', () => {
+
+            let ScWd = window.outerWidth;
+            if (ScWd < 900) {
+
+                this.setState({ shortChart: true });
+
+            } else {
+
+                this.setState({ shortChart: false });
+
+            }
+
+        } );
 
     }
 
@@ -75,6 +140,27 @@ class DashboardHome extends Component {
     render()
     {
 
+        let currentYear = new Date();
+        let data = {
+            type: 'Line',
+            labels: this.state.candidateChartsTime,
+            datasets: [
+                {
+                    label: 'Candidates For ' + currentYear.getFullYear(),
+                    data: this.state.candidateChartsCounts
+                }
+            ],
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 9999
+                    }
+                }]
+            }
+        }
+
         return(
 
             <>
@@ -101,11 +187,11 @@ class DashboardHome extends Component {
 
                         <div className="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                             <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <div className="container-fluid">
+                                <div className="container-fluid mb-5">
                                     <div className="row">
                                         <div className="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between px-5 startProcessDiv">
                                             <div className="d-grid">
-                                                <p className="mb-1 strtprtxt"> { this.state.startProcessTxt } </p>
+                                                <p className="mb-1 strtprtxt pl-5"> { this.state.startProcessTxt } </p>
                                             </div>
                                             <div>
                                                 <button className="btn btn-sm startBtn" onClick={this.startStopP}>Start</button>
@@ -113,6 +199,12 @@ class DashboardHome extends Component {
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div className="chart container-fluid" style={ { 'display' : this.state.shortChart ? 'none' : 'block' } }>
+                                    <Line data={ data } width="100%" height='20' />
+                                    <h5 className="text-center"> { this.state.msg } </h5>
+                                </div>
+                                
                             </div>
                             <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                 <h1>second</h1>

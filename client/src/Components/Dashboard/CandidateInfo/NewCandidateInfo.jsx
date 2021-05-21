@@ -238,6 +238,9 @@ class NewCandidateInfo extends Component {
                                     <i className="las la-chevron-circle-right"></i>
                                 </button>
                             </div>
+                            <button className="btn btn-sm next-btn-sm" onClick={this.next}>
+                                    <i className="las la-bars la-2x"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

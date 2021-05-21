@@ -22,7 +22,8 @@ class Dashboard extends Component {
             isShowed: false,
             isHided: false,
             shortScreen: false,
-            loading: true
+            loading: true,
+            fixedBtnIcon: 'las la-times la-2x'
         }
 
     }
@@ -32,21 +33,28 @@ class Dashboard extends Component {
 
         this.setState( { loading: false } );
         this.props.history.push('/dashboard');
+
         // the following block of code is to check that user has login id or not after every second
         setInterval( () => {
 
             if (Cookies.get('LoginID') === undefined || Cookies.get('LoginID') == null) {
                 
-                // toast.dark("Your Session Has Expired, Login", {
-                //     position: 'bottom-center',
-                //     progressClassName: 'success-progress-bar',
-                //     autoClose: 3000,
-                // });
                 this.props.history.push('/login');
 
             }
 
         }, 0.1 * 1000 );
+
+        let ScWd = window.outerWidth;
+        if (ScWd < 1101) {
+
+            this.setState({ shortScreen: true, show: false });
+
+        } else {
+
+            this.setState({ shortScreen: false, show: true });
+
+        }
 
         //Get Screen width for responsive
         window.addEventListener( 'resize', () => {
@@ -72,10 +80,10 @@ class Dashboard extends Component {
 
         if( this.state.show )
         {
-            this.setState( { show: false } );
+            this.setState( { show: false, fixedBtnIcon: 'las la-ellipsis-v la-2x' } );
         }else
         {
-            this.setState( { show: true } );
+            this.setState( { show: true, fixedBtnIcon: 'las la-times la-2x' } );
         }
 
     }
@@ -107,8 +115,12 @@ class Dashboard extends Component {
                     </div>
                 </div>
                 <div className="NewDashboard">
-                    <button className='btn fixed_btn' onClick={this.openClose} ><i className="lab la-openid"></i></button>
                     <div className="side_bar" style={ { 'left' : this.state.show ? '0' : '-100%' } }>
+                        <div className="fix-top-bar">
+                            <button className='btn fixed_btn p-0 m-0 p-2' onClick={this.openClose} >
+                                <i className={this.state.fixedBtnIcon}></i>
+                            </button>
+                        </div>
                         <h3 className="text-center pt-3 pb-0 mb-0">
                             lab official
                             <div>online laboratory</div>

@@ -39,7 +39,7 @@ class GetToken extends Component {
 
         event.preventDefault();
         let initialNumber = this.state.initialNumber;
-        let addition = initialNumber + 2121;
+        let addition = initialNumber + 2;
         this.setState( { initialNumber: addition } );
         let token = addition.toString();
         let getLenth = token.length;
@@ -67,16 +67,16 @@ class GetToken extends Component {
         let Url = 'https://labofficial.surge.sh/#/welcomecandidate/' + hashedTokenNo;
         QRcode.toDataURL(Url).then( response => {
 
-            var fullTime = null;
+            let fullTime = null;
 
             const date = new Date();
-            var hours = date.getHours();
-            var minutes = date.getMinutes();
-            var ampm = hours >= 12 ? 'pm' : 'am';
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            let ampm = hours >= 12 ? 'pm' : 'am';
             hours = hours % 12;
             hours = hours ? hours : 12; // the hour '0' should be '12'
             minutes = minutes < 10 ? '0' + minutes : minutes;
-            var fullTimes = hours + ':' + minutes + ' ' + ampm;
+            let fullTimes = hours + ':' + minutes + ' ' + ampm;
             fullTime = fullTimes.toString();
 
             const formsData = new FormData();
@@ -84,46 +84,21 @@ class GetToken extends Component {
             formsData.append('time', fullTime);
             axios.post( '/storetoken', formsData ).then( responses => {
 
-                let content = null;
-                content = <>
-                    <div className="container-fluid" id="tokenContent">
-                        <div className="row">
-                            <div className="col-6">
-                                <img src={response} width="100%" alt="qr code img" />
-                            </div>
-                            <div className="col-6 text-center d-grid">
-                                <div>
-                                    <h5 className="text-uppercase font-weight-bold">Labofficial</h5>
-                                    <h4 className="text-uppercase font-weight-bold" style={{ 'fontFamily': 'Exo', 'fontSize': '40px' }}>{tokenTXT}</h4>
-                                    <h6 className="text-uppercase font-weight-bold" style={{ 'fontFamily': 'Exo' }}> {fullTime} </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </>
-
-                this.setState({ getTokenContent: content });
-
-                var backup = document.body.innerHTML;
-                var Pcontent = document.getElementById('tokenContent').innerHTML;
-                document.body.innerHTML = Pcontent;
-                window.print();
-                document.body.innerHTML = backup;
-                let contents = null;
+                this.setState({ getTokenContent: <> <div className="container-fluid" id="tokenContent"> <div className="row"> <div className="col-6"> <img src={ response } width="100%" alt="qr code img" /> </div> <div className="col-6 text-center d-grid"> <div> <h5 className="text-uppercase font-weight-bold">Labofficial</h5> <h4 className="text-uppercase font-weight-bold" style={{ 'fontFamily': 'Exo', 'fontSize': '40px' }}> { tokenTXT } </h4> <h6 className="text-uppercase font-weight-bold" style={{ 'fontFamily': 'Exo' }}> { fullTime } </h6> </div> </div> </div> </div> </> });
+                
+                let prtContent = document.getElementById("tokenContent");
+                let WinPrint = window.open('', '', "left=0,top=0,width='50%',height='100%',toolbar=0,scrollbars=0,status=0");
+                WinPrint.document.write(prtContent.innerHTML);
+                WinPrint.document.close();
+                WinPrint.focus();
+                WinPrint.print();
+                WinPrint.close();
 
                 setTimeout(() => {
 
-                    contents = <>
-                        <form onSubmit={this.getToken}>
-                            <h3 className="mb-3 font-weight-bold text-uppercase text-center">press button & get your token</h3>
-                            <div className="text-center">
-                                <button type="submit" className="btn btn-sm w-50">Get Token</button>
-                            </div>
-                        </form>
-                    </>
+                    this.setState({ getTokenContent: <form onSubmit={this.getToken}> <h3 className="mb-3 font-weight-bold text-uppercase text-center">press button & get your token</h3> <div className="text-center"> <button type="submit" className="btn btn-sm w-50">Get Token</button> </div> </form> });
 
                 }, 1000);
-                this.setState({ getTokenContent: contents });
 
             } ).catch( error => {
 

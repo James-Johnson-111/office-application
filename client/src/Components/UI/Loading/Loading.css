@@ -4,9 +4,10 @@
     width: 100%;
     height: 100vh;
     font-family: Raleway;
-    background-image: url('https://image.freepik.com/free-vector/white-abstract-background-design_23-2148825582.jpg');
-    background-size: 100% 100%;
+    /* background-image: url('https://image.freepik.com/free-vector/white-abstract-background-design_23-2148825582.jpg');
+    background-size: 100% 100%; */
     z-index: 500;
+    background-color: #ffffff;
 }
 
 .loading .loading-inner {

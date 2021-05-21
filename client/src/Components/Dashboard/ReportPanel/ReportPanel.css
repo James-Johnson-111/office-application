@@ -190,11 +190,41 @@
 
 }
 
+@media only screen and (max-width: 992px)
+{
+
+    .candidateDetails .leftSide {
+        width: 100%;
+    }
+
+    .candidateDetails .rightSide {
+        width: 100%;
+        display: block;
+    }
+
+    .candidateDetails .rightSide i {
+        margin: 0 10px;
+    }
+
+}
+
 @media only screen and (max-width: 768px)
 {
 
     .GetCandidate .container-fluid .row .col-lg-12 .search_options .sec .col-4 {
         max-width: 15% !important;
+    }
+
+    .GetCandidate nav {
+        margin-top: 50px;
+    }
+
+    .candidateDetails .leftSide {
+        width: 100%;
+    }
+
+    .candidateDetails .rightSide {
+        width: 100%;
     }
 
 }
@@ -212,6 +242,14 @@
 
     .GetCandidate .container-fluid .row .col-lg-4 .candidate_info_div h5 {
         margin-top: 15px;
+    }
+
+    .candidateDetails .leftSide {
+        width: 100%;
+    }
+
+    .candidateDetails .rightSide {
+        width: 100%;
     }
 
 }
@@ -246,6 +284,10 @@
     .GetCandidate .container-fluid .row .col-lg-12 .search_options .sec i {
         padding: 10px;
         /* margin: 5px 0 0 0; */
+    }
+
+    .candidateDetails .rightSide i {
+        margin: 0 5px;
     }
 
 }

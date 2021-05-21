@@ -105,19 +105,25 @@
     position: relative;
 }
 
-.NewDashboard .fixed_btn {
-    display: none;
-    z-index: 300;
+.NewDashboard .fix-top-bar {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #40CFCD;
+    display: none;
+    z-index: 500;
+    width: 100%;
+    height: 50px;
     color: #ffffff;
-    border: 1px solid #40CFCD;
+}
+
+.NewDashboard .fixed_btn {
+    color: #ffffff;
+    background: none;
 }
 
 .NewDashboard .fixed_btn:active .NewDashboard .side_bar {
     left: 0;
+    z-index: 999;
 }
 
 @media only screen and (max-width: 1370px)
@@ -153,6 +159,7 @@
     .NewDashboard .side_bar {
         left: -100%;
         width: 20%;
+        z-index: 999;
     }
 
     .NewDashboard .main-content {
@@ -161,9 +168,7 @@
         position: relative;
     }
 
-    .NewDashboard .fixed_btn {
-        top: 90vh;
-        left: 93%;
+    .NewDashboard .fix-top-bar {
         display: block;
     }
 
@@ -174,6 +179,7 @@
     
     .NewDashboard .side_bar {
         width: 25%;
+        z-index: 999;
     }
 
     .user_box_container {
@@ -185,14 +191,14 @@
 @media only screen and (max-width: 768px) 
 {
 
-    .NewDashboard .fixed_btn {
-        left: 90%;
-        top: 90vh;
+    .NewDashboard .fix-top-bar {
         display: block;
+        background-color: rgb(26, 36, 118, .8);
     }
 
     .NewDashboard .side_bar {
         width: 35%;
+        z-index: 999;
     }
 
 }
@@ -200,12 +206,13 @@
 @media only screen and (max-width: 600px) 
 {
 
-    .NewDashboard .fixed_btn {
-        left: 85%;
+    .NewDashboard .fix-top-bar {
+        display: block;
     }
 
     .NewDashboard .side_bar {
-        width: 70%;
+        width: 100%;
+        z-index: 999;
     }
 
 }
@@ -213,12 +220,13 @@
 @media only screen and (max-width: 350px) 
 {
 
-    .NewDashboard .fixed_btn {
-        left: 80%;
+    .NewDashboard .fix-top-bar {
+        display: block;
     }
 
     .NewDashboard .side_bar {
         width: 100%;
+        z-index: 999;
     }
 
 }
@@ -229,6 +237,7 @@
     .NewDashboard .side_bar {
         min-height: 600px;
         overflow: auto;
+        z-index: 999;
     }
 
 }

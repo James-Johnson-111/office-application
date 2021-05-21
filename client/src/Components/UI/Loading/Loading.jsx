@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './Loading.css';
-import Loader from '../../../images/827.gif';
+import Loader from '../../../images/785.gif';
 
 class Loading extends Component {
 
@@ -23,7 +23,6 @@ class Loading extends Component {
                 <div className="loading-inner d-flex justify-content-center">
                     <div className="loading-content">
                         <form onSubmit={this.userLogin}>
-                            <h3 className="mb-3 font-weight-bold">Please Wait</h3>
                             <img alt="pre-loader" src={Loader} width="50" />
                         </form>
                     </div>

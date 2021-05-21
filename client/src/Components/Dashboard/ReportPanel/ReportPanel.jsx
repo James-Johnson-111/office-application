@@ -397,7 +397,7 @@ class ReportPanel extends Component {
 
                             return (
                                 <>
-                                    <div key={index} className="w-100 d-flex justify-content-center candidateDetails">
+                                    <div key={index} className="w-100 d-lg-flex justify-content-lg-center candidateDetails">
                                         <div className="leftSide">
                                             <img
                                                 src={"images/candidates/" + data.candidate_image}
@@ -410,28 +410,28 @@ class ReportPanel extends Component {
                                                 <p className="font-weight-normal">I'm <b>{ data.candidate_profession }</b> & My nationality is <b>{ data.candidate_nationality }</b> </p>
                                                 <div className="container-fluid">
                                                     <div className="row">
-                                                        <div className="col-lg-3 col-md-6 col-sm-12">
+                                                        <div className="col-lg-3 col-md-6 col-sm-6">
                                                             <div className="details_item" title={ data.candidate_passport }>
                                                                 <h5 className="heading">Passport</h5>
                                                                 <i className="las la-passport la-2x"></i>
                                                                 <small className="d-block"> { data.candidate_passport.length < 12 ? data.candidate_passport : data.candidate_passport.substring(0, 9) + '...' } </small>
                                                             </div>
                                                         </div>
-                                                        <div className="col-lg-3 col-md-6 col-sm-12">
+                                                        <div className="col-lg-3 col-md-6 col-sm-6">
                                                             <div className="details_item" title={ data.place_of_issue }>
                                                                 <h5 className="heading">Issue Place</h5>
                                                                 <i className="las la-city la-2x"></i>
                                                                 <small className="d-block"> { data.place_of_issue.length < 12 ? data.place_of_issue : data.place_of_issue.substring(0, 9) + '...' } </small>
                                                             </div>
                                                         </div>
-                                                        <div className="col-lg-3 col-md-6 col-sm-12">
+                                                        <div className="col-lg-3 col-md-6 col-sm-6">
                                                             <div className="details_item" title={ data.travelling_to }>
                                                                 <h5 className="heading">Travelling To</h5>
                                                                 <i className="las la-plane-departure la-2x"></i>
                                                                 <small className="d-block"> { data.travelling_to.length < 12 ? data.travelling_to : data.travelling_to.substring(0, 9) + '...' } </small>
                                                             </div>
                                                         </div>
-                                                        <div className="col-lg-3 col-md-6 col-sm-12">
+                                                        <div className="col-lg-3 col-md-6 col-sm-6">
                                                             <div className="details_item" title={ data.candidate_gender }>
                                                                 <h5 className="heading">Gender</h5>
                                                                 <i className="las la-mercury la-2x"></i>
