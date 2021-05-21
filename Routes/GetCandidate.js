@@ -28,6 +28,30 @@ setInterval( () => {
 
 // the following request is to get all users data
 
+router.get( '/getcandidates', ( req, res ) => {
+
+    db.query(
+        "SELECT COUNT(candidate_id) as id, insert_date as date FROM candidate_info GROUP BY insert_date ASC",
+        ( err, rslt ) => {
+
+            if( err )
+            {
+
+                console.log( err );
+
+            }
+            else
+            {
+
+                res.send(rslt);
+
+            }
+
+        }
+    )
+
+} )
+
 // the following request is to get candidate data agains the given token
 
 router.post( '/gettokendata', ( req, res ) => {
