@@ -62,20 +62,20 @@ const SQL = require('mssql');
 // get();
 
 const db = mysql.createConnection( 
-    {
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'office-database',
-        multipleStatements: true
-    }
     // {
-    //     host: 'remotemysql.com',
-    //     user: '8tttXb5VZx',
-    //     password: 'I7W2CAugk4',
-    //     database: '8tttXb5VZx',
+    //     host: 'localhost',
+    //     user: 'root',
+    //     password: '',
+    //     database: 'office-database',
     //     multipleStatements: true
     // }
+    {
+        host: 'remotemysql.com',
+        user: '8tttXb5VZx',
+        password: 'I7W2CAugk4',
+        database: '8tttXb5VZx',
+        multipleStatements: true
+    }
 );
 
 module.exports = db;
