@@ -69,8 +69,8 @@ router.post('/setcandidate', (req, res) => {
                             } else {
 
                                 db.query(
-                                    "INSERT INTO candidate_images(candidate_id, candidate_image) VALUES(?,?); INSERT INTO candidate_tokens(candidate_id, token_no, token_status, token_date, token_time) VALUES (?,?,?,?,?); UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'; INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
-                                    [rslt[0].candidate_id, imagesNames, rslt[0].candidate_id, token, 'encountered', date, fullTime, 'candidate data inserted', Insertor, date, fullTime],
+                                    "INSERT INTO candidate_images(candidate_id, candidate_image) VALUES(?,?); INSERT INTO candidate_tokens(candidate_id, token_no, token_status, token_date, token_time) VALUES (?,?,?,?,?); UPDATE tokens SET tokens.token_status = 'encountered' WHERE tokens.token = '" + token + "'; INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?); INSERT INTO candidate_logs(candidate_id,candidate_name,candidate_passport,candidate_age,candidate_nationality,candidate_gender,candidate_marital_status,candidate_profession, log_date, log_time, place_of_issue, travelling_to, logged_by ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                                    [rslt[0].candidate_id, imagesNames, rslt[0].candidate_id, token, 'encountered', date, fullTime, 'candidate data inserted', Insertor, date, fullTime, rslt[0].candidate_id,Name,Passport,Age,Nationality,Gander,MStatus,Profession,date,fullTime,placeofissue,travellingto, Insertor],
                                     (err, rsltt) => {
 
                                         if (err) {
@@ -238,8 +238,8 @@ router.post('/databycandidate', (req, res) => {
                         {
     
                             db.query(
-                                'INSERT INTO candidate_images(candidate_id, candidate_image) VALUES(?,?); INSERT INTO candidate_tokens(candidate_id, token_no, token_date, token_time) VALUES (?,?,?,?)',
-                                [ rslt[0].candidate_id, imagesNames, rslt[0].candidate_id, token, date, fullTime ],
+                                'INSERT INTO candidate_images(candidate_id, candidate_image) VALUES(?,?); INSERT INTO candidate_tokens(candidate_id, token_no, token_date, token_time) VALUES (?,?,?,?); INSERT INTO candidate_logs(candidate_id,candidate_name,candidate_passport,candidate_age,candidate_nationality,candidate_gender,candidate_marital_status,candidate_profession, log_date, log_time, place_of_issue, travelling_to, logged_by ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                                [ rslt[0].candidate_id, imagesNames, rslt[0].candidate_id, token, date, fullTime, rslt[0].candidate_id,Name,Passport,Age,Nationality,Gander,MStatus,Profession,date,fullTime,placeofissue,travellingto, 'candidate' ],
                                 ( err, rsltt ) => {
     
                                     if( err )
@@ -273,33 +273,5 @@ router.post('/databycandidate', (req, res) => {
     );
 
 });
-
-// the following request is to get the data of candidate against the current token
-
-router.post( '/getcurrentcandidate', ( req, res ) => {
-
-    const { token } = req.body;
-
-    db.query(
-        "SELECT candidate_info.*, candidate_tokens.token_no, candidate_images.candidate_image FROM candidate_info INNER JOIN candidate_tokens ON candidate_info.candidate_id = candidate_tokens.candidate_id INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id WHERE candidate_tokens.token_no = '" + token + "'",
-        ( err, rslt ) => {
-
-            if( err )
-            {
-
-                console.log( err );
-
-            }
-            else
-            {
-
-                res.send(rslt);
-
-            }
-
-        }
-    )
-
-} )
 
 module.exports = router;

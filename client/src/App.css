@@ -1,3 +1,16 @@
+/* .Toastify__toast-body {
+  background-color: blue !important;
+} */
+
+.Toastify__toast {
+  background-color: #1A2476 !important;
+  color: #fff !important;
+}
+
+.Toastify__progress-bar--dark {
+  background-color: #f59b28 !important;
+}
+
 .p-absolute {
   position: absolute;
 }

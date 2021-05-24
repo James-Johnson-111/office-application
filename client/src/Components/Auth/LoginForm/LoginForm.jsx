@@ -89,7 +89,7 @@ class LoginForm extends Component {
                 toast.dark("Invalid Credentials, No User Found", {
                     position: 'bottom-center',
                     progressClassName: 'success-progress-bar',
-                    autoClose: 3000,
+                    autoClose: 3000
                 });
 
             }

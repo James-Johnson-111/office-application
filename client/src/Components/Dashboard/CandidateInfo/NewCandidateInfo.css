@@ -141,7 +141,7 @@
 
     .NewCandidateInfo .form-back {
         height: min-content;
-        margin: 150px 0;
+        margin: 120px 0 150px 0;
     }
 
 }

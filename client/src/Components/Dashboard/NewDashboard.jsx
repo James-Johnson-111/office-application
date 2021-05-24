@@ -23,7 +23,8 @@ class Dashboard extends Component {
             isHided: false,
             shortScreen: false,
             loading: true,
-            fixedBtnIcon: 'las la-times la-2x'
+            fixedBtnIcon: 'las la-arrow-left la-2x',
+            subTxt:'open'
         }
 
     }
@@ -80,10 +81,20 @@ class Dashboard extends Component {
 
         if( this.state.show )
         {
-            this.setState( { show: false, fixedBtnIcon: 'las la-ellipsis-v la-2x' } );
+            this.setState( { show: false } );
+            setTimeout( () => {
+
+                this.setState( { fixedBtnIcon: 'las la-arrow-left la-2x', subTxt: 'open' } );
+
+            }, 300 );
         }else
         {
-            this.setState( { show: true, fixedBtnIcon: 'las la-times la-2x' } );
+            this.setState( { show: true } );
+            setTimeout(() => {
+                
+                this.setState( { fixedBtnIcon: 'las la-times la-2x', subTxt: 'close' } );
+
+            }, 300);
         }
 
     }
@@ -118,7 +129,7 @@ class Dashboard extends Component {
                     <div className="side_bar" style={ { 'left' : this.state.show ? '0' : '-100%' } }>
                         <div className="fix-top-bar">
                             <button className='btn fixed_btn p-0 m-0 p-2' onClick={this.openClose} >
-                                <i className={this.state.fixedBtnIcon}></i>
+                                <sub>{ this.state.subTxt }</sub><i className={this.state.fixedBtnIcon}></i>
                             </button>
                         </div>
                         <h3 className="text-center pt-3 pb-0 mb-0">

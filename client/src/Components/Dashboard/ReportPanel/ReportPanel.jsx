@@ -120,7 +120,7 @@ class ReportPanel extends Component {
                 this.setState({ loading: false });
                 this.setState({ getAllCandidates: response.data });
 
-                if (this.state.getAllCandidates === 0) {
+                if (this.state.getAllCandidates.length === 0) {
 
                     toast.dark("No Record Found", {
                         position: 'bottom-center',
@@ -158,56 +158,50 @@ class ReportPanel extends Component {
 
     getDataThroughToken = ( event ) => {
 
-        event.preventDefault();
         if( Cookies.get('Params') === 'Category 1' )
         {
 
-            setTimeout( () => {
+            if( event.target.value.length > 3 )
+            {
 
-                this.setState({ loading: true });
-                const formsData = new FormData();
-                formsData.append('token', event.target.value);
-                axios.post('/gettokendata', formsData).then(response => {
-    
-                    switch(response)
-                    {
-                        case response.data.length === 0:
-                        case response.data.length < 0:
-                            this.setState({ loading: false });
-    
-                            toast.dark("Not Found", {
-                                position: 'top-center',
+                setTimeout( () => {
+
+                    this.setState({ loading: true });
+                    const formsData = new FormData();
+                    formsData.append('token', event.target.value);
+                    axios.post('/gettokendata', formsData).then(response => {
+        
+                        this.setState({ loading: false });
+                        for (let key in response.data) {
+
+                            this.setState({ getAllCandidates: [response.data[key]] });
+
+                        }
+
+                        if (this.state.getAllCandidates.length === 0) {
+
+                            toast.dark("No Record Found", {
+                                position: 'bottom-center',
                                 progressClassName: 'success-progress-bar',
                                 autoClose: 3000,
                             });
     
-                        break;
-    
-                        default:
-                            this.setState({ loading: false });
-                            for (let key in response.data) {
-    
-                                this.setState({ getAllCandidates: [response.data[key]] });
-    
-                            }
-    
-                            this.setState({ showRecordModal: true, loading: false });
-                        break;
-                        
-                    }
-    
-                }).catch(err => {
-    
-                    this.setState({ loading: false });
-                    toast.dark("Network Error 500 please check your network connection", {
-                        position: 'top-center',
-                        progressClassName: 'success-progress-bar',
-                        autoClose: 3000,
+                        }
+        
+                    }).catch(err => {
+        
+                        this.setState({ loading: false });
+                        toast.dark("Network Error 500 please check your network connection", {
+                            position: 'top-center',
+                            progressClassName: 'success-progress-bar',
+                            autoClose: 3000,
+                        });
+        
                     });
-    
-                });
-    
-            }, 1000 )
+        
+                }, 1000 );
+
+            }
 
         }else
         {
@@ -242,7 +236,7 @@ class ReportPanel extends Component {
                     this.setState({ loading: false });
                     this.setState({ getAllCandidates: response.data });
 
-                    if (this.state.getAllCandidates === 0) {
+                    if (this.state.getAllCandidates.length === 0) {
 
                         toast.dark("No Record Found", {
                             position: 'bottom-center',
@@ -397,58 +391,51 @@ class ReportPanel extends Component {
 
                             return (
                                 <>
-                                    <div key={index} className="w-100 d-lg-flex justify-content-lg-center candidateDetails">
-                                        <div className="leftSide">
-                                            <img
-                                                src={"images/candidates/" + data.candidate_image}
-                                                width="120"
-                                                height='120'
-                                                alt="candidate img"
-                                            />
-                                            <div className="pt-4 pb-2 text-center w-100 font-weight-bolder">
-                                                <h3 style={ { 'fontFamily' : 'JosefinSans', 'color' : '#40CFCD' } }> { data.candidate_name } </h3>
-                                                <p className="font-weight-normal">I'm <b>{ data.candidate_profession }</b> & My nationality is <b>{ data.candidate_nationality }</b> </p>
-                                                <div className="container-fluid">
-                                                    <div className="row">
-                                                        <div className="col-lg-3 col-md-6 col-sm-6">
-                                                            <div className="details_item" title={ data.candidate_passport }>
-                                                                <h5 className="heading">Passport</h5>
-                                                                <i className="las la-passport la-2x"></i>
-                                                                <small className="d-block"> { data.candidate_passport.length < 12 ? data.candidate_passport : data.candidate_passport.substring(0, 9) + '...' } </small>
+                                    <div className="candidateDetails" key={ index }>
+                                        <div className="usrBackImg">
+                                            <div className="usrImg" style={ { 'backgroundImage' : "url('images/candidates/" + data.candidate_image + "')" } }></div>
+                                        </div>
+                                        <div className='otherDetails'>
+                                            <h2 className="text-center font-weight-bolder"> { data.candidate_name } </h2>
+                                            <div className="container">
+                                                <div className="row">
+                                                    <div className="col-lg-6 col-md-6 col-sm-6">
+                                                        <div className="text-left">
+                                                            <div className="mb-3">
+                                                                <h6 className="font-weight-bold">Passport</h6>
+                                                                <p> {data.candidate_passport} </p>
+                                                            </div>
+                                                            <div className="mb-3">
+                                                                <h6 className="font-weight-bold">Profession</h6>
+                                                                <p> {data.candidate_profession} </p>
+                                                            </div>
+                                                            <div className="mb-3">
+                                                                <h6 className="font-weight-bold">Gender</h6>
+                                                                <p> {data.candidate_gender} </p>
                                                             </div>
                                                         </div>
-                                                        <div className="col-lg-3 col-md-6 col-sm-6">
-                                                            <div className="details_item" title={ data.place_of_issue }>
-                                                                <h5 className="heading">Issue Place</h5>
-                                                                <i className="las la-city la-2x"></i>
-                                                                <small className="d-block"> { data.place_of_issue.length < 12 ? data.place_of_issue : data.place_of_issue.substring(0, 9) + '...' } </small>
+                                                    </div>
+                                                    <div className="col-lg-6 col-md-6 col-sm-6">
+                                                        <div className="text-left">
+                                                            <div className="mb-3">
+                                                                <h6 className="font-weight-bold">Marital Status</h6>
+                                                                <p> {data.candidate_marital_status} </p>
+                                                            </div>
+                                                            <div className="mb-3">
+                                                                <h6 className="font-weight-bold">Age</h6>
+                                                                <p> {data.candidate_age} </p>
+                                                            </div>
+                                                            <div className="mb-3">
+                                                                <h6 className="font-weight-bold">Nationality</h6>
+                                                                <p> {data.candidate_nationality} </p>
                                                             </div>
                                                         </div>
-                                                        <div className="col-lg-3 col-md-6 col-sm-6">
-                                                            <div className="details_item" title={ data.travelling_to }>
-                                                                <h5 className="heading">Travelling To</h5>
-                                                                <i className="las la-plane-departure la-2x"></i>
-                                                                <small className="d-block"> { data.travelling_to.length < 12 ? data.travelling_to : data.travelling_to.substring(0, 9) + '...' } </small>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-lg-3 col-md-6 col-sm-6">
-                                                            <div className="details_item" title={ data.candidate_gender }>
-                                                                <h5 className="heading">Gender</h5>
-                                                                <i className="las la-mercury la-2x"></i>
-                                                                <small className="d-block"> { data.candidate_gender.length < 12 ? data.candidate_gender : data.candidate_gender.substring(0, 9) + '...' } </small>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-lg-12 mt-2 col-md-12 col-sm-12 text-center">
-                                                            <small className="d-block p-0 m-0">This Candidate was created by <b>{ data.insert_by }</b> </small>
-                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-12 col-md-12 col-sm-12 text-center">
+                                                        <button className='btn btn-sm w-75' onClick={ this.modalCall }>close</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="rightSide text-center text-white">
-                                            <i className="lar la-user la-2x" title="About Candidate"></i>
-                                            <i className="las la-comment-dots la-2x" title="Candidate More Information"></i>
-                                            <i className="las la-address-card la-2x" title="About User"></i>
                                         </div>
                                     </div>
                                 </>

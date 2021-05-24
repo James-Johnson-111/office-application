@@ -64,7 +64,7 @@
 }
 
 .DashboardHome .DashboardHome-content .startProcessDiv .strtprtxt {
-    border: 2px solid #1A2476;
+    border-left: 2px solid #1A2476;
 }
 
 @media only screen and (max-width: 1250px)
@@ -80,6 +80,10 @@
 @media only screen and (max-width: 768px)
 {
 
+    .DashboardHome nav {
+        margin-top: 50px !important;
+    }
+    
     .DashboardHome .DashboardHome-content {
         font-size: 16px;
     }

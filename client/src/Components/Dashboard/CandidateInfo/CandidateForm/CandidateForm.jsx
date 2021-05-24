@@ -242,8 +242,9 @@ class CandidateForm extends Component {
             this.setState({ loading: false });
             this.props.error(response.data);
 
-            $('input.form-control').val('');
+            $('input').val('');
             $('img.user_img').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU');
+            this.props.filledData([{ token_no: 'Call The Next One', candidate_name: 'Call The Next One' }]);
 
         }).catch( err => {
 
@@ -408,7 +409,7 @@ class CandidateForm extends Component {
                                 onChange={this.onChangeHandler}
                                 required
                                 name="candidate_name"
-                                defaultValue={this.state.candidateInfo.candidate_name}
+                                value={this.state.candidateInfo.candidate_name}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -422,7 +423,7 @@ class CandidateForm extends Component {
                                 onChange={this.onChangeHandler}
                                 required
                                 name="candidate_age"
-                                defaultValue={this.state.candidateInfo.candidate_age}
+                                value={this.state.candidateInfo.candidate_age}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -436,7 +437,7 @@ class CandidateForm extends Component {
                                 onChange={this.onChangeHandler}
                                 required
                                 name="candidate_nationality"
-                                defaultValue={this.state.candidateInfo.candidate_nationality}
+                                value={this.state.candidateInfo.candidate_nationality}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -471,7 +472,7 @@ class CandidateForm extends Component {
                                 placeholder="Candidate Profession"
                                 onChange={this.onChangeHandler}
                                 name="candidate_profession"
-                                defaultValue={this.state.candidateInfo.candidate_profession}
+                                value={this.state.candidateInfo.candidate_profession}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -485,7 +486,7 @@ class CandidateForm extends Component {
                                 onChange={this.onChangeHandler}
                                 required
                                 name="candidate_passport"
-                                defaultValue={this.state.candidateInfo.candidate_passport}
+                                value={this.state.candidateInfo.candidate_passport}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -499,7 +500,7 @@ class CandidateForm extends Component {
                                 onChange={this.onChangeHandler}
                                 required
                                 name="place_of_issue"
-                                defaultValue={this.state.candidateInfo.place_of_issue}
+                                value={this.state.candidateInfo.place_of_issue}
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-3">
@@ -512,7 +513,7 @@ class CandidateForm extends Component {
                                 placeholder="Trevelling To"
                                 onChange={this.onChangeHandler}
                                 name="travelling_to"
-                                defaultValue={this.state.candidateInfo.travelling_to}
+                                value={this.state.candidateInfo.travelling_to}
                             />
                         </div>
                         <div className="text-center">

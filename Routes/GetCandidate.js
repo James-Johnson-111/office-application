@@ -125,7 +125,8 @@ router.post( '/getcandidatethroughtime', ( req, res ) => {
     const { time1, time2, logger } = req.body;
 
     db.query(
-        "SELECT candidate_info.*, users.*, candidate_images.candidate_image from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id INNER JOIN users ON candidate_info.insert_by = users.login_id WHERE candidate_info.inserted_time between '" + time1 + "' AND '" + time2 + "'",
+        "SELECT candidate_info.*, users.*, candidate_images.candidate_image from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id INNER JOIN users ON candidate_info.insert_by = users.login_id WHERE candidate_info.inserted_time BETWEEN '" + time1 + "' AND '" + time2 + "'",
+        // "SELECT candidate_info.*, users.*, candidate_images.candidate_image from candidate_info INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id INNER JOIN users ON candidate_info.insert_by = users.login_id WHERE candidate_info.inserted_time IN ('" + time1 + "', '" + time2 + "')",
         ( err, rslt ) => {
 
             if( err )
@@ -152,6 +153,37 @@ router.post( '/getcandidatethroughtime', ( req, res ) => {
 
                     }
                 )
+
+            }
+
+        }
+    )
+
+} )
+
+// the following request is to get the data of candidate against the current token
+
+router.post( '/getcurrentcandidate', ( req, res ) => {
+
+    const { token } = req.body;
+
+    let tokenDate = new Date();
+    let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+
+    db.query(
+        "SELECT candidate_info.*, candidate_tokens.token_no, candidate_images.candidate_image FROM candidate_info INNER JOIN candidate_tokens ON candidate_info.candidate_id = candidate_tokens.candidate_id INNER JOIN candidate_images ON candidate_info.candidate_id = candidate_images.candidate_id WHERE candidate_tokens.token_no = '" + token + "' AND insert_date = '" + date + "'",
+        ( err, rslt ) => {
+
+            if( err )
+            {
+
+                console.log( err );
+
+            }
+            else
+            {
+
+                res.send(rslt);
 
             }
 

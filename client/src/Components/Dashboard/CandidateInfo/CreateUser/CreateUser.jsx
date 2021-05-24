@@ -30,6 +30,7 @@ class CreateUser extends Component {
             image: null,
             imageName: null,
             showModal: false,
+            camera: false,
             ShowCamera: false
         }
 
@@ -37,6 +38,8 @@ class CreateUser extends Component {
 
     componentDidMount()
     {
+
+        navigator.getUserMedia( { video: true }, () => { this.setState( { camera: true } ); }, () => { this.setState( { camera: false } ); } );
 
         if( Cookies.get('LoginID') === undefined )
         {
@@ -62,25 +65,6 @@ class CreateUser extends Component {
             {
 
                 $('input.password').attr('type', 'text');
-
-            }
-
-        } );
-
-        $('input').on( 'change', () => {
-
-            if( $(this).length < 3 )
-            {
-
-                setTimeout( () => {
-
-                    toast.dark("Login ID must be greateor than 3 characters", {
-                        position: 'bottom-right',
-                        progressClassName: 'success-progress-bar',
-                        autoClose: 3000,
-                    });
-    
-                }, 500 );
 
             }
 
@@ -302,17 +286,24 @@ class CreateUser extends Component {
             <>
                 <Loading show={this.state.loading} />
                 <Modal show={this.state.ShowCamera} close={this.cameraModalCall} top={this.state.modalHeight}>
-                    <Webcam
-                        audio={false}
-                        screenshotFormat="image/jpeg"
-                        width='100%'
-                        ref='webcam'
-                        videoConstraints={videoConstraints}
-                    />
-                    <button className="btn btn-sm btn-block mt-3" onClick={this.takePhoto}>Click</button>
+                    {
+                        this.state.camera ? 
+                            <>
+                                <Webcam
+                                    audio={false}
+                                    screenshotFormat="image/jpeg"
+                                    width='100%'
+                                    ref='webcam'
+                                    videoConstraints={videoConstraints}
+                                />
+                                <button className="btn btn-sm btn-block mt-3" onClick={this.takePhoto}>Click</button>
+                            </>
+                        :
+                        <h1 className="text-center">Camera Not Found</h1>
+                    }
                 </Modal>
                 <Modal show={this.state.showModal} close={this.modalCall} top={this.state.modalHeight}>
-                    {(this.state.userInfo.loginID) && (this.state.userInfo.params != null) && this.state.userInfo.roles != null ?
+                    {(this.state.userInfo.loginID != null) && (this.state.userInfo.params != null) && this.state.userInfo.roles != null ?
                         <>
                             <div className="container-fluid">
                                 <p className="text-center"><small><b>SELECT THE WAY YOU WANT TO UPLOAD IMAGE</b></small></p>

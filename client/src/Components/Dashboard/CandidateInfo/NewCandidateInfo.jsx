@@ -4,6 +4,9 @@ import './NewCandidateInfo.css';
 import Cookies from 'js-cookie';
 import axios from '../../../axios-instance';
 import $ from 'jquery';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Modal from '../../UI/Modal/Modal';
 
 import Candidate from './CandidateForm/CandidateForm';
 import MedicalExam1 from './MedicalExamination/MedicalExamination';
@@ -24,7 +27,8 @@ class NewCandidateInfo extends Component {
             error: null,
             tokens: null,
             firstNum: 0,
-            data: null
+            data: null,
+            showModal: false
         }
 
     }
@@ -34,16 +38,18 @@ class NewCandidateInfo extends Component {
 
         this.setState( { ActiveTabName: 'Candidate Information' } );
         //Get Screen width for responsive
-        let ScWd = window.outerWidth;
-        this.setState( { screenWidth: ScWd } );
+        setInterval( () => {
 
-        if( ScWd > 450 )
-        {
-            $('.form-back').css('height', '50vh');
-        }else
-        {
-            $('.form-back').css('height', '75vh');
-        }
+            let ScWd = window.outerWidth;
+            this.setState({ screenWidth: ScWd });
+
+            if (ScWd > 450) {
+                $('.form-back').css('height', '50vh');
+            } else {
+                $('.form-back').css('height', '75vh');
+            }
+
+        }, 1 * 100 );
 
         function openClose( name )
         {
@@ -140,9 +146,43 @@ class NewCandidateInfo extends Component {
 
     }
 
+    modalCall = ( event ) => {
+
+        event.preventDefault();
+        if(this.state.showModal)
+        {
+            this.setState( { showModal: false } );
+        }else
+        {
+            this.setState( { showModal: true } );
+        }
+
+    }
+
     error = ( msg ) => {
 
-        this.setState( { error: msg } );
+        if( this.state.screenWidth > 768 )
+        {
+
+            this.setState( { error: msg } );
+
+        }else
+        {
+
+            toast.dark( msg , {
+                position: 'top-center',
+                progressClassName: 'success-progress-bar',
+                autoClose: 1000,
+            });
+
+            setTimeout(() => {
+                
+                this.setState( { showModal: true } );
+
+            }, 1000);
+
+        }
+
 
     }
 
@@ -163,6 +203,12 @@ class NewCandidateInfo extends Component {
         return(
 
             <>
+                <Modal show={this.state.showModal} close={this.modalCall}>
+                    <h5 className="text-center">Call The Next Candidate</h5>
+                    <div className="text-center">
+                        <button onClick={this.next} className="btn btn-sm w-75 mt-3" onFocus={this.modalCall}>next</button>
+                    </div>
+                </Modal>
                 <div className="NewCandidateInfo w-100">
                     <div className="container-fluid NewCandidateInfo-content">
                         <div className="row border-bottom">
@@ -197,7 +243,7 @@ class NewCandidateInfo extends Component {
                             </div>
                         </div>
 
-                        <div className="container-fluid current_candidate_info_mobile d-mobile-600-block" style={ { 'margin' : '50px 0 100px 0', 'fontFamily' : 'Quicksand' } }>
+                        <div className="container-fluid current_candidate_info_mobile d-mobile-600-block" style={ { 'margin' : '50px 0 0 0', 'fontFamily' : 'Quicksand' } }>
                             <div className="row">
                                 <div className="col-6">
                                     <b>Token NO:</b> <br/>
@@ -239,11 +285,12 @@ class NewCandidateInfo extends Component {
                                 </button>
                             </div>
                             <button className="btn btn-sm next-btn-sm" onClick={this.next}>
-                                    <i className="las la-bars la-2x"></i>
+                                    <i className="las la-arrow-right la-2x"></i><sub>next</sub>
                             </button>
                         </div>
                     </div>
                 </div>
+                <ToastContainer autoClose={3000} />
             </>
 
         )

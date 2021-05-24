@@ -39,7 +39,7 @@ class GetToken extends Component {
 
         event.preventDefault();
         let initialNumber = this.state.initialNumber;
-        let addition = initialNumber + 2;
+        let addition = initialNumber + 1;
         this.setState( { initialNumber: addition } );
         let token = addition.toString();
         let getLenth = token.length;

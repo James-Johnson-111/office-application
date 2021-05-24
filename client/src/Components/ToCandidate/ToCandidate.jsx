@@ -6,6 +6,7 @@ import Modal from '../UI/Modal/Modal';
 import './ToCandidate.css';
 import cameraImg from '../../images/pngtree-camera-icon-vector-png-image_1747970.jpg';
 import axios from '../../axios-instance';
+import $ from 'jquery';
 
 class ToCandidate extends Component {
 
@@ -31,6 +32,7 @@ class ToCandidate extends Component {
             image: null,
             imageName: null,
             loading: true,
+            camera: false,
             token: null
         }
 
@@ -38,6 +40,8 @@ class ToCandidate extends Component {
 
     componentDidMount()
     {
+
+        navigator.getUserMedia( { video: true }, () => { this.setState( { camera: true } ); }, () => { this.setState( { camera: false } ); } );
 
         let URL = window.location.href.split('/').pop();
         let getOriginalToken = URL.substring(6, 10);
@@ -154,6 +158,7 @@ class ToCandidate extends Component {
 
             this.setState({ loading: false });
             alert("Data inserted successfully, Thank you");
+            $('.ToCandidate-content').html( "<h6 className='text-center'>Thank you for filling the form</h6>" );
 
         }).catch( err => {
 
@@ -244,14 +249,21 @@ class ToCandidate extends Component {
             <>
                 <Loading show={this.state.loading} />
                 <Modal show={this.state.ShowCamera} close={this.cameraModalCall}>
-                    <Webcam
-                        audio={false}
-                        screenshotFormat="image/jpeg"
-                        width='100%'
-                        ref='webcam'
-                        videoConstraints={videoConstraints}
-                    />
-                    <button className="btn btn-sm btn-block mt-3" onClick={this.takePhoto}>Click</button>
+                    {
+                        this.state.camera ?
+                            <>
+                                <Webcam
+                                    audio={false}
+                                    screenshotFormat="image/jpeg"
+                                    width='100%'
+                                    ref='webcam'
+                                    videoConstraints={videoConstraints}
+                                />
+                                <button className="btn btn-sm btn-block mt-3" onClick={this.takePhoto}>Click</button>
+                            </>
+                            :
+                            <h1 className="text-center">Camera Not Found</h1>
+                    }
                 </Modal>
                 <Modal show={this.state.showModal} close={this.modalCall}>
                     {(this.state.candidateInfo.Name != null) && (this.state.candidateInfo.Profession != null) && this.state.candidateInfo.Passport != null ?

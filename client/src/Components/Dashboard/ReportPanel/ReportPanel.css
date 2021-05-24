@@ -1,59 +1,42 @@
-.candidateDetails .leftSide {
-    width: 80%;
-    padding: 15px 10px;
-    text-align: center;
-    background-color: #1A2476;
-    color: #fff !important;
-}
+/* .candidateDetails {
+    background-size: 100%;
+    background-image: url('../../../images.');
+} */
 
-.candidateDetails .leftSide img {
-    border-radius: 20px;
-    border: 4px solid #fff;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-}
-.candidateDetails .leftSide .details_item .heading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: .3;
-    z-index: 0;
+.candidateDetails .usrBackImg {
     width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.candidateDetails .leftSide .details_item {
-    border: 1px solid #40CFCD;
-    border-radius: 10px;
-    width: 100%;
-    height: min-content;
-    padding: 10px 20px;
+    height: 200px;
+    background-image: url('https://image.freepik.com/free-photo/abstract-blue-planets-pattern-blue-background-panoramic-image_295303-2418.jpg');
+    background-size: 100%;
     position: relative;
-    z-index: 1;
 }
 
-.candidateDetails .rightSide {
-    width: 20%;
-    padding: 10px;
-    background-color: #f59b28;
-    display: grid;
-    align-items: center;
-    justify-content: center;
-}
-
-.candidateDetails .rightSide i {
-    padding: 20px;
+.candidateDetails .usrBackImg .usrImg {
+    position: absolute;
+    top: calc( 100% - 75px );
+    left: calc( 50% - 75px );
+    width: 150px;
+    height: 150px;
+    border: 10px solid #fff;
     border-radius: 50%;
-    border: 1px solid #fff;
-    cursor: pointer;
-    transition: .4s;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-.candidateDetails .rightSide i:hover {
-    background-color: #fff;
-    color: #f59b28;
+.candidateDetails .otherDetails {
+    padding: 80px 0 20px 0;
+    color: #000;
+}
+
+.candidateDetails .otherDetails .container {
+    font-size: 12px;
+    width: 60% !important;
+    margin-left: 20%;
+    margin-top: 30px;
+}
+
+.candidateDetails .otherDetails .container .row > div {
+    justify-content: center;
+    display: flex;
 }
 
 .GetCandidate {
@@ -190,7 +173,7 @@
 
 }
 
-@media only screen and (max-width: 992px)
+/* @media only screen and (max-width: 992px)
 {
 
     .candidateDetails .leftSide {
@@ -206,7 +189,7 @@
         margin: 0 10px;
     }
 
-}
+} */
 
 @media only screen and (max-width: 768px)
 {
@@ -219,12 +202,18 @@
         margin-top: 50px;
     }
 
-    .candidateDetails .leftSide {
-        width: 100%;
+    .candidateDetails .otherDetails {
+        margin-left: -40px;
     }
 
-    .candidateDetails .rightSide {
-        width: 100%;
+    .candidateDetails .otherDetails .container {
+        font-size: 12px;
+        width: 100% !important;
+        margin-top: 30px;
+    }
+    
+    .candidateDetails .otherDetails .container .row > div {
+        justify-content: left;
     }
 
 }
@@ -244,12 +233,10 @@
         margin-top: 15px;
     }
 
-    .candidateDetails .leftSide {
-        width: 100%;
-    }
-
-    .candidateDetails .rightSide {
-        width: 100%;
+    .candidateDetails .otherDetails .container {
+        font-size: 12px;
+        width: 100% !important;
+        margin-top: 30px;
     }
 
 }
@@ -286,8 +273,10 @@
         /* margin: 5px 0 0 0; */
     }
 
-    .candidateDetails .rightSide i {
-        margin: 0 5px;
+    .candidateDetails .otherDetails .container {
+        font-size: 12px;
+        width: 100% !important;
+        margin-top: 30px;
     }
 
 }

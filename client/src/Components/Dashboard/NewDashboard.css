@@ -31,6 +31,8 @@
     z-index: 11;
     transition: .5s;
     border: 0;
+    min-height: 435px;
+    overflow: auto;
 }
 
 .NewDashboard .side_bar hr {
@@ -231,13 +233,13 @@
 
 }
 
-@media only screen and (max-height: 600px)
+/* @media only screen and (max-height: 450px)
 {
 
     .NewDashboard .side_bar {
         min-height: 600px;
-        overflow: auto;
+        overflow-y: auto;
         z-index: 999;
     }
 
-}
+} */

@@ -135,7 +135,6 @@ router.post( '/medicalexamination2entry', ( req, res ) => {
 router.post('/laboratoryentry', ( req, res ) => {
 
     const { 
-        logger,
         bloodGroup, 
         hemoglobin, 
         malaria, 
@@ -283,7 +282,7 @@ router.post('/laboratoryentry', ( req, res ) => {
 
                                                                                                                     db.query(
                                                                                                                         "INSERT INTO laboratory_investigation(candidate_id, blood_group, hemoglobin, malaria, micro_filaria, RBs, lft, creatinine, hivIII, HbsAg, antiHcv, vdrl, tpha, sugar, albumin, CovidPCR, CovidAntibodies, helminthes, ova, cyst, others, vaccination_id, insert_by, insert_date, insert_time) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); INSERT INTO logs(log_activity, logged_by, log_date, log_time) VALUES(?,?,?,?)",
-                                                                                                                        [rslt[0].candidate_id, bloodGroup, hemoglobin, malaria, microFilaria, RBs, lft, creatinine, hivIII, HbsAg, antiHcv, vdrl, tpha, sugar, albumin, CovidPCR, CovidAntibodies, helminthes, ova, cyst, others, result[0].id, Inserter, date, fullTime, 'Laboratory investigation data inserted', logger, date, fullTime],
+                                                                                                                        [rslt[0].candidate_id, bloodGroup, hemoglobin, malaria, microFilaria, RBs, lft, creatinine, hivIII, HbsAg, antiHcv, vdrl, tpha, sugar, albumin, CovidPCR, CovidAntibodies, helminthes, ova, cyst, others, result[0].id, Inserter, date, fullTime, 'Laboratory investigation data inserted', Inserter, date, fullTime],
                                                                                                                         (err, result) => {
 
                                                                                                                             if (err) {

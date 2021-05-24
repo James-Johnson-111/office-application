@@ -86,7 +86,7 @@ router.post( '/gettoken', ( req, res ) => {
     const { token }= req.body;
 
     db.query(
-        "SELECT * FROM tokens WHERE token = '" + token + "'",
+        "SELECT * FROM tokens WHERE token = '" + token + "' AND tokens.token_status != 'encountered'",
         ( err, rslt ) => {
 
             if( err )
