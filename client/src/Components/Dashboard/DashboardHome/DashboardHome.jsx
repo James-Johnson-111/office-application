@@ -41,7 +41,7 @@ class DashboardHome extends Component {
         // * Here I'm conting all records of candidates stored in database and show the result in chart
         let ids = [];
         let time = [];
-        axios.get( '/getcandidates' ).then( response => {
+        axios.post( '/getcandidates' ).then( response => {
 
             // console.log( response.data );
             this.setState( { candidateChartsCounts: [ ...response.data ] } );

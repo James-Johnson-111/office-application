@@ -28,7 +28,7 @@ setInterval( () => {
 
 // the following request is to get all users data
 
-router.get( '/getcandidates', ( req, res ) => {
+router.post( '/getcandidates', ( req, res ) => {
 
     db.query(
         "SELECT COUNT(candidate_id) as id, insert_date as date FROM candidate_info GROUP BY insert_date ASC",

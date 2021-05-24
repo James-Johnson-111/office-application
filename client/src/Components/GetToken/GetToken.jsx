@@ -24,13 +24,7 @@ class GetToken extends Component {
     componentDidMount()
     {
 
-        let content = <> <form onSubmit={this.getToken}>
-                <h3 className="mb-3 font-weight-bold text-uppercase text-center">press button & get your token</h3>
-                <div className="text-center">
-                    <button type="submit" className="btn btn-sm w-50">Get Token</button>
-                </div>
-            </form> 
-        </>
+        let content = <><form onSubmit={this.getToken}><h3 className="mb-3 font-weight-bold text-uppercase text-center">press button & get your token</h3><div className="text-center"><button type="submit" className="btn btn-sm w-50">Get Token</button></div></form></>
         this.setState( { loading: false, getTokenContent: content } );
 
     }
@@ -132,20 +126,5 @@ class GetToken extends Component {
     }
 
 }
-
-// const Example = () => {
-//     const componentRef = useRef();
-//     const HandlePrint = useReactToPrint(
-//         {
-//             content: () => componentRef.current
-//         }
-//     )
-
-//     return (
-//         <>
-            
-//         </>
-//     )
-// }
 
 export default GetToken;
