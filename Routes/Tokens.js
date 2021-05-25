@@ -115,6 +115,7 @@ router.post( '/storetoken', ( req, res ) => {
     let tokenDate = new Date();
     let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
 
+    // res.send('store token process');
     db.query(
         "INSERT INTO tokens(token, token_status, token_time, token_date) VALUES(?,?,?,?)",
         [ token, 'initialized', time, date ],
@@ -129,6 +130,34 @@ router.post( '/storetoken', ( req, res ) => {
             {
 
                 res.send("Success");
+
+            }
+
+        }
+    );
+
+} );
+
+// the following request is to get tokens from the table<database
+
+router.get( '/gettokens', ( req, res ) => {
+
+    let tokenDate = new Date();
+    let date = tokenDate.getFullYear() + '-' + monthNames[tokenDate.getMonth()] + '-' + tokenDate.getDate();
+
+    db.query(
+        "SELECT tokens.token FROM tokens WHERE tokens.token_date = '" + date + "' ORDER BY id DESC LIMIT 1",
+        ( err, rslt ) => {
+
+            if( err )
+            {
+
+                console.log( err );
+
+            }else
+            {
+
+                res.send( rslt );
 
             }
 
