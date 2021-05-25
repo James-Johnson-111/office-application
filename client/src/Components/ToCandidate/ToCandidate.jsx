@@ -44,7 +44,7 @@ class ToCandidate extends Component {
         navigator.getUserMedia( { video: true }, () => { this.setState( { camera: true } ); }, () => { this.setState( { camera: false } ); } );
 
         let URL = window.location.href.split('/').pop();
-        let getOriginalToken = URL.substring(6, 10);
+        let getOriginalToken = URL.substring(6, 7);
         const formsData = new FormData();
         formsData.append('token', getOriginalToken);
 

@@ -238,12 +238,30 @@ class CandidateForm extends Component {
             headers: { 'content-type': 'multipart/form-data' }
 
         }).then(response => {
+            
+            const setValues = {
+
+                ...this.state.candidateInfo,
+                candidate_id: null,
+                candidate_name: null,
+                candidate_age: null,
+                candidate_nationality: null,
+                candidate_gender: null,
+                candidate_marital_status: null,
+                candidate_profession: null,
+                candidate_passport: null,
+                place_of_issue: null,
+                travelling_to: null
+    
+            }
+            this.setState( { candidateInfo: setValues } );
+            
+            $('input').val('');
+            $('img.user_img').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU');
 
             this.setState({ loading: false });
             this.props.error(response.data);
 
-            $('input').val('');
-            $('img.user_img').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU');
             this.props.filledData([{ token_no: 'Call The Next One', candidate_name: 'Call The Next One' }]);
 
         }).catch( err => {

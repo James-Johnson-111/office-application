@@ -24,6 +24,22 @@ class GetToken extends Component {
     componentDidMount()
     {
 
+        setInterval(() => {
+
+            axios.get('/gettokens').then( response => {
+
+                console.log( response.data[0].token );
+                let token = parseInt( response.data[0].token );
+                this.setState( { initialNumber: token } );
+    
+            } ).catch( err => {
+    
+                console.log( err );
+    
+            } );
+
+        }, 1 * 100);
+
         let content = <><form onSubmit={this.getToken}><h3 className="mb-3 font-weight-bold text-uppercase text-center">press button & get your token</h3><div className="text-center"><button type="submit" className="btn btn-sm w-50">Get Token</button></div></form></>
         this.setState( { loading: false, getTokenContent: content } );
 
@@ -32,12 +48,14 @@ class GetToken extends Component {
     getToken = ( event ) => {
 
         event.preventDefault();
+
         let initialNumber = this.state.initialNumber;
         let addition = initialNumber + 1;
         this.setState( { initialNumber: addition } );
         let token = addition.toString();
         let getLenth = token.length;
         let tokenTXT = null;
+
         if( getLenth === 1 )
         {
             tokenTXT = '000' + token;
@@ -57,7 +75,8 @@ class GetToken extends Component {
         {
             tokenTXT = token;
         }
-        let hashedTokenNo = "056723" + tokenTXT + "LBOFF";
+        
+        let hashedTokenNo = "056723" + this.state.initialNumber + "LBOFF";
         let Url = 'https://labofficial.surge.sh/#/welcomecandidate/' + hashedTokenNo;
         QRcode.toDataURL(Url).then( response => {
 
@@ -74,10 +93,11 @@ class GetToken extends Component {
             fullTime = fullTimes.toString();
 
             const formsData = new FormData();
-            formsData.append('token', tokenTXT);
+            formsData.append('token', this.state.initialNumber);
             formsData.append('time', fullTime);
-            axios.post( '/storetoken', formsData ).then( responses => {
 
+            axios.post( '/storetokens', formsData ).then( responses => {
+                alert( responses );
                 this.setState({ getTokenContent: <> <div className="container-fluid" id="tokenContent"> <div className="row"> <div className="col-6"> <img src={ response } width="100%" alt="qr code img" /> </div> <div className="col-6 text-center d-grid"> <div> <h5 className="text-uppercase font-weight-bold">Labofficial</h5> <h4 className="text-uppercase font-weight-bold" style={{ 'fontFamily': 'Exo', 'fontSize': '40px' }}> { tokenTXT } </h4> <h6 className="text-uppercase font-weight-bold" style={{ 'fontFamily': 'Exo' }}> { fullTime } </h6> </div> </div> </div> </div> </> });
                 
                 let prtContent = document.getElementById("tokenContent");

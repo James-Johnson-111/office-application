@@ -108,7 +108,7 @@ router.post( '/gettoken', ( req, res ) => {
 
 // the following request is to store token into database when user click on 'get token' button
 
-router.post( '/storetoken', ( req, res ) => {
+router.post( '/storetokens', ( req, res ) => {
 
     const { token, time }= req.body;
 

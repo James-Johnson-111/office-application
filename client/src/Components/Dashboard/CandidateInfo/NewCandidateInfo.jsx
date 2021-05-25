@@ -67,6 +67,15 @@ class NewCandidateInfo extends Component {
 
         } );
 
+        $('.next-btn').on('click', () => {
+
+            $('.next-btn').html('Please Wait');
+            setTimeout(() => {
+                $('.next-btn').html('Next');
+            }, 1000);
+
+        } );
+
     }
 
     nextCandidate = () => {
@@ -98,6 +107,10 @@ class NewCandidateInfo extends Component {
     }
 
     getVal = ( Val ) => {
+
+        if (this.state.screenWidth > 450) {
+            console.log( 'greator' );
+        }
 
         if( Val === 'candidate' )
         {
@@ -281,7 +294,7 @@ class NewCandidateInfo extends Component {
                                 }
                                 <button className="btn btn-sm next-btn" onClick={this.next}>
                                     Next
-                                    <i className="las la-chevron-circle-right"></i>
+                                    {/* <i className="las la-chevron-circle-right"></i> */}
                                 </button>
                             </div>
                             <button className="btn btn-sm next-btn-sm" onClick={this.next}>

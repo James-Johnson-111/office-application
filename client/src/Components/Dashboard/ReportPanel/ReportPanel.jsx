@@ -161,8 +161,8 @@ class ReportPanel extends Component {
         if( Cookies.get('Params') === 'Category 1' )
         {
 
-            if( event.target.value.length > 3 )
-            {
+            // if( event.target.value.length > 3 )
+            // {
 
                 setTimeout( () => {
 
@@ -201,7 +201,7 @@ class ReportPanel extends Component {
         
                 }, 1000 );
 
-            }
+            // }
 
         }else
         {
