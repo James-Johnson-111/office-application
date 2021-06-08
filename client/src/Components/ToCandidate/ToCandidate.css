@@ -1,6 +1,6 @@
 .ToCandidate {
     font-family: Raleway;
-    background-image: url('https://image.freepik.com/free-vector/white-abstract-background-design_23-2148825582.jpg');
+    background-image: url('https://ak.picdn.net/shutterstock/videos/28460836/thumb/1.jpg');
     background-size: 100% 100%;
     min-height: 100vh;
 }
@@ -22,13 +22,13 @@
 
 .ToCandidate i {
     font-size: 25px;
-    color: #40cfcd;
+    color: #2182C5;
 }
 
 .ToCandidate .form-control {
     border-radius: 0;
     border: 0;
-    border-bottom: 1px solid #40cfcd;
+    border-bottom: 1px solid #2182C5;
     font-family: Quicksand;
 }
 
@@ -40,45 +40,32 @@
     color: #ffffff;
     font-family: Exo;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    background-color: #40cfcd;
+    background-color: #00a751;
 }
 
-@media only screen and (max-width: 992px)
-{
-
+@media only screen and (max-width: 992px) {
     .ToCandidate .ToCandidate-content {
         width: 45%;
     }
-
 }
 
-@media only screen and (max-width: 768px)
-{
-
+@media only screen and (max-width: 768px) {
     .ToCandidate .ToCandidate-content {
         width: 55%;
     }
-
 }
 
-@media only screen and (max-width: 600px)
-{
-
+@media only screen and (max-width: 600px) {
     .ToCandidate .ToCandidate-inner {
         margin: 50px 0;
     }
-
     .ToCandidate .ToCandidate-content {
         width: 75%;
     }
-
 }
 
-@media only screen and (max-width: 450px)
-{
-
+@media only screen and (max-width: 450px) {
     .ToCandidate .ToCandidate-content {
         width: 90%;
     }
-
 }

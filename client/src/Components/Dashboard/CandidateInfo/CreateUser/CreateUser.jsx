@@ -306,9 +306,9 @@ class CreateUser extends Component {
                     {(this.state.userInfo.loginID != null) && (this.state.userInfo.params != null) && this.state.userInfo.roles != null ?
                         <>
                             <div className="container-fluid">
-                                <p className="text-center"><small><b>SELECT THE WAY YOU WANT TO UPLOAD IMAGE</b></small></p>
+                                <p className="text-center mb-0" style={ { 'fontSize' : '15px' } }>SELECT THE WAY YOU WANT TO UPLOAD IMAGE</p>
                                 <div className="row">
-                                    <div className="col-6">
+                                    {/* <div className="col-12">
                                         <input
                                             type="file"
                                             className="form-control form-control-sm d-none"
@@ -322,9 +322,9 @@ class CreateUser extends Component {
                                                 <i className="las la-plus la-2x"></i>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="col-6">
-                                        <img alt="camera" className="rounded" style={{ 'cursor': 'pointer' }} onClick={this.cameraModalCall} src={cameraImg} width="100%" />
+                                    </div> */}
+                                    <div className="col-12 text-center">
+                                        <img alt="camera" className="rounded w-50 mx-auto" style={{ 'cursor': 'pointer' }} onClick={this.cameraModalCall} src={cameraImg} width="100%" />
                                     </div>
                                 </div>
                             </div>

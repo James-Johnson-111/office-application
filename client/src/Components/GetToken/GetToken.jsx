@@ -93,11 +93,10 @@ class GetToken extends Component {
             fullTime = fullTimes.toString();
 
             const formsData = new FormData();
-            formsData.append('token', this.state.initialNumber);
+            formsData.append('token', this.state.initialNumber.toString().length > 1 ? this.state.initialNumber.toString() : '0' + this.state.initialNumber.toString());
             formsData.append('time', fullTime);
 
             axios.post( '/storetokens', formsData ).then( responses => {
-                alert( responses );
                 this.setState({ getTokenContent: <> <div className="container-fluid" id="tokenContent"> <div className="row"> <div className="col-6"> <img src={ response } width="100%" alt="qr code img" /> </div> <div className="col-6 text-center d-grid"> <div> <h5 className="text-uppercase font-weight-bold">Labofficial</h5> <h4 className="text-uppercase font-weight-bold" style={{ 'fontFamily': 'Exo', 'fontSize': '40px' }}> { tokenTXT } </h4> <h6 className="text-uppercase font-weight-bold" style={{ 'fontFamily': 'Exo' }}> { fullTime } </h6> </div> </div> </div> </div> </> });
                 
                 let prtContent = document.getElementById("tokenContent");

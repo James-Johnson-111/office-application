@@ -1,62 +1,56 @@
-/* .Toastify__toast-body {
-  background-color: blue !important;
-} */
+* {
+    font-family: Poppins;
+}
 
 .Toastify__toast {
-  background-color: #1A2476 !important;
-  color: #fff !important;
+    background-color: #2182C5 !important;
+    color: #fff !important;
 }
 
 .Toastify__progress-bar--dark {
-  background-color: #f59b28 !important;
+    background-color: #00a751 !important;
 }
 
 .p-absolute {
-  position: absolute;
+    position: absolute;
 }
 
 .clear_float {
-  clear: both;
+    clear: both;
 }
 
 .d-mobile-600-none {
-  display: block;
+    display: block;
 }
 
 .d-mobile-600-block {
-  display: none;
+    display: none;
 }
 
 .d-mobile-768-none {
-  display: block;
+    display: block;
 }
 
 .d-grid {
-  display: grid;
-  align-items: center;
+    display: grid;
+    align-items: center;
 }
 
 .btn:focus {
-  box-shadow: none;
+    box-shadow: none;
 }
 
 @media only screen and (max-width: 768px) {
-
-  .d-mobile-768-none {
-    display: none;
-  }
-
+    .d-mobile-768-none {
+        display: none;
+    }
 }
 
-
 @media only screen and (max-width: 600px) {
-
-  .d-mobile-600-none {
-    display: none;
-  }
-
-  .d-mobile-600-block {
-    display: block;
-  }
-
+    .d-mobile-600-none {
+        display: none;
+    }
+    .d-mobile-600-block {
+        display: block;
+    }
 }

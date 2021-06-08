@@ -33,6 +33,9 @@ app.use( require('./Routes/Tokens') );
 // Following route is to set all routes for only admin
 app.use( require('./Routes/Admin_Specific_Routes') );
 
+// Following route is all about candidate reports
+app.use( require('./Routes/Reports') );
+
 // Here we provide access and allow origin to accept http-request
 
 app.use(( req, res, next ) => {
@@ -54,6 +57,6 @@ if ( process.env.NODE_ENV == "production")
 
 app.listen( PORT, () => {
 
-    console.log("Server Has Been Started");
+    console.log(`Server run on localhost:${PORT}`);
 
 } );

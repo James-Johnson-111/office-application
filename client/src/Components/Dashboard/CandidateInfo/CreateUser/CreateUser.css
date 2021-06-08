@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     height: 30vh;
-    background-color: #f59b28;
+    background-color: #2182C5;
     margin-top: 150px;
 }
 
@@ -12,9 +12,9 @@
     height: min-content;
     background-color: #ffffff;
     position: absolute;
-    top: calc( 50vh - 60vh );
-    left: calc( 35% - 30% );
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    top: calc( 50vh - 60vh);
+    left: calc( 35% - 30%);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
     z-index: 0;
 }
 
@@ -26,14 +26,16 @@
     border: 0;
 }
 
-.CreateUser-container .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: #1A2476;
-    border-color: transparent transparent #f59b28;
-    border-bottom: 4px solid #f59b28 !important;
+.CreateUser-container .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    color: #2182C5;
+    border-color: transparent transparent #00a751;
+    border-bottom: 4px solid #00a751 !important;
     font-weight: bolder;
 }
+
 .CreateUser-container .nav-tabs .nav-link {
-    color: #1A2476;
+    color: #2182C5;
     font-family: Exo;
     font-weight: bolder;
     text-transform: uppercase;
@@ -55,13 +57,13 @@
 
 .CreateUser i {
     font-size: 25px;
-    color: #40cfcd;
+    color: #2182C5;
 }
 
 .CreateUser .form-control {
     border-radius: 0;
     border: 0;
-    border-bottom: 1px solid #40cfcd;
+    border-bottom: 1px solid #2182C5;
     font-family: Quicksand;
 }
 
@@ -73,45 +75,33 @@
     color: #ffffff;
     font-family: Exo;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    background-color: #40cfcd;
+    background-color: #00a751;
 }
 
 .errors {
     font-family: JosefinSans;
 }
 
-@media only screen and (max-width: 992px)
-{
-
+@media only screen and (max-width: 992px) {
     .CreateUser {
         width: 45%;
     }
-
 }
 
-@media only screen and (max-width: 768px)
-{
-
+@media only screen and (max-width: 768px) {
     .CreateUser {
         width: 55%;
     }
-
 }
 
-@media only screen and (max-width: 600px)
-{
-
+@media only screen and (max-width: 600px) {
     .CreateUser {
         width: 75%;
     }
-
 }
 
-@media only screen and (max-width: 450px)
-{
-
+@media only screen and (max-width: 450px) {
     .CreateUser {
         width: 90%;
     }
-
 }

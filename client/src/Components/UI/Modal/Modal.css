@@ -27,7 +27,7 @@
     transition: 1s;
     transform: translateY(-100%);
     opacity: 0;
-    color: #1A2476;
+    color: #2182C5;
     font-family: Quicksand;
     border-radius: 20px;
 }
@@ -36,7 +36,7 @@
     color: #ffffff;
     font-family: Exo;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    background-color: #40cfcd;
+    background-color: #00a751;
 }
 
 .hide-modal {
@@ -47,56 +47,52 @@
     animation: showModal 1s ease 1 forwards alternate;
 }
 
-@keyframes showModal
-{
-
-    50% { transform: translateY(20%); opacity: 1; }
-    100% { transform: translateY(0); opacity: 1; }
-
+@keyframes showModal {
+    50% {
+        transform: translateY(20%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-@keyframes hideModal
-{
-
-    50% { transform: translateY(20%);  }
-    100% { transform: translateY(-100%); opacity: 0; }
-
+@keyframes hideModal {
+    50% {
+        transform: translateY(20%);
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
 }
 
 @media only screen and (max-width: 992px) {
-
     .Modal {
         width: 80% !important;
         /* left: 10%; */
     }
-
 }
 
 @media only screen and (max-width: 768px) {
-
     .Modal {
         width: 90% !important;
         /* left: 5%; */
     }
-
 }
 
 @media only screen and (max-width: 600px) {
-
     .Modal {
         width: 92% !important;
         /* left: 4%; */
         padding: 15px;
     }
-
 }
 
-@media only screen and (max-height: 400px)
-{
-
+@media only screen and (max-height: 400px) {
     .Modal {
         width: 50% !important;
         /* left: 25%; */
     }
-
 }
