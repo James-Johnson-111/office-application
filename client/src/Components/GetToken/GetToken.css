@@ -1,0 +1,67 @@
+.GetToken {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    font-family: Raleway;
+    background-image: url('https://image.freepik.com/free-vector/white-abstract-background-design_23-2148825582.jpg');
+    background-size: 100% 100%;
+}
+
+.GetToken .GetToken-inner {
+    position: relative;
+}
+
+.GetToken .GetToken-inner .GetToken-content {
+    width: 40%;
+    background-color: #fff;
+    padding: 30px;
+    color: #1A2476;
+}
+
+.GetToken .GetToken-inner .GetToken-content i {
+    font-size: 25px;
+    color: #40cfcd;
+}
+
+.GetToken .GetToken-inner .GetToken-content .btn {
+    color: #ffffff;
+    font-family: Exo;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    background-color: #40cfcd;
+}
+
+.GetToken .GetToken-inner .GetToken-content .form-control {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #40cfcd;
+    font-family: Quicksand;
+}
+
+.GetToken .GetToken-inner .GetToken-content .form-control:focus {
+    box-shadow: none;
+}
+
+@media only screen and (max-width: 992px) {
+    .GetToken .GetToken-inner .GetToken-content {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .GetToken .GetToken-inner .GetToken-content {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .GetToken .GetToken-inner .GetToken-content {
+        width: 92%;
+    }
+}
+
+
+/* @media print {
+    @page {
+        size: landscape;
+    }
+} */

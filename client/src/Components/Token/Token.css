@@ -1,0 +1,12 @@
+.Token {
+    /* width: 100%;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0; */
+}
+
+.Token p,
+.Token h4 {
+    margin-bottom: 0 !important;
+}
